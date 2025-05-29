@@ -1,0 +1,24 @@
+--- INSTRUCCIONES DOCKER ---
+
+
+- Navegar hasta la carpeta donde queramos clonar el repositorio
+
+
+- Abrir terminal y copiar:
+
+    git clone https://github.com/rioacosta/S3.03EscapeRoom
+    cd S3.03EscapeRoom
+
+
+- Ejecutar por terminal:
+
+    docker-compose -f docker-compose.yml up --build
+
+
+- Comprobar por la Interfaz gráfica o por terminal que Docker está ejecutándose
+
+
+- Si se quiere comprobar el status por terminal:
+
+    docker-compose ps
+
