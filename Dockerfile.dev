@@ -1,0 +1,20 @@
+# Usa una imagen basada en Debian en lugar de Alpine
+FROM openjdk:21-jdk-slim
+
+# Configurar el directorio de trabajo
+WORKDIR /app
+
+# Instalar Maven
+RUN apt-get update && apt-get install -y maven
+
+# Copiar los archivos de la aplicación
+COPY . .
+
+# Construir el proyecto con Maven
+RUN mvn clean package
+
+# Exponer el puerto de la aplicación
+EXPOSE 8080
+
+# Comando de ejecución
+CMD ["java", "-jar", "app.jar"]
