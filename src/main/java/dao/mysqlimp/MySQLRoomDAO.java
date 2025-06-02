@@ -2,10 +2,13 @@ package dao.mysqlimp;
 
 import dao.DatabaseConnection;
 import dao.interfaces.IGenericDAO;
+import model.Room;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
@@ -18,120 +21,133 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
 
     @Override
     public boolean create(Room room) {
-        String sql = "INSERT INTO salas (escape_room_id, name, dificulty, price) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO room (idEscaperoom_ref, name, dificulty, price) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, room.getEscapeRoomId());
             stmt.setString(2, room.getName());
-            stmt.setInt(3, room.getDificulty());
+            stmt.setString(3, room.getDifficulty().name()); // Manejo correcto de ENUM
             stmt.setBigDecimal(4, room.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        room.setId(generatedKeys.getInt(1));
-                    }
-                }
-                logger.info("Sala creada exitosamente: " + room.getName());
-                return true;
+            if (rowsAffected == 0) {
+                logger.warning("Create failed, no rows affected");
+                return false;
             }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    room.setId(generatedKeys.getInt(1));
+                    logger.log(Level.INFO, "Room created with ID: {0}", room.getId());
+                } else {
+                    logger.warning("Failed to retrieve generated ID");
+                    return false;
+                }
+            }
+            return true;
         } catch (SQLException e) {
-            logger.severe("Error al crear Sala: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error creating room", e);
+            return false;
         }
-        return false;
     }
 
     @Override
     public Optional<Room> findById(Integer id) {
-        String sql = "SELECT * FROM salas WHERE id = ?";
+        String sql = "SELECT * FROM room WHERE idRoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Room room = mapResultSetToRoom(rs);
-                    return Optional.of(room);
+                    return Optional.of(mapResultSetToRoom(rs));
                 }
             }
         } catch (SQLException e) {
-            logger.severe("Error al buscar Sala por ID: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error finding room by ID: " + id, e);
         }
         return Optional.empty();
     }
 
     @Override
     public boolean update(Room room) {
-        String sql = "UPDATE salas SET escape_room_id = ?, name = ?, dificulty = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE room SET idEscaperoom_ref = ?, name = ?, dificulty = ?, price = ? WHERE idRoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, room.getEscapeRoomId());
             stmt.setString(2, room.getName());
-            stmt.setInt(3, room.getDificulty());
+            stmt.setString(3, room.getDifficulty().name());
             stmt.setBigDecimal(4, room.getPrice());
             stmt.setInt(5, room.getId());
 
             int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                logger.info("Sala actualizada exitosamente: " + room.getId());
-                return true;
+            if (rowsAffected == 0) {
+                logger.warning("Update failed, no rows affected for ID: " + room.getId());
+                return false;
             }
+            return true;
         } catch (SQLException e) {
-            logger.severe("Error al actualizar Sala: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error updating room ID: " + room.getId(), e);
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean deleteById(Integer id) {
-        // Borrado físico (sin campo activa)
-        String sql = "DELETE FROM salas WHERE id = ?";
+        String sql = "DELETE FROM room WHERE idRoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                logger.info("Sala eliminada permanentemente: " + id);
-                return true;
+            if (rowsAffected == 0) {
+                logger.warning("Delete failed, room not found ID: " + id);
+                return false;
             }
+            return true;
         } catch (SQLException e) {
-            logger.severe("Error al eliminar Sala: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error deleting room ID: " + id, e);
+            return false;
         }
-        return false;
     }
 
     @Override
     public List<Room> findAll() {
         List<Room> rooms = new ArrayList<>();
-        String sql = "SELECT * FROM salas";
+        String sql = "SELECT * FROM room";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 rooms.add(mapResultSetToRoom(rs));
             }
         } catch (SQLException e) {
-            logger.severe("Error al obtener todas las salas: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error retrieving all rooms", e);
         }
         return rooms;
     }
 
     @Override
     public boolean existsById(Integer id) {
-        String sql = "SELECT 1 FROM salas WHERE id = ?";
+        String sql = "SELECT 1 FROM room WHERE idRoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next();
             }
         } catch (SQLException e) {
-            logger.severe("Error al verificar existencia de Sala: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            return false;
         }
-        return false;
     }
 
     private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
         Room room = new Room();
-        room.setId(rs.getInt("id"));
-        room.setEscapeRoomId(rs.getInt("escape_room_id"));
+        room.setId(rs.getInt("idRoom"));
+        room.setEscapeRoomId(rs.getInt("idEscaperoom_ref"));
         room.setName(rs.getString("name"));
-        room.setDificulty(rs.getInt("dificulty"));
+
+        String difficultyStr = rs.getString("dificulty");
+        try {
+            room.setDifficulty(Room.Difficulty.valueOf(difficultyStr));
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.WARNING, "Invalid difficulty value: {0}", difficultyStr);
+            room.setDifficulty(Room.Difficulty.MEDIUM); // Valor por defecto
+        }
+
         room.setPrice(rs.getBigDecimal("price"));
         return room;
     }
