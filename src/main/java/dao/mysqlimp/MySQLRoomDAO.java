@@ -1,0 +1,153 @@
+package dao.mysqlimp;
+
+import dao.interfaces.IGenericDAO;
+import model.Room;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
+    private static final Logger logger = Logger.getLogger(MySQLRoomDAO.class.getName());
+    private final Connection connection;
+
+    public MySQLRoomDAO(DatabaseConnection databaseConnection) {
+        this.connection = databaseConnection.getConnection();
+    }
+
+    @Override
+    public boolean create(Room room) {
+        String sql = "INSERT INTO room (idEscaperoom_ref, name, dificulty, price) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, room.getEscapeRoomId());
+            stmt.setString(2, room.getName());
+            stmt.setString(3, room.getDifficulty().name()); // Manejo correcto de ENUM
+            stmt.setBigDecimal(4, room.getPrice());
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                logger.warning("Create failed, no rows affected");
+                return false;
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    room.setId(generatedKeys.getInt(1));
+                    logger.log(Level.INFO, "Room created with ID: {0}", room.getId());
+                } else {
+                    logger.warning("Failed to retrieve generated ID");
+                    return false;
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error creating room", e);
+            return false;
+        }
+    }
+
+    @Override
+    public Optional<Room> findById(Integer id) {
+        String sql = "SELECT * FROM room WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSetToRoom(rs));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error finding room by ID: " + id, e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean update(Room room) {
+        String sql = "UPDATE room SET idEscaperoom_ref = ?, name = ?, dificulty = ?, price = ? WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, room.getEscapeRoomId());
+            stmt.setString(2, room.getName());
+            stmt.setString(3, room.getDifficulty().name());
+            stmt.setBigDecimal(4, room.getPrice());
+            stmt.setInt(5, room.getId());
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                logger.warning("Update failed, no rows affected for ID: " + room.getId());
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error updating room ID: " + room.getId(), e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteById(Integer id) {
+        String sql = "DELETE FROM room WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                logger.warning("Delete failed, room not found ID: " + id);
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error deleting room ID: " + id, e);
+            return false;
+        }
+    }
+
+    @Override
+    public List<Room> findAll() {
+        List<Room> rooms = new ArrayList<>();
+        String sql = "SELECT * FROM room";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                rooms.add(mapResultSetToRoom(rs));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error retrieving all rooms", e);
+        }
+        return rooms;
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        String sql = "SELECT 1 FROM room WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            return false;
+        }
+    }
+
+    private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
+        Room room = new Room();
+        room.setId(rs.getInt("idRoom"));
+        room.setEscapeRoomId(rs.getInt("idEscaperoom_ref"));
+        room.setName(rs.getString("name"));
+
+        String difficultyStr = rs.getString("dificulty");
+        try {
+            room.setDifficulty(Room.Difficulty.valueOf(difficultyStr));
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.WARNING, "Invalid difficulty value: {0}", difficultyStr);
+            room.setDifficulty(Room.Difficulty.MEDIUM); // Valor por defecto
+        }
+
+        room.setPrice(rs.getBigDecimal("price"));
+        return room;
+    }
+}

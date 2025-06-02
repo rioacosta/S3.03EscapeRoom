@@ -1,4 +1,4 @@
-package config;
+package dao.mysqlimp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ public class DatabaseConnection {
     private Connection connection;
     private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
-    private static final String URL = "jdbc:mysql://localhost:3306/escape_room_db";
+    private static final String URL = "jdbc:mysql://localhost:3306/escaperoomdb";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "654321Hola";
 
