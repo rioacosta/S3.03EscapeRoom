@@ -10,19 +10,6 @@ public class Room {
     private Difficulty dificulty;
     private float price;  // 2 decimales max, gestionar
 
-    // BORRAR LUEGO, ESTOY PROBANDO COSAS
-
-
-    public Room(int idRoom, int idEscaperoom_ref, String name, Difficulty dificulty, float price) {
-        this.idRoom = idRoom;
-        this.idEscaperoom_ref = idEscaperoom_ref;
-        this.name = name;
-        this.dificulty = dificulty;
-        this.price = price;
-    }
-
-    /// ///
-
     public int getIdRoom() {
         return idRoom;
     }
@@ -71,5 +58,7 @@ public class Room {
 
     // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
     // que no se pase de los caracteres máximos que acepta la base de datos...
+
+    // No están hechas por ahora porque no tengo 100% claro cómo se van a gestionar con el Builder
 
 }
