@@ -1,6 +1,5 @@
 package dao;
 
-import dao.mysqlimp.DatabaseConnection;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 

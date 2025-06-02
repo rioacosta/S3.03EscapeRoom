@@ -1,7 +1,9 @@
-package dao.mysqlimp;
+package org.example.dao.mysqlimp;
 
-import dao.DatabaseConnection;
-import dao.interfaces.IGenericDAO;
+import org.example.dao.DatabaseConnection;
+import org.example.dao.interfaces.IGenericDAO;
+import org.example.model.entities.EscapeRoom;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MySQLEscaperoomDAO implements IGenericDAO<Escaperoom, Integer> {
+public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
     private static final Logger logger = Logger.getLogger(MySQLEscaperoomDAO.class.getName());
     private final Connection connection;
 
@@ -18,7 +20,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<Escaperoom, Integer> {
     }
 
     @Override
-    public boolean create(Escaperoom escaperoom) {
+    public boolean create(EscapeRoom escaperoom) {
         String sql = "INSERT INTO escaperoom (name) VALUES (?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, escaperoom.getName());
@@ -46,7 +48,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<Escaperoom, Integer> {
     }
 
     @Override
-    public Optional<Escaperoom> findById(Integer id) {
+    public Optional<EscapeRoom> findById(Integer id) {
         String sql = "SELECT * FROM escaperoom WHERE idEscaperoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -62,7 +64,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<Escaperoom, Integer> {
     }
 
     @Override
-    public boolean update(Escaperoom escaperoom) {
+    public boolean update(EscapeRoom escaperoom) {
         String sql = "UPDATE escaperoom SET name = ? WHERE idEscaperoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, escaperoom.getName());
@@ -98,8 +100,8 @@ public class MySQLEscaperoomDAO implements IGenericDAO<Escaperoom, Integer> {
     }
 
     @Override
-    public List<Escaperoom> findAll() {
-        List<Escaperoom> escaperooms = new ArrayList<>();
+    public List<EscapeRoom> findAll() {
+        List<EscapeRoom> escaperooms = new ArrayList<>();
         String sql = "SELECT * FROM escaperoom";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -126,8 +128,8 @@ public class MySQLEscaperoomDAO implements IGenericDAO<Escaperoom, Integer> {
         }
     }
 
-    private Escaperoom mapResultSetToEscaperoom(ResultSet rs) throws SQLException {
-        Escaperoom escaperoom = new Escaperoom();
+    private EscapeRoom mapResultSetToEscaperoom(ResultSet rs) throws SQLException {
+        EscapeRoom escaperoom = new EscapeRoom();
         escaperoom.setIdEscaperoom(rs.getInt("idEscaperoom"));
         escaperoom.setName(rs.getString("name"));
         return escaperoom;

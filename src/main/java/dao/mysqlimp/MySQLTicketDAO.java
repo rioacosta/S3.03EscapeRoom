@@ -1,7 +1,9 @@
-package dao.mysqlimp;
+package org.example.dao.mysqlimp;
 
-import dao.DatabaseConnection;
-import dao.interfaces.IGenericDAO;
+import org.example.dao.DatabaseConnection;
+import org.example.dao.interfaces.IGenericDAO;
+import org.example.model.entities.Tickets;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
+public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
     private static final Logger logger = Logger.getLogger(MySQLTicketDAO.class.getName());
     private final Connection connection;
 
@@ -18,23 +20,17 @@ public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
     }
 
     @Override
-    public boolean create(Ticket ticket) {
+    public boolean create(Tickets ticket) {
         String sql = "INSERT INTO tickets (idTickets, idRoom, idPlayer, boughtOn, price) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, ticket.getIdTickets());
-            stmt.setInt(2, ticket.getIdRoom());
-            stmt.setInt(3, ticket.getIdPlayer());
-            stmt.setTimestamp(4, ticket.getBoughtOn());
-            stmt.setBigDecimal(5, ticket.getPrice());
+            stmt.setInt(1, ticket.idTickets());
+            stmt.setInt(2, ticket.idRoom());
+            stmt.setInt(3, ticket.idPlayer());
+            stmt.setDate(4, Date.valueOf(ticket.boughtOn())); // Conversión de LocalDate a SQL Date
+            stmt.setDouble(5, ticket.price());
 
             int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                logger.log(Level.INFO, "Ticket created with ID: {0}", ticket.getIdTickets());
-                return true;
-            } else {
-                logger.warning("Create failed, no rows affected");
-                return false;
-            }
+            return rowsAffected > 0;
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error creating ticket", e);
             return false;
@@ -42,7 +38,7 @@ public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
     }
 
     @Override
-    public Optional<Ticket> findById(Integer id) {
+    public Optional<Tickets> findById(Integer id) {
         String sql = "SELECT * FROM tickets WHERE idTickets = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -58,23 +54,19 @@ public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
     }
 
     @Override
-    public boolean update(Ticket ticket) {
+    public boolean update(Tickets ticket) {
         String sql = "UPDATE tickets SET idRoom = ?, idPlayer = ?, boughtOn = ?, price = ? WHERE idTickets = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, ticket.getIdRoom());
-            stmt.setInt(2, ticket.getIdPlayer());
-            stmt.setTimestamp(3, ticket.getBoughtOn());
-            stmt.setBigDecimal(4, ticket.getPrice());
-            stmt.setInt(5, ticket.getIdTickets());
+            stmt.setInt(1, ticket.idRoom());
+            stmt.setInt(2, ticket.idPlayer());
+            stmt.setDate(3, Date.valueOf(ticket.boughtOn())); // Conversión de LocalDate a SQL Date
+            stmt.setDouble(4, ticket.price());
+            stmt.setInt(5, ticket.idTickets());
 
             int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected == 0) {
-                logger.warning("Update failed, no rows affected for ID: " + ticket.getIdTickets());
-                return false;
-            }
-            return true;
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating ticket ID: " + ticket.getIdTickets(), e);
+            logger.log(Level.SEVERE, "Error updating ticket ID: " + ticket.idTickets(), e);
             return false;
         }
     }
@@ -85,11 +77,7 @@ public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected == 0) {
-                logger.warning("Delete failed, ticket not found ID: " + id);
-                return false;
-            }
-            return true;
+            return rowsAffected > 0;
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error deleting ticket ID: " + id, e);
             return false;
@@ -97,8 +85,8 @@ public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
     }
 
     @Override
-    public List<Ticket> findAll() {
-        List<Ticket> tickets = new ArrayList<>();
+    public List<Tickets> findAll() {
+        List<Tickets> tickets = new ArrayList<>();
         String sql = "SELECT * FROM tickets";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -125,13 +113,13 @@ public class MySQLTicketDAO implements IGenericDAO<Ticket, Integer> {
         }
     }
 
-    private Ticket mapResultSetToTicket(ResultSet rs) throws SQLException {
-        Ticket ticket = new Ticket();
-        ticket.setIdTickets(rs.getInt("idTickets"));
-        ticket.setIdRoom(rs.getInt("idRoom"));
-        ticket.setIdPlayer(rs.getInt("idPlayer"));
-        ticket.setBoughtOn(rs.getTimestamp("boughtOn"));
-        ticket.setPrice(rs.getBigDecimal("price"));
-        return ticket;
+    private Tickets mapResultSetToTicket(ResultSet rs) throws SQLException {
+        return new Tickets(
+                rs.getInt("idTickets"),
+                rs.getInt("idRoom"),
+                rs.getInt("idPlayer"),
+                rs.getDate("boughtOn").toLocalDate(), // Conversión de SQL Date a LocalDate
+                rs.getDouble("price")
+        );
     }
 }

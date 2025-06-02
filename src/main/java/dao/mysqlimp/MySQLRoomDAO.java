@@ -1,7 +1,9 @@
-package dao.mysqlimp;
+package org.example.dao.mysqlimp;
 
-import dao.interfaces.IGenericDAO;
-import model.Room;
+import org.example.dao.DatabaseConnection;
+import org.example.dao.interfaces.IGenericDAO;
+import org.example.model.entities.Room;
+import org.example.model.enums.Difficulty;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
     public boolean create(Room room) {
         String sql = "INSERT INTO room (idEscaperoom_ref, name, dificulty, price) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, room.getEscapeRoomId());
+            stmt.setInt(1, room.getIdEscaperoom_ref());
             stmt.setString(2, room.getName());
             stmt.setString(3, room.getDifficulty().name()); // Manejo correcto de ENUM
             stmt.setBigDecimal(4, room.getPrice());
@@ -35,8 +37,8 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    room.setId(generatedKeys.getInt(1));
-                    logger.log(Level.INFO, "Room created with ID: {0}", room.getId());
+                    room.setIdRoom(generatedKeys.getInt(1));
+                    logger.log(Level.INFO, "Room created with ID: {0}", room.getIdRoom());
                 } else {
                     logger.warning("Failed to retrieve generated ID");
                     return false;
@@ -69,20 +71,20 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
     public boolean update(Room room) {
         String sql = "UPDATE room SET idEscaperoom_ref = ?, name = ?, dificulty = ?, price = ? WHERE idRoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, room.getEscapeRoomId());
+            stmt.setInt(1, room.getIdEscaperoom_ref());
             stmt.setString(2, room.getName());
             stmt.setString(3, room.getDifficulty().name());
             stmt.setBigDecimal(4, room.getPrice());
-            stmt.setInt(5, room.getId());
+            stmt.setInt(5, room.getIdRoom());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Update failed, no rows affected for ID: " + room.getId());
+                logger.warning("Update failed, no rows affected for ID: " + room.getIdRoom());
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating room ID: " + room.getId(), e);
+            logger.log(Level.SEVERE, "Error updating room ID: " + room.getIdRoom(), e);
             return false;
         }
     }
@@ -135,16 +137,16 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
 
     private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
         Room room = new Room();
-        room.setId(rs.getInt("idRoom"));
-        room.setEscapeRoomId(rs.getInt("idEscaperoom_ref"));
+        room.setIdRoom(rs.getInt("idRoom"));
+        room.getIdEscaperoom_ref();//(rs.getInt("idEscaperoom_ref"));
         room.setName(rs.getString("name"));
 
-        String difficultyStr = rs.getString("dificulty");
+        String difficultyStr = rs.getString("difficulty");
         try {
-            room.setDifficulty(Room.Difficulty.valueOf(difficultyStr));
+            room.setDifficulty(Difficulty.valueOf(difficultyStr));
         } catch (IllegalArgumentException e) {
             logger.log(Level.WARNING, "Invalid difficulty value: {0}", difficultyStr);
-            room.setDifficulty(Room.Difficulty.MEDIUM); // Valor por defecto
+            room.setDifficulty(Difficulty.MEDIUM);
         }
 
         room.setPrice(rs.getBigDecimal("price"));

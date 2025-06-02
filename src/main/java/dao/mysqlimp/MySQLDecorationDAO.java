@@ -1,7 +1,9 @@
-package dao.mysqlimp;
+package org.example.dao.mysqlimp;
 
-import dao.DatabaseConnection;
-import dao.interfaces.IGenericDAO;
+import org.example.dao.DatabaseConnection;
+import org.example.dao.interfaces.IGenericDAO;
+import org.example.model.entities.Decoration;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
     public boolean create(Decoration decoration) {
         String sql = "INSERT INTO decoration (idRoom_ref, description, material, price) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, decoration.getIdRoomRef());
+            stmt.setInt(1, decoration.getIdRoom_ref());
             stmt.setString(2, decoration.getDescription());
             stmt.setString(3, decoration.getMaterial());
             stmt.setBigDecimal(4, decoration.getPrice());
@@ -68,7 +70,7 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
     public boolean update(Decoration decoration) {
         String sql = "UPDATE decoration SET idRoom_ref = ?, description = ?, material = ?, price = ? WHERE idDecoration = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, decoration.getIdRoomRef());
+            stmt.setInt(1, decoration.getIdRoom_ref());
             stmt.setString(2, decoration.getDescription());
             stmt.setString(3, decoration.getMaterial());
             stmt.setBigDecimal(4, decoration.getPrice());
@@ -135,7 +137,7 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
     private Decoration mapResultSetToDecoration(ResultSet rs) throws SQLException {
         Decoration decoration = new Decoration();
         decoration.setIdDecoration(rs.getInt("idDecoration"));
-        decoration.setIdRoomRef(rs.getInt("idRoom_ref"));
+        decoration.setIdRoom_ref(rs.getInt("idRoom_ref"));
         decoration.setDescription(rs.getString("description"));
         decoration.setMaterial(rs.getString("material"));
         decoration.setPrice(rs.getBigDecimal("price"));

@@ -1,7 +1,9 @@
-package dao.mysqlimp;
+package org.example.dao.mysqlimp;
 
-import dao.DatabaseConnection;
-import dao.interfaces.IGenericDAO;
+import org.example.dao.DatabaseConnection;
+import org.example.dao.interfaces.IGenericDAO;
+import org.example.model.entities.Player;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
+class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
     private static final Logger logger = Logger.getLogger(MySQLPlayerDAO.class.getName());
     private final Connection connection;
 
@@ -18,7 +20,7 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
     }
 
     @Override
-    public boolean create(Player player) {
+    public boolean create(org.example.model.entities.Player player) {
         String sql = "INSERT INTO player (idPlayer, name, email) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, player.getIdPlayer());
@@ -106,6 +108,12 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
     }
 
     private Player mapResultSetToPlayer(ResultSet rs) throws SQLException {
-        return new Player(rs.getInt("idPlayer"), rs.getString("name"), rs.getString("email"));
+        Player player = new Player();
+        player.setIdPlayer(rs.getInt("idPlayer"));
+        player.setName(rs.getString("name"));
+        player.setEmail(rs.getString("email"));
+        return player;
     }
+
+
 }
