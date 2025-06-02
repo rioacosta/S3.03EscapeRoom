@@ -8,14 +8,12 @@ import java.util.regex.Pattern;
 public class InputUtils {
 
     public static void getValidString(String input) {
-        // POR CHECKEAR
         if (input == null || input.trim().isEmpty()) {
             throw new EmptyInputException("No puedes responder en blanco");
         }
     }
 
     public static void getValidInt(Integer input) {
-        // POR CHECKEAR
         if (input == null) {
             throw new EmptyInputException("No puedes responder en blanco");
         }
@@ -25,7 +23,6 @@ public class InputUtils {
     }
 
     public static void getValidList(List<?> input) {
-        // POR CHECKEAR
         if (input == null) {
             throw new EmptyInputException("La lista no puede ser nula");
         }
