@@ -1,4 +1,3 @@
-//--------------------------------------------------------------------------------------------------------------------
 package dao.mysqlimp;
 
 import dao.DatabaseConnection;
@@ -127,7 +126,6 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
         return false;
     }
 
-    // Método auxiliar para mapear ResultSet a objeto Room
     private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
         Room room = new Room();
         room.setId(rs.getInt("id"));
