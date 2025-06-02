@@ -1,14 +1,35 @@
 package org.example.model.entities;
 
+import org.example.utils.*;
+
 import java.util.List;
 
-public class EscapeRoom {
+public final class EscapeRoom {
 
-    // FALTA USAR UN SINGLETON PARA ESTO !!!!!!!!
+    private static EscapeRoom instance;
 
-    private int idEscaperoom; // esto cómo lo conectamos a la base de datos?
-    private String name;  // 45 max, gestionar
-    private List<EscapeRoom> rooms;
+    private int idEscaperoom;
+    private String name;
+    private List<Room> rooms;
+
+    private EscapeRoom(int idEscaperoom, String name, List<Room> rooms) {
+        InputUtils.getValidInt(idEscaperoom);
+        do {
+            InputUtils.getValidString(name);
+        } while (!nameCharacterLimit(name));
+        InputUtils.getValidList(rooms);
+
+        this.idEscaperoom = idEscaperoom;
+        this.name = name;
+        this.rooms = rooms;
+    }
+
+    public static EscapeRoom getInstance(int idEscaperoom, String name, List<Room> rooms) {
+        if (instance == null) {
+            instance = new EscapeRoom(idEscaperoom, name, rooms);
+        }
+        return instance;
+    }
 
     public int getIdEscaperoom() {
         return idEscaperoom;
@@ -26,15 +47,26 @@ public class EscapeRoom {
         this.name = name;
     }
 
-    public List<EscapeRoom> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<EscapeRoom> rooms) {
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 
-    // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
-    // que no se pase de los caracteres máximos que acepta la base de datos...
+    @Override
+    public String toString() {
+        return this.name + ", " + this.rooms + ", id " + this.idEscaperoom;
+    }
+
+    // ✓ Funciona
+    private boolean nameCharacterLimit(String name) {
+        while (name.length() > 45) {
+            System.out.println("El nombre del escape room no puede tener más de 45 caracteres"
+                + "\nIntroduce un nombre válido");
+        }
+        return true;
+    }
 
 }
