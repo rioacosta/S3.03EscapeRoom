@@ -2,8 +2,6 @@ package dao.mysqlimp;
 
 import dao.DatabaseConnection;
 import dao.interfaces.IGenericDAO;
-import model.Player;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
