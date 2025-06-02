@@ -1,4 +1,4 @@
-package dao;
+package dao.mysqlimp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

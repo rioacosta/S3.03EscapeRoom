@@ -1,6 +1,5 @@
 package dao.mysqlimp;
 
-import dao.DatabaseConnection;
 import dao.interfaces.IGenericDAO;
 import model.Room;
 
