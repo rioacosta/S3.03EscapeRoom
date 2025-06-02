@@ -3,6 +3,7 @@ package org.example.model.entities;
 import org.example.utils.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 public final class EscapeRoom {
 
@@ -14,9 +15,7 @@ public final class EscapeRoom {
 
     private EscapeRoom(int idEscaperoom, String name, List<Room> rooms) {
         InputUtils.getValidInt(idEscaperoom);
-        do {
-            InputUtils.getValidString(name);
-        } while (!nameCharacterLimit(name));
+        name = nameCharacterLimit(name);
         InputUtils.getValidList(rooms);
 
         this.idEscaperoom = idEscaperoom;
@@ -60,13 +59,14 @@ public final class EscapeRoom {
         return this.name + ", " + this.rooms + ", id " + this.idEscaperoom;
     }
 
-    // ✓ Funciona
-    private boolean nameCharacterLimit(String name) {
+    private String nameCharacterLimit(String name) {
+        Scanner scanner = new Scanner(System.in);
+
         while (name.length() > 45) {
-            System.out.println("El nombre del escape room no puede tener más de 45 caracteres"
-                + "\nIntroduce un nombre válido");
+            System.out.println("El nombre del escape room no puede tener más de 45 caracteres. Introduce un nombre válido");
+            name = scanner.nextLine();
         }
-        return true;
+        return name;
     }
 
 }
