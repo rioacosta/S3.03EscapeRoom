@@ -2,13 +2,15 @@ package org.example.model.entities;
 
 import org.example.model.entities.enums.Difficulty;
 
+import java.math.BigDecimal;
+
 public class Room {
 
     private int idRoom;  // esto cómo lo conectamos a la base de datos?
     private int idEscaperoom_ref;  // esto cómo lo conectamos a la base de datos?
     private String name;  // 45 max, gestionar
-    private Difficulty dificulty;
-    private float price;  // 2 decimales max, gestionar
+    private Difficulty difficulty;
+    private BigDecimal price;  // 2 decimales max, gestionar
 
     public int getIdRoom() {
         return idRoom;
@@ -34,25 +36,25 @@ public class Room {
         this.name = name;
     }
 
-    public Difficulty getDificulty() {
-        return dificulty;
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
-    public void setDificulty(Difficulty dificulty) {
-        this.dificulty = dificulty;
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     @Override
     public String toString() {
-        return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + dificulty.getDescription()
+        return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + difficulty.getDescription()
                 + "\nPrecio: " + price + " euros";
     }
 

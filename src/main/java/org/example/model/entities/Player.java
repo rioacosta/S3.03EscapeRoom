@@ -1,7 +1,5 @@
 package org.example.model.entities;
 
-import java.time.LocalDate;
-
 public class Player {
 
     private int idPlayer;
@@ -34,5 +32,7 @@ public class Player {
 
     // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
     // que no se pase de los caracteres máximos que acepta la base de datos...
+
+    // Usar el InputUtils para validar el mail
 
 }

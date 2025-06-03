@@ -1,12 +1,14 @@
 package org.example.model.entities;
 
+import java.math.BigDecimal;
+
 public class Decoration {
 
     private int idDecoration;  // esto cómo lo conectamos a la base de datos?
     private int idRoom_ref;  // esto cómo lo conectamos a la base de datos?
     private String description;  // 100 max, gestionar
     private String material;  // 45 max, gestionar
-    private float price;  // 2 max, gestionar
+    private BigDecimal price;  // 2 max, gestionar
 
     public int getIdDecoration() {
         return idDecoration;
@@ -40,11 +42,11 @@ public class Decoration {
         this.material = material;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

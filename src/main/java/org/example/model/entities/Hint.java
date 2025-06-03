@@ -1,12 +1,14 @@
 package org.example.model.entities;
 
+import java.math.BigDecimal;
+
 public class Hint {
 
     private int idHint;  // esto cómo lo conectamos a la base de datos?
     private int idRoom;  // esto cómo lo conectamos a la base de datos?
     private String description;  // 200 max, gestionar
     private String theme;  // 45 max, gestionar
-    private float price;  // 2 max, gestionar
+    private BigDecimal price;  // 2 max, gestionar
 
     public int getIdHint() {
         return idHint;
@@ -40,11 +42,11 @@ public class Hint {
         this.theme = theme;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
