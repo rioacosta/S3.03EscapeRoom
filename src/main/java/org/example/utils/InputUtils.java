@@ -22,6 +22,19 @@ public class InputUtils {
         }
     }
 
+    public static void checkEmptyInput(String input) {
+        if (input.trim().isEmpty()) {
+            throw new EmptyInputException("No puedes responder en blanco");
+        }
+    }
+
+    // Check if the byte is within the valid range
+    public static void getValidByte(byte input) {
+        if (input < -128 || input > 127) {
+            throw new IllegalArgumentException("El valor debe estar en el rango de un byte (-128 a 127)");
+        }
+    }
+
     public static void getValidList(List<?> input) {
         if (input == null) {
             throw new EmptyInputException("La lista no puede ser nula");
