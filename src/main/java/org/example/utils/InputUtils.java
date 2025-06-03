@@ -2,6 +2,10 @@ package org.example.utils;
 
 import org.example.exceptions.EmptyInputException;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -19,6 +23,12 @@ public class InputUtils {
         }
         if (input <= 0) {
             throw new IllegalArgumentException("El número no puede ser negativo");
+        }
+    }
+
+    public static void getValidBigDecimal(BigDecimal input) {
+        if (input.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("El número no puede ser negativo o cero");
         }
     }
 
@@ -43,6 +53,24 @@ public class InputUtils {
             throw new EmptyInputException("La lista no puede estar vacía");
         }
     }
+
+
+
+    public static void getValidLocalDate(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            throw new EmptyInputException("La fecha no puede estar vacía");
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // or any other format you prefer
+        try {
+            LocalDate.parse(input, formatter); // This will throw an exception if the format is incorrect
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Fecha inválida. El formato correcto es yyyy-MM-dd.");
+        }
+    }
+
+
+
 
     public static void getValidEmail(String input) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
