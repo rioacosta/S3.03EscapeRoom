@@ -1,14 +1,31 @@
 package org.example.model.entities;
 
+import org.example.utils.InputUtils;
+
 import java.time.LocalDate;
 
 public class Certificate {
 
     private int idCertificate;
-    private String name;  // no se puso límite en la base de datos
+    private String name;
     private LocalDate dateOfDelivery;
     private byte giftCoupon;
     private int idPlayer;
+
+    public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, byte giftCoupon, int idPlayer) {
+        InputUtils.getValidInt(idCertificate);
+        InputUtils.getValidString(name);
+        // TODO validar date
+        InputUtils.checkEmptyInput(String.valueOf(giftCoupon));
+        InputUtils.getValidByte(giftCoupon);
+        InputUtils.getValidInt(idPlayer);
+
+        this.idCertificate = idCertificate;
+        this.name = name;
+        this.dateOfDelivery = dateOfDelivery;
+        this.giftCoupon = giftCoupon;
+        this.idPlayer = idPlayer;
+    }
 
     public int getIdCertificate() {
         return idCertificate;
@@ -49,8 +66,5 @@ public class Certificate {
     public void setIdPlayer(int idPlayer) {
         this.idPlayer = idPlayer;
     }
-
-    // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
-    // que no se pase de los caracteres máximos que acepta la base de datos...
 
 }
