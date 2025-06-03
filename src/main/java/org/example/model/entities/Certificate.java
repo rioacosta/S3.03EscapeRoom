@@ -15,7 +15,7 @@ public class Certificate {
     public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, byte giftCoupon, int idPlayer) {
         InputUtils.getValidInt(idCertificate);
         InputUtils.getValidString(name);
-        // TODO validar date
+        InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.checkEmptyInput(String.valueOf(giftCoupon));
         InputUtils.getValidByte(giftCoupon);
         InputUtils.getValidInt(idPlayer);
