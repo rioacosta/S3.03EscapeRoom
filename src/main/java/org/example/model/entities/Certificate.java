@@ -1,9 +1,14 @@
 package org.example.model.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.utils.InputUtils;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
+@Getter
+@Setter
 public class Certificate {
 
     private int idCertificate;
@@ -14,6 +19,8 @@ public class Certificate {
 
     public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, byte giftCoupon, int idPlayer) {
         InputUtils.getValidInt(idCertificate);
+        // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
+        // usando el method que hay abajo en este documento
         InputUtils.getValidString(name);
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.checkEmptyInput(String.valueOf(giftCoupon));
@@ -27,44 +34,16 @@ public class Certificate {
         this.idPlayer = idPlayer;
     }
 
-    public int getIdCertificate() {
-        return idCertificate;
-    }
+    // De los getters and setters se está encargando Lombok
 
-    public void setIdCertificate(int idCertificate) {
-        this.idCertificate = idCertificate;
-    }
+    private String nameCharacterLimit(String name) {
+        Scanner scanner = new Scanner(System.in);
 
-    public String getName() {
+        while (name.length() > 45) {
+            System.out.println("El nombre del escape room no puede tener más de 45 caracteres. Introduce un nombre válido");
+            name = scanner.nextLine();
+        }
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDateOfDelivery() {
-        return dateOfDelivery;
-    }
-
-    public void setDateOfDelivery(LocalDate dateOfDelivery) {
-        this.dateOfDelivery = dateOfDelivery;
-    }
-
-    public byte getGiftCoupon() {
-        return giftCoupon;
-    }
-
-    public void setGiftCoupon(byte giftCoupon) {
-        this.giftCoupon = giftCoupon;
-    }
-
-    public int getIdPlayer() {
-        return idPlayer;
-    }
-
-    public void setIdPlayer(int idPlayer) {
-        this.idPlayer = idPlayer;
     }
 
 }

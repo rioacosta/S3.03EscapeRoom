@@ -1,56 +1,67 @@
 package org.example.model.entities;
 
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
+import org.example.utils.InputUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Scanner;
+
+@Getter
+@Setter
 public class Decoration {
 
-    private int idDecoration;  // esto cómo lo conectamos a la base de datos?
-    private int idRoom_ref;  // esto cómo lo conectamos a la base de datos?
-    private String description;  // 100 max, gestionar
-    private String material;  // 45 max, gestionar
+    private int idDecoration;
+    private int idRoom_ref;
+    private String description;
+    private String material;
     private BigDecimal price;  // 2 max, gestionar
 
-    public int getIdDecoration() {
-        return idDecoration;
-    }
+    public Decoration(int idDecoration, int idRoom_ref, String description, String material, BigDecimal price) {
+        // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
+        // fuera de aquí, usando los métodos que hay abajo en este documento
+        InputUtils.getValidInt(idDecoration);
+        InputUtils.getValidInt(idRoom_ref);
+        InputUtils.getValidString(description);
+        InputUtils.getValidString(material);
+        InputUtils.getValidBigDecimal(price);
 
-    public void setIdDecoration(int idDecoration) {
         this.idDecoration = idDecoration;
-    }
-
-    public int getIdRoom_ref() {
-        return idRoom_ref;
-    }
-
-    public void setIdRoom_ref(int idRoom_ref) {
         this.idRoom_ref = idRoom_ref;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
         this.material = material;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
-    // que no se pase de los caracteres máximos que acepta la base de datos...
+    // De los getters and setters se está encargando Lombok
+
+    private String descriptionCharacterLimit(String description) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (description.length() > 100) {
+            System.out.println("La descripción no puede tener más de 100 caracteres. Introduce una descripción válida");
+            description = scanner.nextLine();
+        }
+        return description;
+    }
+
+    private String materialCharacterLimit(String material) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (material.length() > 45) {
+            System.out.println("El material no puede tener más de 45 caracteres. Introduce un material válido");
+            material = scanner.nextLine();
+        }
+        return material;
+    }
+
+    public static String priceCharacterLimit(BigDecimal price) {
+        if (price.scale() > 2) {
+            price = price.setScale(2, RoundingMode.HALF_UP);
+        }
+
+        return price.toString();
+    }
 
 }

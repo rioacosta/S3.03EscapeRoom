@@ -1,10 +1,14 @@
 package org.example.model.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.utils.*;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Getter
+@Setter
 public final class EscapeRoom {
 
     private static EscapeRoom instance;
@@ -15,7 +19,9 @@ public final class EscapeRoom {
 
     private EscapeRoom(int idEscaperoom, String name, List<Room> rooms) {
         InputUtils.getValidInt(idEscaperoom);
-        name = nameCharacterLimit(name);
+        // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
+        // usando el method que hay abajo en este documento
+        InputUtils.getValidString(name);
         InputUtils.getValidList(rooms);
 
         this.idEscaperoom = idEscaperoom;
@@ -23,36 +29,7 @@ public final class EscapeRoom {
         this.rooms = rooms;
     }
 
-    public static EscapeRoom getInstance(int idEscaperoom, String name, List<Room> rooms) {
-        if (instance == null) {
-            instance = new EscapeRoom(idEscaperoom, name, rooms);
-        }
-        return instance;
-    }
-
-    public int getIdEscaperoom() {
-        return idEscaperoom;
-    }
-
-    public void setIdEscaperoom(int idEscaperoom) {
-        this.idEscaperoom = idEscaperoom;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
+    // De los getters and setters se está encargando Lombok
 
     @Override
     public String toString() {

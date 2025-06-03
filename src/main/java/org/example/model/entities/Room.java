@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 public class Room {
 
-    private int idRoom;  // esto cómo lo conectamos a la base de datos?
-    private int idEscaperoom_ref;  // esto cómo lo conectamos a la base de datos?
+    private int idRoom;
+    private int idEscaperoom_ref;
     private String name;  // 45 max, gestionar
     private Difficulty difficulty;
     private BigDecimal price;  // 2 decimales max, gestionar

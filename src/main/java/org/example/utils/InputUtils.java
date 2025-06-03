@@ -38,7 +38,6 @@ public class InputUtils {
         }
     }
 
-    // Check if the byte is within the valid range
     public static void getValidByte(byte input) {
         if (input < -128 || input > 127) {
             throw new IllegalArgumentException("El valor debe estar en el rango de un byte (-128 a 127)");
@@ -54,23 +53,18 @@ public class InputUtils {
         }
     }
 
-
-
     public static void getValidLocalDate(String input) {
         if (input == null || input.trim().isEmpty()) {
             throw new EmptyInputException("La fecha no puede estar vacía");
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // or any other format you prefer
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            LocalDate.parse(input, formatter); // This will throw an exception if the format is incorrect
+            LocalDate.parse(input, formatter);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Fecha inválida. El formato correcto es yyyy-MM-dd.");
         }
     }
-
-
-
 
     public static void getValidEmail(String input) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
