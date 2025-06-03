@@ -25,7 +25,8 @@ Crear y subir una rama:
 
 Una vez que estemos en la rama (¡asegúrate de en qué rama estás!), trabajamos y escribimos nuestro código.
 
-Cuando el código esté finalizado, se hace un merge a develop.
+Cuando el código esté finalizado, se crea una pull request.
+Cuando la pull request se aprueba o corrige, se hace un merge a develop.
 
 ⚠️ Cuidado en este paso:
 Antes de hacer el merge, probablemente será necesario hacer pull de develop, resolver posibles conflictos, y luego hacer el merge de tu rama a develop.
