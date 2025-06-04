@@ -1,5 +1,9 @@
 package com.escapeRoom.roombuilder;
 
+import com.escapeRoom.entities.Decoration;
+import com.escapeRoom.entities.Hint;
+import com.escapeRoom.entities.Room;
+import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.exceptions.*;
 import com.escapeRoom.roombuilder.interfaces.IRoomBuilder;
 
@@ -11,7 +15,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     private String name;
     private List<Hint> hints;
     private List<Decoration>decorations;
-    private Dificulty dificulty;
+    private Difficulty dificulty;
     private int price;
 
 
@@ -44,7 +48,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     };
 
     @Override
-    public IRoomBuilder setDificulty(Dificulty dificulty){
+    public IRoomBuilder setDificulty(Difficulty dificulty){
         if(dificulty == null){
             throw new InvalidDificultyException("Debe tener una dificultad añadida");
         }

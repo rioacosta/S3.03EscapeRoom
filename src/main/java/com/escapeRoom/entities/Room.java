@@ -1,9 +1,13 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
+
+@NoArgsConstructor
 public class Room {
 
     private int idRoom;
@@ -11,6 +15,11 @@ public class Room {
     private String name;  // 45 max, gestionar
     private Difficulty difficulty;
     private BigDecimal price;  // 2 decimales max, gestionar
+
+    public Room(long id, String name, ArrayList<Hint> hints, ArrayList<Decoration> decorations,
+    Difficulty dificulty, int price) {
+
+    }
 
     public int getIdRoom() {
         return idRoom;

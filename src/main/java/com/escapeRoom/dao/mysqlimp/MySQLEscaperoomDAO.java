@@ -1,8 +1,10 @@
 package com.escapeRoom.dao.mysqlimp;
 
-import org.example.dao.DatabaseConnection;
-import org.example.dao.interfaces.IGenericDAO;
-import org.example.model.entities.EscapeRoom;
+
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.EscapeRoom;
+import com.escapeRoom.entities.Room;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -129,7 +131,12 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
     }
 
     private EscapeRoom mapResultSetToEscaperoom(ResultSet rs) throws SQLException {
-        EscapeRoom escaperoom = new EscapeRoom();
+        EscapeRoom escaperoom = new EscapeRoom(
+            rs.getInt("idEscaperoom"),
+            rs.getString("name"),
+            (List<Room>) rs.getArray("rooms")
+        );
+
         escaperoom.setIdEscaperoom(rs.getInt("idEscaperoom"));
         escaperoom.setName(rs.getString("name"));
         return escaperoom;
