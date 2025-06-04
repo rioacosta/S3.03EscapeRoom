@@ -12,7 +12,8 @@ out/
 Validation_examples.java
 
 *.iml
-.idea
+.idea/
+target/
 
 ### Eclipse ###
 .apt_generated
