@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConcreteBuilder implements IRoomBuilder {
-    private long id;
+    private long idRoom;
     private String name;
     private List<Hint> hints;
     private List<Decoration>decorations;
