@@ -20,7 +20,7 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
 
     @Override
     public boolean create(Hint hint) {
-        String sql = "INSERT INTO tickets (idTickets, idRoom, idPlayer, boughtOn, price) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO hint (idHint, idRoom, description, theme, price) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, hint.idHint());
             stmt.setInt(2, hint.idRoom());
