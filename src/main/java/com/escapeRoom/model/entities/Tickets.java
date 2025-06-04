@@ -1,4 +1,4 @@
-package com.escapeRoom.model.entities;
+package com.escapeRoom.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

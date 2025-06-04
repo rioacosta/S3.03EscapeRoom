@@ -1,4 +1,4 @@
-package com.escapeRoom.model.entities;
+package com.escapeRoom.entities;
 
 import lombok.Getter;
 import lombok.Setter;
