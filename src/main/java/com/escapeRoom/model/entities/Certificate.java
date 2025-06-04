@@ -1,8 +1,8 @@
-package org.example.model.entities;
+package com.escapeRoom.model.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.utils.InputUtils;
+import com.escapeRoom.utils.InputUtils;
 
 import java.time.LocalDate;
 import java.util.Scanner;

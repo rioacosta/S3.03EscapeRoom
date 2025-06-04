@@ -1,7 +1,7 @@
-package org.example.notifications.concreteSubject;
+package com.escapeRoom.notifications.concreteSubject;
 
-import org.example.notifications.interfaces.Newsletter;
-import org.example.notifications.interfaces.Subscriber;
+import com.escapeRoom.notifications.interfaces.Newsletter;
+import com.escapeRoom.notifications.interfaces.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;

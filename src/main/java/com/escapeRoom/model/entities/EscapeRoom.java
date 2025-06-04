@@ -1,8 +1,8 @@
-package org.example.model.entities;
+package com.escapeRoom.model.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.utils.*;
+import com.escapeRoom.utils.*;
 
 import java.util.List;
 import java.util.Scanner;

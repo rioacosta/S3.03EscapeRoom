@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package com.escapeRoom.exceptions;
 
 public class EmptyInputException extends RuntimeException {
 

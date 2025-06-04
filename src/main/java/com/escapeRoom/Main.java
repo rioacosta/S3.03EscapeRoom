@@ -1,4 +1,4 @@
-package org.example;
+package com.escapeRoom;
 
 public class Main {
 

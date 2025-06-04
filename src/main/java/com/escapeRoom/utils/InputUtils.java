@@ -1,6 +1,6 @@
-package org.example.utils;
+package com.escapeRoom.utils;
 
-import org.example.exceptions.EmptyInputException;
+import com.escapeRoom.exceptions.EmptyInputException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

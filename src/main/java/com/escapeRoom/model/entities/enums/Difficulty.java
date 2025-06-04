@@ -1,4 +1,4 @@
-package org.example.model.entities.enums;
+package com.escapeRoom.model.entities.enums;
 
 public enum Difficulty {
 

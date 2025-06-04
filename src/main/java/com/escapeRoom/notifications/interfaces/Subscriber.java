@@ -1,4 +1,4 @@
-package org.example.notifications.interfaces;
+package com.escapeRoom.notifications.interfaces;
 
 public interface Subscriber {
 

@@ -1,6 +1,6 @@
-package org.example.model.entities;
+package com.escapeRoom.model.entities;
 
-import org.example.model.entities.enums.Difficulty;
+import com.escapeRoom.model.entities.enums.Difficulty;
 
 import java.math.BigDecimal;
 

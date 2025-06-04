@@ -1,6 +1,6 @@
-package org.example.notifications.concreteObserver;
+package com.escapeRoom.notifications.concreteObserver;
 
-import org.example.notifications.interfaces.Subscriber;
+import com.escapeRoom.notifications.interfaces.Subscriber;
 
 public class NewSubscriber implements Subscriber {
 
