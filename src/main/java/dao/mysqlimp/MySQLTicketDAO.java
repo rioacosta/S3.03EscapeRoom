@@ -55,7 +55,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
 
     @Override
     public boolean update(Tickets ticket) {
-        String sql = "UPDATE tickets SET idRoom = ?, idPlayer = ?, boughtOn = ?, price = ? WHERE idTickets = ?";
+        /*String sql = "UPDATE tickets SET idRoom = ?, idPlayer = ?, boughtOn = ?, price = ? WHERE idTickets = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, ticket.idRoom());
             stmt.setInt(2, ticket.idPlayer());
@@ -68,7 +68,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error modificando el ticket ID: " + ticket.idTickets(), e);
             return false;
-        }
+        }*/ return false;
     }
 
     @Override
