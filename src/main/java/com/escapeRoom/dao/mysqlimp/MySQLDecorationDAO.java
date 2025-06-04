@@ -1,4 +1,4 @@
-package org.example.dao.mysqlimp;
+package com.escapeRoom.dao.mysqlimp;
 
 import org.example.dao.DatabaseConnection;
 import org.example.dao.interfaces.IGenericDAO;
