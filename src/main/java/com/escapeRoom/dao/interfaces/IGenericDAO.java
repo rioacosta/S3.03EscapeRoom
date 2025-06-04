@@ -1,4 +1,4 @@
-package dao.interfaces;
+package com.escapeRoom.dao.interfaces;
 
 import java.util.List;
 import java.util.Optional;

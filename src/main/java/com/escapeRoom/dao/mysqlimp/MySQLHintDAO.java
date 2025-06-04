@@ -1,7 +1,7 @@
-package dao.mysqlimp;
+package com.escapeRoom.dao.mysqlimp;
 
-import dao.DatabaseConnection;
-import dao.interfaces.IGenericDAO;
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.interfaces.IGenericDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
-    private static final Logger logger = Logger.getLogger(org.example.dao.mysqlimp.MySQLTicketDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(MySQLTicketDAO.class.getName());
     private final Connection connection;
 
     public MySQLHintDAO(DatabaseConnection databaseConnection) {

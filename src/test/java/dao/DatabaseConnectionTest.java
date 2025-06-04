@@ -1,5 +1,6 @@
 package dao;
 
+import com.escapeRoom.dao.DatabaseConnection;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
