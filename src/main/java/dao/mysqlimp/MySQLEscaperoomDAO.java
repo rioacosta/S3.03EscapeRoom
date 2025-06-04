@@ -27,22 +27,22 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Create failed, no rows affected");
+                logger.warning("Creación fallida, ninguna fila afectada");
                 return false;
             }
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     escaperoom.setIdEscaperoom(generatedKeys.getInt(1));
-                    logger.log(Level.INFO, "Escaperoom created with ID: {0}", escaperoom.getIdEscaperoom());
+                    logger.log(Level.INFO, "Escaperoom creado con ID: {0}", escaperoom.getIdEscaperoom());
                 } else {
-                    logger.warning("Failed to retrieve generated ID");
+                    logger.warning("No se pudo recuperar el ID generado.");
                     return false;
                 }
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creating escaperoom", e);
+            logger.log(Level.SEVERE, "Error creando el escaperoom", e);
             return false;
         }
     }
@@ -58,7 +58,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error finding escaperoom by ID: " + id, e);
+            logger.log(Level.SEVERE, "Error encontrando el escaperoom por ID: " + id, e);
         }
         return Optional.empty();
     }
@@ -72,12 +72,12 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Update failed, no rows affected for ID: " + escaperoom.getIdEscaperoom());
+                logger.warning("Modificiacion fallida, ninguna fila ha sido afectada en su ID: " + escaperoom.getIdEscaperoom());
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating escaperoom ID: " + escaperoom.getIdEscaperoom(), e);
+            logger.log(Level.SEVERE, "Error modificando el escaperoom ID: " + escaperoom.getIdEscaperoom(), e);
             return false;
         }
     }
@@ -89,12 +89,12 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Delete failed, escaperoom not found ID: " + id);
+                logger.warning("Borrado fallido, escaperoom nono encontrado ID: " + id);
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error deleting escaperoom ID: " + id, e);
+            logger.log(Level.SEVERE, "Error borrando el escaperoom ID: " + id, e);
             return false;
         }
     }
@@ -109,7 +109,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
                 escaperooms.add(mapResultSetToEscaperoom(rs));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error retrieving all escaperooms", e);
+            logger.log(Level.SEVERE, "Error recuperando todos los escaperooms", e);
         }
         return escaperooms;
     }
@@ -123,7 +123,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
                 return rs.next();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            logger.log(Level.SEVERE, "Error checkeando la existencia del ID: " + id, e);
             return false;
         }
     }

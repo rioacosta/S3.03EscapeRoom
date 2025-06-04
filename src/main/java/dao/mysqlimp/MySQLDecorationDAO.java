@@ -30,22 +30,22 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Create failed, no rows affected");
+                logger.warning("Creación fallida, ninguna fila afectada");
                 return false;
             }
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     decoration.setIdDecoration(generatedKeys.getInt(1));
-                    logger.log(Level.INFO, "Decoration created with ID: {0}", decoration.getIdDecoration());
+                    logger.log(Level.INFO, "Decoración creado con ID: {0}", decoration.getIdDecoration());
                 } else {
-                    logger.warning("Failed to retrieve generated ID");
+                    logger.warning("No se pudo recuperar el ID generado");
                     return false;
                 }
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creating decoration", e);
+            logger.log(Level.SEVERE, "Error creando decoración", e);
             return false;
         }
     }
@@ -61,7 +61,7 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error finding decoration by ID: " + id, e);
+            logger.log(Level.SEVERE, "Error encontrando la decoración por ID: " + id, e);
         }
         return Optional.empty();
     }
@@ -78,12 +78,12 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Update failed, no rows affected for ID: " + decoration.getIdDecoration());
+                logger.warning("Modificiación fallida, ninguna fila ha sido afectada en su ID: " + decoration.getIdDecoration());
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating decoration ID: " + decoration.getIdDecoration(), e);
+            logger.log(Level.SEVERE, "Error modificando el decoración ID: " + decoration.getIdDecoration(), e);
             return false;
         }
     }
@@ -95,12 +95,12 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Delete failed, decoration not found ID: " + id);
+                logger.warning("Borrado fallido, decoración no encontrada por ID: " + id);
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error deleting decoration ID: " + id, e);
+            logger.log(Level.SEVERE, "Error borrando la decoración por ID: " + id, e);
             return false;
         }
     }
@@ -115,7 +115,7 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
                 decorations.add(mapResultSetToDecoration(rs));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error retrieving all decorations", e);
+            logger.log(Level.SEVERE, "Error recuperando todas las decoraciones", e);
         }
         return decorations;
     }
@@ -129,7 +129,7 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
                 return rs.next();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            logger.log(Level.SEVERE, "Error checkeando la existencia del ID: " + id, e);
             return false;
         }
     }

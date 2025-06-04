@@ -32,7 +32,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creating ticket", e);
+            logger.log(Level.SEVERE, "Error creando el ticket", e);
             return false;
         }
     }
@@ -48,7 +48,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error finding ticket by ID: " + id, e);
+            logger.log(Level.SEVERE, "Error encontrando el ticket por ID: " + id, e);
         }
         return Optional.empty();
     }
@@ -66,7 +66,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating ticket ID: " + ticket.idTickets(), e);
+            logger.log(Level.SEVERE, "Error modificando el ticket ID: " + ticket.idTickets(), e);
             return false;
         }
     }
@@ -79,7 +79,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error deleting ticket ID: " + id, e);
+            logger.log(Level.SEVERE, "Error borrando el ticket ID: " + id, e);
             return false;
         }
     }
@@ -94,7 +94,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
                 tickets.add(mapResultSetToTicket(rs));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error retrieving all tickets", e);
+            logger.log(Level.SEVERE, "Error recuperando todos los tickets", e);
         }
         return tickets;
     }
@@ -108,7 +108,7 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
                 return rs.next();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            logger.log(Level.SEVERE, "Error checkeando la existencia del ID: " + id, e);
             return false;
         }
     }

@@ -30,7 +30,7 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creating Player", e);
+            logger.log(Level.SEVERE, "Error creando el jugador", e);
             return false;
         }
     }
@@ -45,7 +45,7 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
                 return Optional.of(mapResultSetToPlayer(rs));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error finding Player by ID: " + id, e);
+            logger.log(Level.SEVERE, "Error encontrando jugador por ID: " + id, e);
         }
         return Optional.empty();
     }
@@ -61,7 +61,7 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating Player ID: " + player.getIdPlayer(), e);
+            logger.log(Level.SEVERE, "Error modificando el jugador ID: " + player.getIdPlayer(), e);
             return false;
         }
     }
@@ -74,7 +74,7 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error deleting Player ID: " + id, e);
+            logger.log(Level.SEVERE, "Error borrando el jugador ID: " + id, e);
             return false;
         }
     }
@@ -89,7 +89,7 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
                 players.add(mapResultSetToPlayer(rs));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error retrieving all Players", e);
+            logger.log(Level.SEVERE, "Error recuperando todos los jugadores", e);
         }
         return players;
     }
@@ -102,7 +102,7 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             ResultSet rs = stmt.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            logger.log(Level.SEVERE, "Error checkeando la existencia del ID: " + id, e);
             return false;
         }
     }

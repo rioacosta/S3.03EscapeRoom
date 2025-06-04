@@ -31,7 +31,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Create failed, no rows affected");
+                logger.warning("Creación fallida, ninguna fila afectada");
                 return false;
             }
 
@@ -40,13 +40,13 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
                     room.setIdRoom(generatedKeys.getInt(1));
                     logger.log(Level.INFO, "Room created with ID: {0}", room.getIdRoom());
                 } else {
-                    logger.warning("Failed to retrieve generated ID");
+                    logger.warning("No se pudo recuperar el ID generado");
                     return false;
                 }
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creating room", e);
+            logger.log(Level.SEVERE, "Error creando la sala", e);
             return false;
         }
     }
@@ -62,7 +62,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error finding room by ID: " + id, e);
+            logger.log(Level.SEVERE, "Error encontrando la sala por ID: " + id, e);
         }
         return Optional.empty();
     }
@@ -79,12 +79,12 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Update failed, no rows affected for ID: " + room.getIdRoom());
+                logger.warning("Modificiación fallida, ninguna fila ha sido afectada en su ID: " + room.getIdRoom());
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error updating room ID: " + room.getIdRoom(), e);
+            logger.log(Level.SEVERE, "Error modificando el sala ID: " + room.getIdRoom(), e);
             return false;
         }
     }
@@ -96,12 +96,12 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                logger.warning("Delete failed, room not found ID: " + id);
+                logger.warning("Borrado fallido, sala no encontrada ID: " + id);
                 return false;
             }
             return true;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error deleting room ID: " + id, e);
+            logger.log(Level.SEVERE, "Error borrando sala ID: " + id, e);
             return false;
         }
     }
@@ -116,7 +116,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
                 rooms.add(mapResultSetToRoom(rs));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error retrieving all rooms", e);
+            logger.log(Level.SEVERE, "Error recuperando todas las salas", e);
         }
         return rooms;
     }
@@ -130,7 +130,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
                 return rs.next();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error checking existence for ID: " + id, e);
+            logger.log(Level.SEVERE, "Error checkeando la existencia del ID: " + id, e);
             return false;
         }
     }
@@ -145,7 +145,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
         try {
             room.setDifficulty(Difficulty.valueOf(difficultyStr));
         } catch (IllegalArgumentException e) {
-            logger.log(Level.WARNING, "Invalid difficulty value: {0}", difficultyStr);
+            logger.log(Level.WARNING, "Valor de dificultad invalido: {0}", difficultyStr);
             room.setDifficulty(Difficulty.MEDIUM);
         }
 
