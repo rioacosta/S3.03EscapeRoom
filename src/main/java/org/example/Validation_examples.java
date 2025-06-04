@@ -11,7 +11,7 @@ import org.example.utils.InputUtils;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class Validation_testing {
+public class Validation_examples {
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -90,7 +90,6 @@ public class Validation_testing {
                 System.out.println(e.getMessage());
             }
         }
-
 
     }
 
