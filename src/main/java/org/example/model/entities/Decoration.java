@@ -34,8 +34,6 @@ public class Decoration {
         this.price = price;
     }
 
-    // De los getters and setters se está encargando Lombok
-
     private String descriptionCharacterLimit(String description) {
         Scanner scanner = new Scanner(System.in);
 

@@ -29,8 +29,6 @@ public final class EscapeRoom {
         this.rooms = rooms;
     }
 
-    // De los getters and setters se está encargando Lombok
-
     @Override
     public String toString() {
         return this.name + ", " + this.rooms + ", id " + this.idEscaperoom;

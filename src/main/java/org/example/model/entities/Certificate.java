@@ -34,8 +34,6 @@ public class Certificate {
         this.idPlayer = idPlayer;
     }
 
-    // De los getters and setters se está encargando Lombok
-
     private String nameCharacterLimit(String name) {
         Scanner scanner = new Scanner(System.in);
 

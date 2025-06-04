@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class Player {
 
     private int idPlayer;
-    private String name;  // 45 max, gestionar
-    private String email;  // 45 max, gestionar
+    private String name;
+    private String email;
 
     public Player(int idPlayer, String name, String email) {
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
@@ -25,8 +25,6 @@ public class Player {
         this.name = name;
         this.email = email;
     }
-
-    // De los getters and setters se está encargando Lombok
 
     private String nameCharacterLimit(String name) {
         Scanner scanner = new Scanner(System.in);

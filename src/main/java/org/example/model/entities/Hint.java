@@ -14,9 +14,9 @@ public class Hint {
 
     private int idHint;
     private int idRoom;
-    private String description;  // 200 max, gestionar
-    private String theme;  // 45 max, gestionar
-    private BigDecimal price;  // 2 max, gestionar
+    private String description;
+    private String theme;
+    private BigDecimal price;
 
     public Hint(int idHint, int idRoom, String description, String theme, BigDecimal price) {
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
@@ -33,11 +33,6 @@ public class Hint {
         this.theme = theme;
         this.price = price;
     }
-
-    // De los getters and setters se está encargando Lombok
-
-    // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
-    // que no se pase de los caracteres máximos que acepta la base de datos...
 
     private String descriptionCharacterLimit(String description) {
         Scanner scanner = new Scanner(System.in);
