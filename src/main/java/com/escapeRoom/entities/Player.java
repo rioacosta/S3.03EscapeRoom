@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Getter
@@ -13,6 +14,7 @@ public class Player {
     private int idPlayer;
     private String name;
     private String email;
+    private List<Certificate> certificates;
 
     public Player(int idPlayer, String name, String email) {
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
@@ -24,6 +26,10 @@ public class Player {
         this.idPlayer = idPlayer;
         this.name = name;
         this.email = email;
+    }
+
+    public void setCertificate(Certificate certificate) {
+        certificates.add(certificate);
     }
 
     private String nameCharacterLimit(String name) {
