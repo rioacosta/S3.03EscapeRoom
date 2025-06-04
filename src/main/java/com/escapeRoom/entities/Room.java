@@ -16,8 +16,9 @@ public class Room {
     private Difficulty difficulty;
     private BigDecimal price;  // 2 decimales max, gestionar
 
-    public Room(long id, String name, ArrayList<Hint> hints, ArrayList<Decoration> decorations, Difficulty dificulty, int price) {
-    }
+    public Room(){}//long id, String name, ArrayList<Hint> hints, ArrayList<Decoration> decorations,
+    // Difficulty dificulty, int price) {
+    //}
 
     public int getIdRoom() {
         return idRoom;

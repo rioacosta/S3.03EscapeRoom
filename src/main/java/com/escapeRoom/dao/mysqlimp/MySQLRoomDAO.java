@@ -136,12 +136,12 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
     }
 
     private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
-        Room room = new Room(
-            rs.getInt("idRoom"),
-            rs.getInt("idEscaperoom_ref"),
-            rs.getString("name"),
-            Difficulty.valueOf(rs.getString("difficulty")),
-            rs.getBigDecimal("price")
+        Room room = new Room(//
+           //  rs.getInt("idRoom"),
+           // rs.getInt("idEscaperoom_ref"),
+           // rs.getString("name"),
+            //Difficulty.valueOf(rs.getString("difficulty")),
+          //  rs.getBigDecimal("price")
         );
         room.setIdRoom(rs.getInt("idRoom"));
         room.setIdEscaperoom_ref(rs.getInt("idEscaperoom_ref"));
