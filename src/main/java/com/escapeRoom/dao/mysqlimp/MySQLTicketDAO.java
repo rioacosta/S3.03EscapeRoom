@@ -1,10 +1,11 @@
 package com.escapeRoom.dao.mysqlimp;
 
-import org.example.dao.DatabaseConnection;
-import org.example.dao.interfaces.IGenericDAO;
-import org.example.model.entities.Tickets;
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Tickets;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,18 +22,29 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
 
     @Override
     public boolean create(Tickets ticket) {
-        String sql = "INSERT INTO tickets (idTickets, idRoom, idPlayer, boughtOn, price) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, ticket.idTickets());
-            stmt.setInt(2, ticket.idRoom());
-            stmt.setInt(3, ticket.idPlayer());
-            stmt.setDate(4, Date.valueOf(ticket.boughtOn())); // Conversión de LocalDate a SQL Date
-            stmt.setDouble(5, ticket.price());
+        if (ticket.getIdRoom() <= 0 || ticket.getIdPlayer() <= 0) {
+            throw new IllegalArgumentException("IDs inválidos");
+        }
+
+        String sql = "INSERT INTO tickets (idRoom, idPlayer, boughtOn, price) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, ticket.getIdRoom());
+            stmt.setInt(2, ticket.getIdPlayer());
+            stmt.setDate(3, Date.valueOf(ticket.getBoughtOn()));
+            stmt.setBigDecimal(4, ticket.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        ticket.setIdTickets(rs.getInt(1)); // Asignar ID generado
+                        return true;
+                    }
+                }
+            }
+            return false;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creando el ticket", e);
+            logger.log(Level.SEVERE, "Error creando ticket", e);
             return false;
         }
     }
@@ -55,20 +67,22 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
 
     @Override
     public boolean update(Tickets ticket) {
-        /*String sql = "UPDATE tickets SET idRoom = ?, idPlayer = ?, boughtOn = ?, price = ? WHERE idTickets = ?";
+        if(ticket.getIdRoom() <= 0 || ticket.getIdPlayer() <= 0) {
+            throw new IllegalArgumentException("IDs inválidos");
+        }
+        String sql = "UPDATE tickets SET idRoom = ?, idPlayer = ?, boughtOn = ?, price = ? WHERE idTickets = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, ticket.idRoom());
-            stmt.setInt(2, ticket.idPlayer());
-            stmt.setDate(3, Date.valueOf(ticket.boughtOn())); // Conversión de LocalDate a SQL Date
-            stmt.setDouble(4, ticket.price());
-            stmt.setInt(5, ticket.idTickets());
+            stmt.setInt(1, ticket.getIdRoom());
+            stmt.setInt(2, ticket.getIdPlayer());
+            stmt.setDate(3, Date.valueOf(ticket.getBoughtOn()));
+            stmt.setBigDecimal(4, ticket.getPrice());
+            stmt.setInt(5, ticket.getIdTickets());
 
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error modificando el ticket ID: " + ticket.idTickets(), e);
+            logger.log(Level.SEVERE, "Error actualizando ticket ID: " + ticket.getIdTickets(), e);
             return false;
-        }*/ return false;
+        }
     }
 
     @Override
@@ -114,12 +128,15 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
     }
 
     private Tickets mapResultSetToTicket(ResultSet rs) throws SQLException {
+        Date boughtOnDate = rs.getDate("boughtOn");
+        LocalDate boughtOn = (boughtOnDate != null) ? boughtOnDate.toLocalDate() : null;
+
         return new Tickets(
                 rs.getInt("idTickets"),
                 rs.getInt("idRoom"),
                 rs.getInt("idPlayer"),
-                rs.getDate("boughtOn").toLocalDate(), // Conversión de SQL Date a LocalDate
-                rs.getDouble("price")
+                boughtOn,
+                rs.getBigDecimal("price")
         );
     }
 }

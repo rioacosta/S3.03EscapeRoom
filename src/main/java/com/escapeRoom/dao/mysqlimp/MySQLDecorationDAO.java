@@ -1,8 +1,9 @@
 package com.escapeRoom.dao.mysqlimp;
 
-import org.example.dao.DatabaseConnection;
-import org.example.dao.interfaces.IGenericDAO;
-import org.example.model.entities.Decoration;
+
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Decoration;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -135,7 +136,13 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
     }
 
     private Decoration mapResultSetToDecoration(ResultSet rs) throws SQLException {
-        Decoration decoration = new Decoration();
+        Decoration decoration = new Decoration(
+                rs.getInt("idDecoration"),
+                rs.getInt("idRoom_ref"),
+                rs.getString("description"),
+                rs.getString("material"),
+                rs.getBigDecimal("price")
+        );
         decoration.setIdDecoration(rs.getInt("idDecoration"));
         decoration.setIdRoom_ref(rs.getInt("idRoom_ref"));
         decoration.setDescription(rs.getString("description"));

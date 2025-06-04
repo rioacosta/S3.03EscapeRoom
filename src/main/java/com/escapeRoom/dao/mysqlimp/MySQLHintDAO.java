@@ -1,7 +1,9 @@
 package com.escapeRoom.dao.mysqlimp;
 
+
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Hint;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,14 +24,22 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
     public boolean create(Hint hint) {
         String sql = "INSERT INTO hint (idHint, idRoom, description, theme, price) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, hint.idHint());
-            stmt.setInt(2, hint.idRoom());
-            stmt.setString(3, hint.description());
-            stmt.setString(4, hint.theme());
-            stmt.setDouble(5, hint.price());
+            stmt.setInt(1, hint.getIdHint());
+            stmt.setInt(2, hint.getIdRoom());
+            stmt.setString(3, hint.getDescription());
+            stmt.setString(4, hint.getTheme());
+            stmt.setBigDecimal(5, hint.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        hint.setIdHint(rs.getInt(1));
+                    }
+                }
+                return true;
+            }
+            return false;
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error creando la pista", e);
             return false;
@@ -56,16 +66,16 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
     public boolean update(Hint hint) {
         String sql = "UPDATE hint SET idHint = ?, idRoom = ?, theme = ?, price = ? WHERE idHint = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, hint.idHint());
-            stmt.setInt(2, hint.idRoom());
-            stmt.setString(3, hint.description());
-            stmt.setString(4, hint.theme());
-            stmt.setDouble(5, hint.price());
+            stmt.setInt(1, hint.getIdHint());
+            stmt.setInt(2, hint.getIdRoom());
+            stmt.setString(3, hint.getDescription());
+            stmt.setString(4, hint.getTheme());
+            stmt.setBigDecimal(5, hint.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error modificando la pista ID: " + ticket.idTickets(), e);
+            logger.log(Level.SEVERE, "Error modificando la pista ID: " + hint.getIdHint(), e);
             return false;
         }
     }
@@ -118,7 +128,7 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
                 rs.getInt("idRoom"),
                 rs.getString("description"),
                 rs.getString("theme"),
-                rs.getDouble("price")
+                rs.getBigDecimal("price")
         );
     }
 

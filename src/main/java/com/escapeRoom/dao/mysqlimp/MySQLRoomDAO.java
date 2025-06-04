@@ -1,9 +1,9 @@
 package com.escapeRoom.dao.mysqlimp;
 
-import org.example.dao.DatabaseConnection;
-import org.example.dao.interfaces.IGenericDAO;
-import org.example.model.entities.Room;
-import org.example.model.enums.Difficulty;
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Room;
+import com.escapeRoom.entities.enums.Difficulty;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -136,9 +136,15 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
     }
 
     private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
-        Room room = new Room();
+        Room room = new Room(
+            rs.getInt("idRoom"),
+            rs.getInt("idEscaperoom_ref"),
+            rs.getString("name"),
+            Difficulty.valueOf(rs.getString("difficulty")),
+            rs.getBigDecimal("price")
+        );
         room.setIdRoom(rs.getInt("idRoom"));
-        room.getIdEscaperoom_ref();//(rs.getInt("idEscaperoom_ref"));
+        room.setIdEscaperoom_ref(rs.getInt("idEscaperoom_ref"));
         room.setName(rs.getString("name"));
 
         String difficultyStr = rs.getString("difficulty");

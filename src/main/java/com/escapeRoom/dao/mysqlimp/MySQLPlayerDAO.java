@@ -1,8 +1,9 @@
 package com.escapeRoom.dao.mysqlimp;
 
-import org.example.dao.DatabaseConnection;
-import org.example.dao.interfaces.IGenericDAO;
-import org.example.model.entities.Player;
+
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,17 +21,24 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
     }
 
     @Override
-    public boolean create(org.example.model.entities.Player player) {
-        String sql = "INSERT INTO player (idPlayer, name, email) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, player.getIdPlayer());
-            stmt.setString(2, player.getName());
-            stmt.setString(3, player.getEmail());
+    public boolean create(Player player) {
+        String sql = "INSERT INTO player (name, email) VALUES (?, ?)"; // ID auto-generado
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, player.getName());
+            stmt.setString(2, player.getEmail());
 
             int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        player.setIdPlayer(rs.getInt(1)); // Asignar ID generado
+                    }
+                }
+                return true;
+            }
+            return false;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error creando el jugador", e);
+            logger.log(Level.SEVERE, "Error creando jugador", e);
             return false;
         }
     }
@@ -108,7 +116,11 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
     }
 
     private Player mapResultSetToPlayer(ResultSet rs) throws SQLException {
-        Player player = new Player();
+        Player player = new Player(
+            rs.getInt("idPlayer"),
+            rs.getString("name"),
+            rs.getString("email")
+        );
         player.setIdPlayer(rs.getInt("idPlayer"));
         player.setName(rs.getString("name"));
         player.setEmail(rs.getString("email"));
