@@ -30,7 +30,8 @@ public class PlayerHandler {
     }
 
     public Optional<Player> findPlayerByName(String name) {
-       name.getValidString();
+        if(name == null || name.isEmpty()) {       throw new  NullOrEmptyException("Jugador no encontrado");
+        }
         return playerDao.findByName(name);
     }
 
