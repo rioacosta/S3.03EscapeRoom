@@ -19,7 +19,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public IRoomBuilder setName(String name){
         if(name == null || name.trim().isEmpty()){
-            throw new InvalidRoomNameException("The room name cannot be empty");
+            throw new NullOrEmptyException("El nombre de la sala no puede estar vacio");
         }
         this.name = name;
         return this;
@@ -28,7 +28,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public IRoomBuilder addHints(Hint hints){
         if(hints == null || hints.getDescription().trim().isEmpty()){
-            throw new InvalidHintException("Hint cannot be null or empty.");
+            throw new NullOrEmptyException("La pista no puede estar vacia.");
         }
         this.hints.add(hints);
         return this;
@@ -37,7 +37,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public IRoomBuilder addDecorations(Decoration decorations){
         if(decorations == null || decorations.getDescription().trim().isEmpty()){
-            throw new InvalidDecorationException("Decoration cannot be null or empty");
+            throw new NullOrEmptyException("La decoración no puede estar vacia");
         }
         this.decorations.add(decorations);
         return this;
@@ -46,7 +46,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public IRoomBuilder setDificulty(Dificulty dificulty){
         if(dificulty == null){
-            throw new InvalidDificultyException("A valid difficulty must be specified");
+            throw new InvalidDificultyException("Debe tener una dificultad añadida");
         }
         this.dificulty = dificulty;
         return this;
@@ -55,7 +55,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public IRoomBuilder setPrice(int price){
         if(price <= 0){
-            throw new InvalidPriceException("The price cannot be negative");
+            throw new InvalidPriceException("El precio no puede ser negativo");
         }
         this.price = price;
         return this;
