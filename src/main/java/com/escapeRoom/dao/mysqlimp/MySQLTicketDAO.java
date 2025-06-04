@@ -66,6 +66,11 @@ public class MySQLTicketDAO implements IGenericDAO<Tickets, Integer> {
     }
 
     @Override
+    public Optional<Tickets> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean update(Tickets ticket) {
         if(ticket.getIdRoom() <= 0 || ticket.getIdPlayer() <= 0) {
             throw new IllegalArgumentException("IDs inválidos");

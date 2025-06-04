@@ -1,5 +1,6 @@
 package com.escapeRoom.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
@@ -7,6 +8,7 @@ import com.escapeRoom.utils.InputUtils;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+@Builder
 @Getter
 @Setter
 public class Certificate {
