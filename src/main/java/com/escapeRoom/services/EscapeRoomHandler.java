@@ -1,6 +1,8 @@
 package com.escapeRoom.services;
 
 import com.escapeRoom.entities.Room;
+import com.escapeRoom.manager.MenuManager;
+
 
 import java.util.Scanner;
 
@@ -8,16 +10,16 @@ public class EscapeRoomHandler {
     private static EscapeRoomHandler INSTANCE;
     private Scanner scanner;
     private MenuManager menuManager;
-    private RoomController roomController;
-    private PlayerController playerController;
-    private TicketController ticketController;
+    private RoomHandler roomHandler;
+    private PlayerHandler playerHandler;
+    private TicketHandler ticketHandler;
 
     private EscapeRoomHandler() {
         this.scanner = new Scanner(System.in);
         this.menuManager = new MenuManager(scanner);
-        this.roomController = new RoomController(scanner);
-        this.playerController = new PlayerController(scanner);
-        this.ticketController = new TicketController(scanner);
+        this.roomHandler = new RoomHandler(scanner);
+        this.playerHandler = new PlayerHandler(scanner);
+        this.ticketHandler = new TicketHandler(scanner);
     }
 
     public static EscapeRoomHandler getINSTANCE() {
@@ -38,11 +40,11 @@ public class EscapeRoomHandler {
             option = menuManager.showMainMenu();
 
             switch (option) {
-                case 1 -> roomController.handleRoomOperations();
+                case 1 -> roomHandler.handleRoomOperations();
                 break;
-                case 2 -> playerController.handleRoomOperations();
+                case 2 -> playerHandler.handleRoomOperations();
                 break;
-                case 3 -> ticketController.handleRoomOperations();
+                case 3 -> ticketHandler.handleRoomOperations();
 
             }
 
