@@ -15,9 +15,6 @@ public final class EscapeRoom {
     private String name;
     private List<Room> rooms;
 
-    // Esto lo puse como private y alguien lo cambió a public
-    // No puede ser public, el constructor está en privado para que sea un Singleton. Se crea una instancia de EscapeRoom
-    // con getInstance. Así nos aseguramos que solo puede haber una instancia
     private EscapeRoom(int idEscaperoom, String name, List<Room> rooms) {
         InputUtils.getValidInt(idEscaperoom);
         // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
@@ -30,7 +27,6 @@ public final class EscapeRoom {
         this.rooms = rooms;
     }
 
-    // Esto lo borré por error y lo necesitamos
     public static EscapeRoom getInstance(int idEscaperoom, String name, List<Room> rooms) {
         if(instance == null) {
             instance = new EscapeRoom(idEscaperoom, name, rooms);
