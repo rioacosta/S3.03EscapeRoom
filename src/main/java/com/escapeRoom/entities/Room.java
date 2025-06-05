@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+import java.util.List;
 
 @NoArgsConstructor
 public class Room {
@@ -13,6 +13,8 @@ public class Room {
     private int idRoom;
     private int idEscaperoom_ref;
     private String name;  // 45 max, gestionar
+    private List<Hint> hints;
+    private List<Decoration> decorationItems;
     private Difficulty difficulty;
     private BigDecimal price;  // 2 decimales max, gestionar
 
@@ -67,9 +69,6 @@ public class Room {
                 + "\nPrecio: " + price + " euros";
     }
 
-    // Validaciones (que no esté vacío, que el tipo de dato sea el que toca (esto quizás utils),
-    // que no se pase de los caracteres máximos que acepta la base de datos...
-
-    // No están hechas por ahora porque no tengo 100% claro cómo se van a gestionar con el Builder
+    // No están hechas las validations por ahora porque no tengo 100% claro cómo se van a gestionar con el Builder
 
 }
