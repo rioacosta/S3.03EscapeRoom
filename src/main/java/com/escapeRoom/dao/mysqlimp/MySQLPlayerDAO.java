@@ -42,6 +42,20 @@ class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             return false;
         }
     }
+    public Optional<Player> findByName(String name) {
+        String sql = "SELECT * FROM player WHERE name = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSetToPlayer(rs));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error encontrando jugador por nombre: " + name, e);
+        }
+        return Optional.empty();
+    }
 
     @Override
     public Optional<Player> findById(Integer id) {

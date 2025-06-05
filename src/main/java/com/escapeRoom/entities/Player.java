@@ -1,15 +1,17 @@
 package com.escapeRoom.entities;
 
+import com.escapeRoom.notifications.interfaces.Subscriber;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
 
+import javax.security.auth.Subject;
 import java.util.List;
 import java.util.Scanner;
 
 @Getter
 @Setter
-public class Player {
+public class Player implements Subscriber {
 
     private int idPlayer;
     private String name;
@@ -52,4 +54,8 @@ public class Player {
         return email;
     }
 
+    @Override
+    public void update(String newsletterUpdate) {
+        System.out.println("Nueva notificación de newsletter :D");
+    }
 }

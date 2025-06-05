@@ -29,14 +29,23 @@ public class PlayerHandler {
         return playerDao.findById(id);
     }
 
-    public boolean assignCertificateToPlayer(int playerId, int certificateId) {
-        Player player = findPlayerById(playerId).orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
-        Certificate certificate = new Certificate(1, "Certificate Name", LocalDate.now(), (byte) 1, playerId);
-        Optional<Player> playerOpt = findPlayerById(playerId);
-        if(playerOpt.isEmpty()) {
-            throw new RuntimeException("Jugador no encontrado");
+    public Optional<Player> findPlayerByName(String name) {
+        if(name == null || name.isEmpty()) {       throw new  NullOrEmptyException("Jugador no encontrado");
         }
-        player.setCertificate(certificate);//(playerId, certificateId);
+        return playerDao.findByName(name);
+    }
+
+    public boolean assignCertificateToPlayer(int playerId, int certificateId) {
+
+        Optional<Player> playerOpt = findPlayerById(playerId);
+        if(playerOpt.isEmpty()) {   throw new RuntimeException("Jugador no encontrado");
+        }
+        String name = playerOpt.get().getName();
+
+        Certificate newCertificate = new Certificate(certificateId, name, LocalDate.now(), playerId);
+
+        playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
+
         System.out.println("Asignando certificado " + certificateId + " al jugador " + playerId);
         return true;
     }

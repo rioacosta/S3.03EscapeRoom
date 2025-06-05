@@ -68,6 +68,11 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
     }
 
     @Override
+    public Optional<Decoration> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean update(Decoration decoration) {
         String sql = "UPDATE decoration SET idRoom_ref = ?, description = ?, material = ?, price = ? WHERE idDecoration = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
