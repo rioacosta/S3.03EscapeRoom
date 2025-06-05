@@ -11,7 +11,6 @@ import java.util.Scanner;
 public final class EscapeRoom {
 
     private static EscapeRoom instance;
-
     private int idEscaperoom;
     private String name;
     private List<Room> rooms;
