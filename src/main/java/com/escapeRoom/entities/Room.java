@@ -1,12 +1,16 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
-
+@Getter
+@Setter
 @NoArgsConstructor
 public class Room {
 
@@ -15,52 +19,41 @@ public class Room {
     private String name;  // 45 max, gestionar
     private Difficulty difficulty;
     private BigDecimal price;  // 2 decimales max, gestionar
+    private ArrayList<Hint> hints;
+    private ArrayList<Decoration> decorations;
 
-    public Room(long id, String name, ArrayList<Hint> hints, ArrayList<Decoration> decorations,
-    Difficulty dificulty, int price) {
-
-    }
-
-    public int getIdRoom() {
-        return idRoom;
-    }
-
-    public void setIdRoom(int idRoom) {
-        this.idRoom = idRoom;
-    }
-
-    public int getIdEscaperoom_ref() {
-        return idEscaperoom_ref;
-    }
-
-    public void setIdEscaperoom_ref(int idEscaperoom_ref) {
-        this.idEscaperoom_ref = idEscaperoom_ref;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Room(long id, String name, Difficulty difficulty,  int price) {
+        this.idRoom = (int) id;
         this.name = name;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+        this.price = BigDecimal.valueOf(price);
+        this.hints = new ArrayList<>();
+        this.decorations = new ArrayList<>();
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public void showDecorationItems() {
+        for (Decoration deco : decorations) {
+            System.out.println(deco.toString());
+        }
+    }
+    public void showHintItems() {
+        for (Hint hint : hints) {
+            System.out.println(hint.toString());
+        }
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+    public BigDecimal getTotalFromDecorationPrice() {
+        if (decorations.isEmpty()) {
+            return BigDecimal.ZERO;        }
 
+        BigDecimal price = BigDecimal.ZERO;
+        for (Decoration deco : decorations) {
+            if (deco.getPrice() != null) {
+                price = price.add(deco.getPrice());            }
+        }
+        return price.setScale(2, RoundingMode.HALF_UP);
+
+    }
     @Override
     public String toString() {
         return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + difficulty.getDescription()

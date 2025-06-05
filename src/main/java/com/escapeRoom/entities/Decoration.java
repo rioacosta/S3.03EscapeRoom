@@ -3,6 +3,7 @@ package com.escapeRoom.entities;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -62,4 +63,8 @@ public class Decoration {
         return price.toString();
     }
 
+    @Override
+    public String toString() {
+        return "Objeto de decoracion:" + description + ", hecho de: " + material + ", de valor: "+ price +"€.";
+    }
 }

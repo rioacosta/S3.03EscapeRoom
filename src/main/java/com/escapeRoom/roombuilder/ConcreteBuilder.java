@@ -67,7 +67,6 @@ public class ConcreteBuilder implements IRoomBuilder {
 
     @Override
     public Room build(){
-
         return new Room(id, name, new ArrayList<>(hints), new ArrayList<>(decorations), dificulty, price);
 
     };
