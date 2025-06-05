@@ -63,6 +63,11 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
     }
 
     @Override
+    public Optional<Hint> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean update(Hint hint) {
         String sql = "UPDATE hint SET idHint = ?, idRoom = ?, theme = ?, price = ? WHERE idHint = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

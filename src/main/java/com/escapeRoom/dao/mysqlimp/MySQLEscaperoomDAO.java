@@ -66,6 +66,11 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
     }
 
     @Override
+    public Optional<EscapeRoom> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean update(EscapeRoom escaperoom) {
         String sql = "UPDATE escaperoom SET name = ? WHERE idEscaperoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

@@ -68,6 +68,11 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
     }
 
     @Override
+    public Optional<Room> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public boolean update(Room room) {
         String sql = "UPDATE room SET idEscaperoom_ref = ?, name = ?, dificulty = ?, price = ? WHERE idRoom = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
