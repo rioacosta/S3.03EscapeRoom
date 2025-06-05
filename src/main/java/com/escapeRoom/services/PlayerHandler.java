@@ -40,13 +40,9 @@ public class PlayerHandler {
         Optional<Player> playerOpt = findPlayerById(playerId);
         if(playerOpt.isEmpty()) {   throw new RuntimeException("Jugador no encontrado");
         }
-        Certificate newCertificate = Certificate.builder()
-                //.idCertificate(userInput.nextInt())
-                .name(playerOpt.get().getName())
-                .dateOfDelivery(LocalDate.now())
-                //.giftCoupon(Byte.parseByte(userInput.next()))
-                .idPlayer(playerId)
-                .build();
+        String name = playerOpt.get().getName();
+
+        Certificate newCertificate = new Certificate(certificateId, name, LocalDate.now(), playerId);
 
         playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
 

@@ -16,17 +16,17 @@ public class Certificate {
     private int idCertificate;
     private String name;
     private LocalDate dateOfDelivery;
-    private byte giftCoupon;
+    private boolean giftCoupon = true;
     private int idPlayer;
 
-    public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, byte giftCoupon, int idPlayer) {
+    public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, int idPlayer) {
         InputUtils.getValidInt(idCertificate);
         // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
         // usando el method que hay abajo en este documento
         InputUtils.getValidString(name);
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.checkEmptyInput(String.valueOf(giftCoupon));
-        InputUtils.getValidByte(giftCoupon);
+        //InputUtils.getValidByte(giftCoupon);
         InputUtils.getValidInt(idPlayer);
 
         this.idCertificate = idCertificate;
