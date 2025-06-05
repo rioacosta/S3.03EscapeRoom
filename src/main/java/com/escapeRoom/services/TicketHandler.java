@@ -25,16 +25,19 @@ public class TicketHandler {
     public void createTicket() {
         System.out.println("Para qué habitación es?");
         int idRoom = scanner.nextInt();
+        scanner.nextLine();
         InputUtils.getValidInt(idRoom);
 
         System.out.println("Dime qué jugador compra el ticket");
         int idPlayer = scanner.nextInt();
+        scanner.nextLine();
         InputUtils.getValidInt(idPlayer);
 
         LocalDate boughtOn = LocalDate.now();
 
         System.out.println("Qué precio tiene?");
         BigDecimal price = scanner.nextBigDecimal();
+        scanner.nextLine();
         InputUtils.getValidBigDecimal(price);
 
         Tickets newTicket = new Tickets(idRoom, idPlayer, boughtOn, price);
@@ -56,6 +59,9 @@ public class TicketHandler {
         }
 
         int newTicketId = scanner.nextInt();
+        scanner.nextLine();
+        InputUtils.getValidInt(newTicketId);
+
         boolean result = ticketDAO.deleteById(newTicketId);
 
         if (result) {
