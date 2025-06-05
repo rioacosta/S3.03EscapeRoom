@@ -15,7 +15,11 @@ public final class EscapeRoom {
     private String name;
     private List<Room> rooms;
 
+<<<<<<< HEAD
     public EscapeRoom() {
+=======
+    private EscapeRoom() {
+>>>>>>> origin/feature/inventory
         InputUtils.getValidInt(idEscaperoom);
         // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
         // usando el method que hay abajo en este documento
