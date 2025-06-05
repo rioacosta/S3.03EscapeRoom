@@ -1,13 +1,11 @@
 package com.escapeRoom.entities;
 
-import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.*;
 
 import java.util.List;
 import java.util.Scanner;
 
-@Getter
 @Setter
 public final class EscapeRoom {
 
@@ -27,6 +25,25 @@ public final class EscapeRoom {
         this.idEscaperoom = idEscaperoom;
         this.name = name;
         this.rooms = rooms;
+    }
+
+    public static EscapeRoom getInstance(int idEscaperoom, String name, List<Room> rooms) {
+        if(instance == null) {
+            instance = new EscapeRoom(idEscaperoom, name, rooms);
+        }
+        return instance;
+    }
+
+    public int getIdEscaperoom() {
+        return idEscaperoom;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
     }
 
     @Override
