@@ -3,6 +3,7 @@ package com.escapeRoom.entities;
 import lombok.Setter;
 import com.escapeRoom.utils.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,21 +16,20 @@ public final class EscapeRoom {
     private String name;
     private List<Room> rooms;
 
-    private EscapeRoom(int idEscaperoom, String name, List<Room> rooms) {
+    public EscapeRoom() {
         InputUtils.getValidInt(idEscaperoom);
         // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
         // usando el method que hay abajo en este documento
-        InputUtils.getValidString(name);
+        //InputUtils.getValidString(name);
         InputUtils.getValidList(rooms);
-
-        this.idEscaperoom = idEscaperoom;
-        this.name = name;
-        this.rooms = rooms;
+        this.idEscaperoom = 1;
+        this.name = "";
+        this.rooms = new ArrayList<>();
     }
 
-    public static EscapeRoom getInstance(int idEscaperoom, String name, List<Room> rooms) {
+    public static EscapeRoom getInstance() {
         if(instance == null) {
-            instance = new EscapeRoom(idEscaperoom, name, rooms);
+            instance = new EscapeRoom();
         }
         return instance;
     }
@@ -41,10 +41,16 @@ public final class EscapeRoom {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = nameCharacterLimit(name);
+    }
+    public void setName(int name) { this.name = String.valueOf(name);}
 
     public List<Room> getRooms() {
         return rooms;
     }
+
+    public void addRoom(Room room) {         this.rooms.add(room);    }
 
     @Override
     public String toString() {
