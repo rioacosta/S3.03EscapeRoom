@@ -1,5 +1,6 @@
 package com.escapeRoom.entities;
 
+import com.escapeRoom.entities.enums.Theme;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
@@ -15,16 +16,15 @@ public class Hint {
     private int idHint;
     private int idRoom;
     private String description;
-    private String theme;
+    private Theme theme;
     private BigDecimal price;
 
-    public Hint(int idHint, int idRoom, String description, String theme, BigDecimal price) {
+    public Hint(int idHint, int idRoom, String description, Theme theme, BigDecimal price) {
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
         // fuera de aquí, usando los métodos que hay abajo en este documento
         InputUtils.getValidInt(idHint);
         InputUtils.getValidInt(idRoom);
         InputUtils.getValidString(description);
-        InputUtils.getValidString(theme);
         InputUtils.getValidBigDecimal(price);
 
         this.idHint = idHint;
