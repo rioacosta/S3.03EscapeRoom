@@ -3,6 +3,7 @@ package com.escapeRoom.input;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.manager.MenuManager;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class RoomInputCollector {
@@ -25,8 +26,17 @@ public class RoomInputCollector {
         System.out.println("Nombre de la sala");
         String name  = scanner.next();
 
-        System.out.println("ID de la sala");
-        int idRoom = scanner.nextInt();
+        System.out.print("Precio: ");
+        BigDecimal price = BigDecimal.valueOf(scanner.nextDouble());
+
+        // Usar Builder directamente (sin Director)
+        return new Room.Builder()
+                .idRoom(idRoom)
+                .idEscaperoom(idEscaperoom)
+                .name(name)
+                .difficulty(difficulty)
+                .price(price)
+                .build();
 
 
     }
