@@ -89,42 +89,44 @@ public class Room {
 
     public BigDecimal getTotalFromDecorationPrice() {
         if (decorations.isEmpty()) {
-            return BigDecimal.ZERO;        }
+            return BigDecimal.ZERO;
+        }
 
         BigDecimal price = BigDecimal.ZERO;
         for (Decoration deco : decorations) {
             if (deco.getPrice() != null) {
-                price = price.add(deco.getPrice());            }
+                price = price.add(deco.getPrice());
+            }
         }
         return price.setScale(2, RoundingMode.HALF_UP);
 
 
-    //añado getters y setters para las listas
+        //añado getters y setters para las listas
 
 
-    public List<Hint> getHints() {
-        return hints;
+        public List<Hint> getHints () {
+            return hints;
+        }
+
+        public void setHints (List < Hint > hints) {
+            this.hints = hints;
+        }
+
+        public List<Decoration> getDecorationItems () {
+            return decorationItems;
+        }
+
+        public void setDecorationItems (List < Decoration > decorationItems) {
+            this.decorationItems = decorationItems;
+        }
+
+        @Override
+        public String toString () {
+            return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + difficulty.getDescription()
+                    + "\nPrecio: " + price + " euros" + "\nPistas: " + (hints != null ? hints.size() : 0) +
+                    "\nDecoraciones: " + (decorationItems != null ? decorationItems.size() : 0);
+        }
+
+        // No están hechas las validations por ahora porque no tengo 100% claro cómo se van a gestionar con el Builder
+
     }
-
-    public void setHints(List<Hint> hints) {
-        this.hints = hints;
-    }
-
-    public List<Decoration> getDecorationItems() {
-        return decorationItems;
-    }
-
-    public void setDecorationItems(List<Decoration> decorationItems) {
-        this.decorationItems = decorationItems;
-    }
-
-    @Override
-    public String toString() {
-        return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + difficulty.getDescription()
-                + "\nPrecio: " + price + " euros" + "\nPistas: " + (hints != null ? hints.size() : 0) +
-                "\nDecoraciones: " + (decorationItems != null ? decorationItems.size() : 0);
-    }
-
-    // No están hechas las validations por ahora porque no tengo 100% claro cómo se van a gestionar con el Builder
-
-}
