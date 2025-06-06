@@ -23,15 +23,16 @@ public class Room {
     private List<Decoration> decorationItems;
     private Difficulty difficulty;
     private BigDecimal price;  // 2 decimales max, gestionar
-/*
-    public Room(long id, String name, ArrayList<Hint> hints, ArrayList<Decoration> decorations,
-    Difficulty dificulty, int price) {
 
-    }
+    /*
+        public Room(long id, String name, ArrayList<Hint> hints, ArrayList<Decoration> decorations,
+        Difficulty dificulty, int price) {
+
+        }
 
 
- */
-    public Room(){
+     */
+    public Room() {
         //inicializo las listas para que no esten vacias
         this.hints = new ArrayList<>();
         this.decorationItems = new ArrayList<>();
@@ -40,7 +41,7 @@ public class Room {
 
 
     Room(int idEscaperoom_ref, String name, Difficulty difficulty,
-                 BigDecimal price, List<Hint> hints, List<Decoration> decorations) {
+         BigDecimal price, List<Hint> hints, List<Decoration> decorations) {
         this.idEscaperoom_ref = idEscaperoom_ref;
         this.name = name;
         this.difficulty = difficulty;
@@ -48,6 +49,7 @@ public class Room {
         this.hints = hints != null ? hints : new ArrayList<>();
         this.decorationItems = decorations != null ? decorations : new ArrayList<>();
     }
+
     public int getIdRoom() {
         return idRoom;
     }
@@ -70,17 +72,14 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
-        this.difficulty = difficulty;
-        this.price = BigDecimal.valueOf(price);
-        this.hints = new ArrayList<>();
-        this.decorations = new ArrayList<>();
     }
 
     public void showDecorationItems() {
-        for (Decoration deco : decorations) {
+        for (Decoration deco : decorationItems) {
             System.out.println(deco.toString());
         }
     }
+
     public void showHintItems() {
         for (Hint hint : hints) {
             System.out.println(hint.toString());
@@ -88,19 +87,23 @@ public class Room {
     }
 
     public BigDecimal getTotalFromDecorationPrice() {
-        if (decorations.isEmpty()) {
+        if (decorationItems.isEmpty()) {
             return BigDecimal.ZERO;
         }
 
-        BigDecimal price = BigDecimal.ZERO;
-        for (Decoration deco : decorations) {
-            if (deco.getPrice() != null) {
-                price = price.add(deco.getPrice());
-            }
+
+    BigDecimal price = BigDecimal.ZERO;
+        for(
+    Decoration deco :decorationItems)
+
+    {
+        if (deco.getPrice() != null) {
+            price = price.add(deco.getPrice());
         }
-        return price.setScale(2, RoundingMode.HALF_UP);
+    }
+        return price.setScale(2,RoundingMode.HALF_UP);
 
-
+    }
         //añado getters y setters para las listas
 
 

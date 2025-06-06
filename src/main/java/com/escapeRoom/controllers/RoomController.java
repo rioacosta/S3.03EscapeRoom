@@ -74,6 +74,9 @@ public class RoomController {
             System.out.println("Sala eliminada exitosamente!");
         } else {
             System.out.println("Error al eliminar la sala.");
+
         }
     }
+
+
 }
