@@ -36,7 +36,7 @@ public class RoomHandler {
     }
 
     public boolean editRoom(Room room){
-        
+
     }
     public void deleteRoom(int id, String name){
         rooms.removeIf(room -> room.getIdRoom() == id && room.getName().equalsIgnoreCase(name))
