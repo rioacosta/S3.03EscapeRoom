@@ -1,41 +1,42 @@
 package com.escapeRoom.services;
 
+import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.exceptions.InvalidSearchName;
 import com.escapeRoom.entities.Room;
-import com.escapeRoom.roombuilder.ConcreteBuilder;
+import com.escapeRoom.exceptions.NullOrEmptyException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomHandler {
-    private List<Room> rooms = new ArrayList<>();
+    private final IGenericDAO<Room, Integer> roomDAO;
 
-    public void addRoom(Room room) {
-        this.rooms.add(room);
+    public RoomHandler(IGenericDAO<Room, Integer>roomDAO){
+        this.roomDAO = roomDAO;
+
     }
 
-    public Room createRoom(ConcreteBuilder builder){
-                builder.setName();
-                builder.addHints();
-                builder.addDecorations();
-                builder.setDificulty();
-                builder.setPrice();
-                builder.build();
+    public boolean createRoom(Room room){
+        if(room == null || room.getName() == null || room.getIdRoom() == 0) {
+            throw new NullOrEmptyException("Datos de la sala inválidos");
+        }
+        return roomDAO.create(room);
     }
 
-    public void findRoomById(int id, String name) {
-        rooms.stream()
-                .filter(room -> room.getIdRoom() == id && room.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .ifPresentOrElse(room -> System.out.println("Sala encontrada: " + room.getName()),
-                        () -> {
-                            throw new InvalidSearchName("La sala que estas buscando no se encuentra en el listado");
-                        }
-                );
+    //tema exceptions revisarlos y personalizarlos
+    public Optional<Room> findRoomById(int id) {
+        if(id <= 0) {
+            throw new IllegalArgumentException("ID de jugador inválido");
+        }
+        return roomDAO.findById(id);
     }
-    public Room editRoom(Room idRoom){
-        return rooms.stream()
-                .filter(rooms->rooms.getIdRoom() == idRoom);
+
+    public List<Room> getAllRooms(){
+        return roomDAO.findAll();
+    }
+
+    public boolean editRoom(Room room){
+        
     }
     public void deleteRoom(int id, String name){
         rooms.removeIf(room -> room.getIdRoom() == id && room.getName().equalsIgnoreCase(name))

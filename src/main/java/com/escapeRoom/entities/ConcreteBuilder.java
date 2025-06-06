@@ -1,23 +1,33 @@
-package com.escapeRoom.roombuilder;
+package com.escapeRoom.entities;
 
-import com.escapeRoom.entities.Decoration;
-import com.escapeRoom.entities.Hint;
-import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.exceptions.*;
 import com.escapeRoom.roombuilder.interfaces.IRoomBuilder;
 
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConcreteBuilder implements IRoomBuilder {
-    private long idRoom;
+    private int idRoom;
+    private int idEscapeRoom_ref;
     private String name;
     private List<Hint> hints;
     private List<Decoration>decorations;
     private Difficulty dificulty;
-    private int price;
+    private BigDecimal price;
 
+    public ConcreteBuilder() {
+        this.hints = new ArrayList<>();
+        this.decorations = new ArrayList<>();
+    }
+
+    @Override
+    public IRoomBuilder setIdEscapeRoom_ref(int idEscapeRoom_ref){
+        this.idEscapeRoom_ref = idEscapeRoom_ref;
+        return this;
+    }
 
 
     @Override
@@ -57,9 +67,9 @@ public class ConcreteBuilder implements IRoomBuilder {
     };
 
     @Override
-    public IRoomBuilder setPrice(int price){
-        if(price <= 0){
-            throw new InvalidPriceException("El precio no puede ser negativo");
+    public IRoomBuilder setPrice(BigDecimal price){
+        if(price.compareTo(BigDecimal.ZERO) == 0){
+            throw new InvalidPriceException("El precio no puede ser cero o negativo");
         }
         this.price = price;
         return this;
@@ -68,7 +78,8 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public Room build(){
 
-        return new Room(id, name, new ArrayList<>(hints), new ArrayList<>(decorations), dificulty, price);
+        return new Room(idEscapeRoom_ref, name, dificulty,
+                price, hints, decorations);
 
     };
 }
