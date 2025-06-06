@@ -35,6 +35,11 @@ public class Decoration {
         this.price = price;
     }
 
+    public Decoration(String description, BigDecimal price) {
+        this.description = description;
+        this.price = price;
+    }
+
     private String descriptionCharacterLimit(String description) {
         Scanner scanner = new Scanner(System.in);
 

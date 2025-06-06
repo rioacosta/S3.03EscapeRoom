@@ -1,5 +1,7 @@
 package com.escapeRoom.manager;
 
+import com.escapeRoom.entities.enums.Difficulty;
+
 import java.util.Scanner;
 
 public class MenuManager {
@@ -29,5 +31,15 @@ public class MenuManager {
         System.out.println("0. Volver al menú principal");
         System.out.print("Selecciona opción: ");
         return scanner.nextInt();
+    }
+    public Difficulty selectDifficulty() {
+        System.out.println("Selecciona dificultad:");
+        Difficulty[] difficulties = Difficulty.values();
+        for (int i = 0; i < difficulties.length; i++) {
+            System.out.println((i + 1) + ". " + difficulties[i]);
+        }
+        System.out.print("Opción: ");
+        int choice = scanner.nextInt() - 1;
+        return difficulties[choice];
     }
 }
