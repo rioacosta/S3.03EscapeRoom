@@ -12,10 +12,9 @@ import java.util.List;
 
 //comento lombok me da problemas con el builder
 //@NoArgsConstructor
-
-
+@Setter
+@Getter
 public class Room {
-
     private int idRoom;
     private int idEscaperoom_ref;
     private String name;  // 45 max, gestionar
@@ -50,7 +49,7 @@ public class Room {
         this.decorationItems = decorations != null ? decorations : new ArrayList<>();
     }
 
-    public int getIdRoom() {
+    /*public int getIdRoom() {
         return idRoom;
     }
 
@@ -72,7 +71,7 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
     public void showDecorationItems() {
         for (Decoration deco : decorationItems) {
@@ -90,13 +89,8 @@ public class Room {
         if (decorationItems.isEmpty()) {
             return BigDecimal.ZERO;
         }
-
-
     BigDecimal price = BigDecimal.ZERO;
-        for(
-    Decoration deco :decorationItems)
-
-    {
+        for(Decoration deco :decorationItems)    {
         if (deco.getPrice() != null) {
             price = price.add(deco.getPrice());
         }
@@ -104,7 +98,7 @@ public class Room {
         return price.setScale(2,RoundingMode.HALF_UP);
 
     }
-        //añado getters y setters para las listas
+     /*   //añado getters y setters para las listas
 
 
         public List<Hint> getHints () {
@@ -122,7 +116,7 @@ public class Room {
         public void setDecorationItems (List < Decoration > decorationItems) {
             this.decorationItems = decorationItems;
         }
-
+*/
         @Override
         public String toString () {
             return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + difficulty.getDescription()

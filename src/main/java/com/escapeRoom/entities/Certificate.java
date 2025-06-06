@@ -8,7 +8,7 @@ import com.escapeRoom.utils.InputUtils;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-@Builder
+//@Builder
 @Getter
 @Setter
 public class Certificate {
@@ -16,7 +16,7 @@ public class Certificate {
     private int idCertificate;
     private String name;
     private LocalDate dateOfDelivery;
-    private boolean giftCoupon = true;
+    private boolean giftCoupon;
     private int idPlayer;
 
     public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, int idPlayer) {
@@ -32,7 +32,7 @@ public class Certificate {
         this.idCertificate = idCertificate;
         this.name = name;
         this.dateOfDelivery = dateOfDelivery;
-        this.giftCoupon = giftCoupon;
+        this.giftCoupon = true;
         this.idPlayer = idPlayer;
     }
 
