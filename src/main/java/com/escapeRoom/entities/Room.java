@@ -1,9 +1,12 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,23 +70,33 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+        this.price = BigDecimal.valueOf(price);
+        this.hints = new ArrayList<>();
+        this.decorations = new ArrayList<>();
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public void showDecorationItems() {
+        for (Decoration deco : decorations) {
+            System.out.println(deco.toString());
+        }
+    }
+    public void showHintItems() {
+        for (Hint hint : hints) {
+            System.out.println(hint.toString());
+        }
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+    public BigDecimal getTotalFromDecorationPrice() {
+        if (decorations.isEmpty()) {
+            return BigDecimal.ZERO;        }
+
+        BigDecimal price = BigDecimal.ZERO;
+        for (Decoration deco : decorations) {
+            if (deco.getPrice() != null) {
+                price = price.add(deco.getPrice());            }
+        }
+        return price.setScale(2, RoundingMode.HALF_UP);
 
 
     //añado getters y setters para las listas

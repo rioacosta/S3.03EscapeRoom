@@ -46,7 +46,6 @@ public class Hint {
 
     private String themeCharacterLimit(String theme) {
         Scanner scanner = new Scanner(System.in);
-
         while (theme.length() > 45) {
             System.out.println("El tema no puede tener más de 45 caracteres. Introduce un tema válido");
             theme = scanner.nextLine();
@@ -58,8 +57,11 @@ public class Hint {
         if (price.scale() > 2) {
             price = price.setScale(2, RoundingMode.HALF_UP);
         }
-
         return price.toString();
     }
 
+    @Override
+    public String toString() {
+        return "La pista: " + description + ", del tema: " + theme;
+    }
 }

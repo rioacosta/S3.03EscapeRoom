@@ -136,11 +136,7 @@ public class MySQLEscaperoomDAO implements IGenericDAO<EscapeRoom, Integer> {
     }
 
     private EscapeRoom mapResultSetToEscaperoom(ResultSet rs) throws SQLException {
-        EscapeRoom escaperoom = new EscapeRoom(
-            rs.getInt("idEscaperoom"),
-            rs.getString("name"),
-            (List<Room>) rs.getArray("rooms")
-        );
+        EscapeRoom escaperoom = new EscapeRoom();
 
         escaperoom.setIdEscaperoom(rs.getInt("idEscaperoom"));
         escaperoom.setName(rs.getString("name"));
