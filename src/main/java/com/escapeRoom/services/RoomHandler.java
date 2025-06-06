@@ -25,6 +25,7 @@ public class RoomHandler {
 
     //tema exceptions revisarlos y personalizarlos
     public Optional<Room> findRoomById(int id) {
+
         if(id <= 0) {
             throw new IllegalArgumentException("ID de jugador inválido");
         }
@@ -35,18 +36,30 @@ public class RoomHandler {
         return roomDAO.findAll();
     }
 
-    public boolean editRoom(Room room){
+    public boolean editRoom(Room room) {
 
+        if (!roomDAO.existsById(room.getIdRoom())) {
+            throw new IllegalArgumentException("La sala con ID " + room.getIdRoom() + " no existe");
+        }
+        // Validaciones de negocio
+       // validateRoom(room);
+
+        // Actualizar en base de datos
+        return roomDAO.update(room);
     }
-    public void deleteRoom(int id, String name){
-        rooms.removeIf(room -> room.getIdRoom() == id && room.getName().equalsIgnoreCase(name))
 
-                .ifPresentOrElse(room -> System.out.println("Room: " + room.getName()+ " was deleted"),
-                        () -> {
-                            throw new InvalidSearchName("The room you were looking for was not found");
-                        }
-                );
+    public boolean deleteRoom(int id){
+
+        if (!roomDAO.existsById(id)) {
+            throw new IllegalArgumentException("La sala con ID " + id + " no existe");
+        }
+        // Validaciones de negocio
+        // validateRoom(room);
+
+        // Actualizar en base de datos
+        return roomDAO.deleteById(id);
+    }
     }
 
 
-}
+
