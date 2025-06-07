@@ -44,8 +44,8 @@ public class EscapeRoomHandler {
             switch (option) {
                 case 1 -> roomController.handleRoomOperations();
 
-                case 2 -> playerController.handleRoomOperations();
-                break;
+                //case 2 -> playerController.handleRoomOperations();
+              
               /*  case 3 -> ticketController.handleRoomOperations();
 
              */
