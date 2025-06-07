@@ -55,7 +55,9 @@ public class TicketHandler {
 
         List<Tickets> tickets = ticketDAO.findAll();
         for (Tickets ticket : tickets) {
-            System.out.println("Ticket num " + ticket.getIdTickets() + " - del jugador número " + ticket.getIdPlayer());
+            // estaría bien que mostrara el nombre del jugador, no el número
+            System.out.println(ticket.getIdTickets() + " - Vendido aljugador num " + ticket.getIdPlayer()
+                    + ". Precio de " + ticket.getPrice());
         }
 
         int newTicketId = scanner.nextInt();
