@@ -18,9 +18,6 @@ public class InputUtils {
     }
 
     public static void getValidInt(Integer input) {
-        if (input == null) {
-            throw new EmptyInputException("No puedes responder en blanco");
-        }
         if (input <= 0) {
             throw new IllegalArgumentException("El número no puede ser negativo");
         }
