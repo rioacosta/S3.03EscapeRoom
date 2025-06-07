@@ -38,7 +38,8 @@ public class TicketMenu {
                         ticketHandler.deleteTicket();
                         break;
                     case 3:
-                        ticketHandler.calculateTotalProfit();
+                        System.out.println(ticketHandler.calculateTotalProfit() + " euros de beneficio total");
+                        // ticketHandler.calculateTotalProfit();
                         break;
                     case 4:
                         // TODO
