@@ -14,7 +14,8 @@ public final class EscapeRoom {
     private int idEscaperoom;
     private String name;
     private List<Room> rooms;
-
+    private ArrayList<Player> players;   //Rio: agrego la lista de jugadores que no esta en ningun lugar,
+    //se puede mover de esta clase a otra si no lo ven claro
 
     public EscapeRoom() {
 
@@ -26,6 +27,7 @@ public final class EscapeRoom {
         this.idEscaperoom = 1;
         this.name = "";
         this.rooms = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
     public static EscapeRoom getInstance() {
@@ -33,6 +35,14 @@ public final class EscapeRoom {
             instance = new EscapeRoom();
         }
         return instance;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 
     public int getIdEscaperoom() {
@@ -51,7 +61,7 @@ public final class EscapeRoom {
         return rooms;
     }
 
-    public void addRoom(Room room) {         this.rooms.add(room);    }
+    public void addRoom(Room room) {    this.rooms.add(room);    }
 
     @Override
     public String toString() {

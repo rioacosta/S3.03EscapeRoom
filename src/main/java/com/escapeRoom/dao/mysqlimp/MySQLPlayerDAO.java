@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
+public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
     private static final Logger logger = Logger.getLogger(MySQLPlayerDAO.class.getName());
     private final Connection connection;
 
