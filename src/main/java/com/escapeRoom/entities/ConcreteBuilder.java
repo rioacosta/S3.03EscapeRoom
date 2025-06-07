@@ -37,25 +37,26 @@ public class ConcreteBuilder implements IRoomBuilder {
         }
         this.name = name;
         return this;
-    };
+    }
 
     @Override
-    public IRoomBuilder addHints(Hint hints){
-        if(hints == null || hints.getDescription().trim().isEmpty()){
-            throw new NullOrEmptyException("La pista no puede estar vacia.");
+    public IRoomBuilder setHints(List<Hint> hints) {
+        if (hints == null || hints.isEmpty()) {
+            throw new NullOrEmptyException("La lista de pistas no puede estar vacía.");
         }
-        this.hints.add(hints);
+        this.hints.addAll(hints);
         return this;
-    };
+    }
 
     @Override
-    public IRoomBuilder addDecorations(Decoration decorations){
-        if(decorations == null || decorations.getDescription().trim().isEmpty()){
-            throw new NullOrEmptyException("La decoración no puede estar vacia");
+    public IRoomBuilder setDecorations(List<Decoration> decorations) {
+        if (decorations == null || decorations.isEmpty()) {
+            throw new NullOrEmptyException("La lista de decoraciones no puede estar vacía.");
         }
-        this.decorations.add(decorations);
+        this.decorations.addAll(decorations);
         return this;
-    };
+    }
+
 
     @Override
     public IRoomBuilder setDificulty(Difficulty dificulty){
@@ -64,7 +65,7 @@ public class ConcreteBuilder implements IRoomBuilder {
         }
         this.dificulty = dificulty;
         return this;
-    };
+    }
 
     @Override
     public IRoomBuilder setPrice(BigDecimal price){
@@ -73,7 +74,7 @@ public class ConcreteBuilder implements IRoomBuilder {
         }
         this.price = price;
         return this;
-    };
+    }
 
     @Override
     public Room build(){
@@ -81,5 +82,5 @@ public class ConcreteBuilder implements IRoomBuilder {
         return new Room(idEscapeRoom_ref, name, dificulty,
                 price, hints, decorations);
 
-    };
+    }
 }

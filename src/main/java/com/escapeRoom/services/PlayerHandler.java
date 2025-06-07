@@ -4,7 +4,6 @@ import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.entities.Certificate;
 import com.escapeRoom.entities.Player;
 import com.escapeRoom.exceptions.NullOrEmptyException;
-
 import java.time.LocalDate;
 import java.util.Optional;
 

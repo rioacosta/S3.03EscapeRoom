@@ -33,6 +33,10 @@ public class Hint {
         this.theme = theme;
         this.price = price;
     }
+    public Hint(String description) {
+        this.description = description;
+        this.price = BigDecimal.ZERO;
+    }
 
     private String descriptionCharacterLimit(String description) {
         Scanner scanner = new Scanner(System.in);

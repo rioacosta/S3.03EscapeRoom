@@ -17,7 +17,7 @@ public class Decoration {
     private int idRoom_ref;
     private String description;
     private String material;
-    private BigDecimal price;  // 2 max, gestionar
+    private BigDecimal price;
 
     public Decoration(int idDecoration, int idRoom_ref, String description, String material, BigDecimal price) {
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
@@ -32,6 +32,11 @@ public class Decoration {
         this.idRoom_ref = idRoom_ref;
         this.description = description;
         this.material = material;
+        this.price = price;
+    }
+
+    public Decoration(String description, BigDecimal price) {
+        this.description = description;
         this.price = price;
     }
 

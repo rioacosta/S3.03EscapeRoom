@@ -4,6 +4,7 @@ package com.escapeRoom.dao.mysqlimp;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.entities.Hint;
+import com.escapeRoom.entities.enums.Theme;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
             stmt.setInt(1, hint.getIdHint());
             stmt.setInt(2, hint.getIdRoom());
             stmt.setString(3, hint.getDescription());
-            stmt.setString(4, hint.getTheme());
+            stmt.setString(4, hint.getTheme().name());
             stmt.setBigDecimal(5, hint.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
@@ -74,7 +75,7 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
             stmt.setInt(1, hint.getIdHint());
             stmt.setInt(2, hint.getIdRoom());
             stmt.setString(3, hint.getDescription());
-            stmt.setString(4, hint.getTheme());
+            stmt.setString(4, hint.getTheme().name());
             stmt.setBigDecimal(5, hint.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
@@ -132,7 +133,7 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
                 rs.getInt("idHint"),
                 rs.getInt("idRoom"),
                 rs.getString("description"),
-                rs.getString("theme"),
+                Theme.valueOf(rs.getString("theme")),
                 rs.getBigDecimal("price")
         );
     }

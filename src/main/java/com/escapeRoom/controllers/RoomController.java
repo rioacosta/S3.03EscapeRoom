@@ -1,10 +1,15 @@
 package com.escapeRoom.controllers;
 
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
 import com.escapeRoom.entities.Room;
-import com.escapeRoom.input.RoomInputCollector;
+import com.escapeRoom.entities.RoomInputCollector;
 import com.escapeRoom.manager.MenuManager;
 import com.escapeRoom.services.RoomHandler;
 
+
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class RoomController {
@@ -13,7 +18,7 @@ public class RoomController {
     private MenuManager menuManager;
 
     public RoomController(Scanner scanner) {
-        this.roomHandler = new RoomHandler(scanner);
+        this.roomHandler = new RoomHandler(new MySQLRoomDAO(DatabaseConnection.getInstance()));
         this.menuManager = new MenuManager(scanner);
         this.inputCollector = new RoomInputCollector(scanner, menuManager);
     }
@@ -24,25 +29,21 @@ public class RoomController {
             option = menuManager.showRoomMenu();
 
             switch (option) {
-                case 1:
-                    createRoom();
-                    break;
-                case 2:
-                    roomHandler.listAllRooms();
-                    break;
-                case 3:
-                    updateRoom();
-                    break;
-                case 4:
-                    deleteRoom();
-                    break;
+                case 1 -> createRoom();
+
+                case 2 -> listAllRooms();
+
+                case 3 -> updateRoom();
+
+                case 4 -> deleteRoom();
+
             }
         } while (option != 0);
     }
 
     private void createRoom() {
         try {
-            Room room = inputCollector.collectNewRoomData();
+            Room room = inputCollector.CollectNewRoomData();
             boolean success = roomHandler.createRoom(room);
 
             if (success) {
@@ -57,12 +58,12 @@ public class RoomController {
 
     private void updateRoom() {
         int id = inputCollector.collectRoomIdForUpdate();
-        Room existingRoom = roomHandler.getRoomById(id);
-
-        if (existingRoom != null) {
-            // Lógica para modificar...
+        Optional<Room> existingRoom = roomHandler.findRoomById(id);
+        if (existingRoom.isPresent()) {
+            Room room = existingRoom.get();
+            // Lógica para modificar room...
         } else {
-            System.out.println("ala no encontrada.");
+            System.out.println("Sala no encontrada.");
         }
     }
 
@@ -77,6 +78,14 @@ public class RoomController {
 
         }
     }
-
+    private void listAllRooms(){
+        List<Room> rooms = roomHandler.getAllRooms();
+        if (rooms.isEmpty()) {
+            System.out.println("No hay salas registradas actualmente.");
+        } else {
+            System.out.println("===== LISTADO DE SALAS =====");
+            rooms.forEach(System.out::println);
+        }
+    }
 
 }

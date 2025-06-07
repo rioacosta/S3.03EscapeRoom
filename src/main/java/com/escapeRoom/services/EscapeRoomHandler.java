@@ -14,6 +14,7 @@ public class EscapeRoomHandler {
     private RoomController roomController;
 //    private PlayerController playerController;
 //    private TicketController ticketController;
+    private PlayerHandler playerHandler;
 
     private EscapeRoomHandler() {
         this.scanner = new Scanner(System.in);
@@ -42,12 +43,10 @@ public class EscapeRoomHandler {
 
             switch (option) {
                 case 1 -> roomController.handleRoomOperations();
-            //    break;
-            /*
-                case 2 -> playerController.handleRoomOperations();
-                break;
-                case 3 -> ticketController.handleRoomOperations();
 
+                //case 2 -> playerController.handleRoomOperations();
+              
+              /*  case 3 -> ticketController.handleRoomOperations();
 
              */
             }

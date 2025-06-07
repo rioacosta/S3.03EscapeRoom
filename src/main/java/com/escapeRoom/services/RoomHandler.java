@@ -36,7 +36,7 @@ public class RoomHandler {
         return roomDAO.findAll();
     }
 
-    public boolean editRoom(Room room) {
+    public boolean updateRoom(Room room) {
 
         if (!roomDAO.existsById(room.getIdRoom())) {
             throw new IllegalArgumentException("La sala con ID " + room.getIdRoom() + " no existe");

@@ -1,5 +1,7 @@
 package com.escapeRoom.manager;
 
+import com.escapeRoom.entities.enums.Difficulty;
+
 import java.util.Scanner;
 
 public class MenuManager {
@@ -10,24 +12,55 @@ public class MenuManager {
     }
 
     public int showMainMenu(){
-        System.out.println("======ESCAPE ROOM MANAGEMENT=====");
-        System.out.println("1- GESTIONAR SALAS");
-        System.out.println("2- GESTIONAR JUGADORES");
-        System.out.println("3- GESTIONAR TICKETS");
-        System.out.println("0- SALIR");
-        System.out.println("Seleccionar una opción: ");
-
+        System.out.println("""
+                ======ESCAPE ROOM MANAGEMENT=====
+                    1- GESTIONAR SALAS
+                    2- GESTIONAR JUGADORES
+                    3- GESTIONAR TICKETS
+                    4- GESTIONAR EL INVENTARIO
+                    0- SALIR
+                Seleccionar una opción:
+                """);
         return scanner.nextInt();
     }
 
     public int showRoomMenu() {
-        System.out.println("===== GESTIÓN DE SALAS =====");
-        System.out.println("1. Crear nueva sala");
-        System.out.println("2. Listar salas");
-        System.out.println("3. Modificar sala");
-        System.out.println("4. Eliminar sala");
-        System.out.println("0. Volver al menú principal");
-        System.out.print("Selecciona opción: ");
+        System.out.println("""
+                    ===== GESTIÓN DE SALAS =====
+                        1. Crear nueva sala
+                        2. Listar salas
+                        3. Modificar sala
+                        4. Eliminar sala
+                        0. Volver al menú principal
+                        Selecciona opción:
+                      """);
         return scanner.nextInt();
+    }
+    public int showPlayersMenu(){
+    System.out.println("""
+            ====GESTION DE JUGADORES====
+                1.Otorgar certificados
+                2.Subscribir a la newsletter
+            """);
+       return scanner.nextInt();
+    }
+
+    public int showInventoryMenu(){
+        System.out.println("""
+            ====GESTION DE INVENTARIO====
+                1.Mostrar el inventario
+                2.Mostrar el  valor total del inventario
+            """);
+        return scanner.nextInt();
+    }
+    public Difficulty selectDifficulty() {   //----------------Este metodo deberia ir aqui o en el controller de room???
+        System.out.println("Selecciona dificultad:");
+        Difficulty[] difficulties = Difficulty.values();
+        for (int i = 0; i < difficulties.length; i++) {
+            System.out.println((i + 1) + ". " + difficulties[i]);
+        }
+        System.out.print("Opción: ");
+        int choice = scanner.nextInt() - 1;
+        return difficulties[choice];
     }
 }

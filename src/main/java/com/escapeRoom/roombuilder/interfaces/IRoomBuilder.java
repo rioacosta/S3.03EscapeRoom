@@ -6,13 +6,14 @@ import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 public interface IRoomBuilder {
     IRoomBuilder setIdEscapeRoom_ref(int idEscapeRoom_ref);
     IRoomBuilder setName(String name);
-    IRoomBuilder addHints(Hint hints);
-    IRoomBuilder addDecorations(Decoration decorations);
+    IRoomBuilder setHints(List<Hint> hints);
+    IRoomBuilder setDecorations(List<Decoration> decorations);
     IRoomBuilder setDificulty(Difficulty dificulty);
     IRoomBuilder setPrice(BigDecimal price);
     Room build();
