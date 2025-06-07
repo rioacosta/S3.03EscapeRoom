@@ -10,9 +10,10 @@ public class DatabaseConnection {
     private Connection connection;
     private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
+    // change this to your personal credentials
     private static final String URL = "jdbc:mysql://localhost:3306/escaperoomdb";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "654321Hola";
+    private static final String PASSWORD = "pistacho";
 
     private DatabaseConnection() {
         try {
