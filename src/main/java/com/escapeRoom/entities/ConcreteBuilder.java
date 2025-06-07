@@ -37,7 +37,7 @@ public class ConcreteBuilder implements IRoomBuilder {
         }
         this.name = name;
         return this;
-    };
+    }
 
     @Override
     public IRoomBuilder setHints(List<Hint> hints) {
@@ -65,7 +65,7 @@ public class ConcreteBuilder implements IRoomBuilder {
         }
         this.dificulty = dificulty;
         return this;
-    };
+    }
 
     @Override
     public IRoomBuilder setPrice(BigDecimal price){
@@ -74,7 +74,7 @@ public class ConcreteBuilder implements IRoomBuilder {
         }
         this.price = price;
         return this;
-    };
+    }
 
     @Override
     public Room build(){
@@ -82,5 +82,5 @@ public class ConcreteBuilder implements IRoomBuilder {
         return new Room(idEscapeRoom_ref, name, dificulty,
                 price, hints, decorations);
 
-    };
+    }
 }

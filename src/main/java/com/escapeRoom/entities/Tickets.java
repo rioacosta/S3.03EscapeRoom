@@ -1,10 +1,13 @@
 package com.escapeRoom.entities;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Getter
 public class Tickets {
-    private int idTickets;  // Campo añadido
+    private int idTickets;
     private int idRoom;
     private int idPlayer;
     private LocalDate boughtOn;
@@ -27,20 +30,11 @@ public class Tickets {
         setPrice(price);
     }
 
-    // Getters y Setters con validación
-    public int getIdTickets() {
-        return idTickets;
-    }
-
     public void setIdTickets(int idTickets) {
         if (idTickets <= 0) {
             throw new IllegalArgumentException("ID inválido");
         }
         this.idTickets = idTickets;
-    }
-
-    public int getIdRoom() {
-        return idRoom;
     }
 
     public void setIdRoom(int idRoom) {
@@ -50,19 +44,11 @@ public class Tickets {
         this.idRoom = idRoom;
     }
 
-    public int getIdPlayer() {
-        return idPlayer;
-    }
-
     public void setIdPlayer(int idPlayer) {
         if (idPlayer <= 0) {
             throw new IllegalArgumentException("ID Player inválido");
         }
         this.idPlayer = idPlayer;
-    }
-
-    public LocalDate getBoughtOn() {
-        return boughtOn;
     }
 
     public void setBoughtOn(LocalDate boughtOn) {
@@ -73,10 +59,6 @@ public class Tickets {
             throw new IllegalArgumentException("Fecha no puede ser futura");
         }
         this.boughtOn = boughtOn;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
     }
 
     public void setPrice(BigDecimal price) {

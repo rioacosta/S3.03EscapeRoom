@@ -48,7 +48,6 @@ public class EscapeRoomHandler {
                 break;
                 case 3 -> ticketController.handleRoomOperations();
 
-
              */
             }
 

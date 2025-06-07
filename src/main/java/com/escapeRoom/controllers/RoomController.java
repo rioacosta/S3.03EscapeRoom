@@ -29,24 +29,14 @@ public class RoomController {
             option = menuManager.showRoomMenu();
 
             switch (option) {
-                case 1:
-                    createRoom();
-                    break;
-                case 2:
-                    List<Room> rooms = roomHandler.getAllRooms();
-                    if (rooms.isEmpty()) {
-                        System.out.println("No hay salas registradas actualmente.");
-                    } else {
-                        System.out.println("===== LISTADO DE SALAS =====");
-                        rooms.forEach(System.out::println);
-                    }
-                    break;
-                case 3:
-                    updateRoom();
-                    break;
-                case 4:
-                    deleteRoom();
-                    break;
+                case 1 -> createRoom();
+
+                case 2 -> listAllRooms();
+
+                case 3 -> updateRoom();
+
+                case 4 -> deleteRoom();
+
             }
         } while (option != 0);
     }
@@ -88,6 +78,14 @@ public class RoomController {
 
         }
     }
-
+    private void listAllRooms(){
+        List<Room> rooms = roomHandler.getAllRooms();
+        if (rooms.isEmpty()) {
+            System.out.println("No hay salas registradas actualmente.");
+        } else {
+            System.out.println("===== LISTADO DE SALAS =====");
+            rooms.forEach(System.out::println);
+        }
+    }
 
 }
