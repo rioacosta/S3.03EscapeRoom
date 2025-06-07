@@ -15,8 +15,9 @@ public class TicketMenu {
     private MySQLTicketDAO ticketDAO = new MySQLTicketDAO(dbConnection);
     TicketHandler ticketHandler = new TicketHandler(ticketDAO);
 
+    private int selection = 0;
+
     public void runTicketMenu() {
-        int selection = 0;
 
         do {
             try {
@@ -26,9 +27,8 @@ public class TicketMenu {
                         3 - Calcular beneficio por venta de tickets
                         4 - Volver al menú principal""");
 
-                selection = scanner.nextInt();
-                scanner.nextLine();
-                InputUtils.getValidInt(selection);
+                String input = scanner.nextLine();
+                selection = checkInput(input);
 
                 switch (selection) {
                     case 1:
@@ -38,14 +38,15 @@ public class TicketMenu {
                         ticketHandler.deleteTicket();
                         break;
                     case 3:
-                        ticketHandler.calculateTotalProfit();
+                        System.out.println(ticketHandler.calculateTotalProfit() + " euros de beneficio total");
+                        // ticketHandler.calculateTotalProfit();
                         break;
                     case 4:
                         // TODO
                         // enviar al menú principal
                         break;
                     default:
-                        System.err.println("Error: El número introducido es incorrecto");
+                        System.err.println("Error: El número introducido debe ser del 1 al 4");
                 }
             } catch (EmptyInputException | IllegalArgumentException e) {
                 System.err.println(e.getMessage());
@@ -53,4 +54,16 @@ public class TicketMenu {
         } while (selection != 4);
     }
 
+    public int checkInput(String input) {
+        InputUtils.checkEmptyInput(input);
+
+        try {
+            selection = Integer.parseInt(input);
+            InputUtils.getValidInt(selection);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Error: Debes introducir un número");
+        }
+
+        return selection;
+    }
 }

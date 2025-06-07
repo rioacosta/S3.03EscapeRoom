@@ -55,7 +55,9 @@ public class TicketHandler {
 
         List<Tickets> tickets = ticketDAO.findAll();
         for (Tickets ticket : tickets) {
-            System.out.println(ticket.getIdTickets());
+            // estaría bien que mostrara el nombre del jugador, no el número
+            System.out.println(ticket.getIdTickets() + " - Vendido aljugador num " + ticket.getIdPlayer()
+                    + ". Precio de " + ticket.getPrice());
         }
 
         int newTicketId = scanner.nextInt();
@@ -81,29 +83,5 @@ public class TicketHandler {
 
         return totalProfit;
     }
-
-// CREO QUE ESTO NO LO NECESITO PORQUE HAGO LA VALIDACIÓN DE OTRA FORMA, PERO DEJAR POR SI ACASO DE MOMENTO
-
-//    public boolean ticketIsValid(Tickets ticket) {
-//        if(ticket == null || ticket.getIdRoom() <= 0 || ticket.getIdPlayer() <= 0 ||
-//            ticket.getBoughtOn() == null || ticket.getPrice() == null) {
-//                throw new NullOrEmptyException("Datos del ticket inválidos");
-//        }
-//        return ticketDao.create(ticket);
-//    }
-
-//    public boolean findTicketById(Integer id) {
-//        if(id == null) {
-//            throw new NullOrEmptyException("Id del ticket inválido");
-//        }
-//        return ticketDao.existsById(id);
-//    }
-//
-//    public boolean deleteTicket(Integer id) {
-//        if(!findTicketById(id)) {
-//            throw new NullOrEmptyException("El ticket no existe");
-//        }
-//        return ticketDao.deleteById(id);
-//    }
 
 }
