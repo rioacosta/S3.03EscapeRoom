@@ -22,17 +22,51 @@ public class RoomInputCollector {
         System.out.println("=====CREAR NUEVA SALA=====");
 
         System.out.println("ID del escapeRoom");
-        int idEscapeRoom_ref = scanner.nextInt();
+        int idEscaperoom_ref = scanner.nextInt();
         scanner.nextLine();
 
         System.out.println("Nombre de la sala");
         String name = scanner.next();
 
-        System.out.print("Precio: ");
-        BigDecimal price = BigDecimal.valueOf(scanner.nextDouble());
+        BigDecimal price;
+        while (true) {
+            try {
+                System.out.print("Precio base: ");
+                String input = scanner.nextLine().trim();
 
-        Difficulty difficulty = menuManager.selectDifficulty();
-        scanner.nextLine();
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("El precio no puede estar vacío.");
+                }
+
+
+                input = input.replace(",", ".");
+
+                price = new BigDecimal(input);
+
+                if (price.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("El precio debe ser mayor a 0.");
+                }
+
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Formato inválido. Usá números como 12.5");
+            } catch (IllegalArgumentException e) {
+                System.out.println("  " + e.getMessage());
+            }
+        }
+
+
+
+        Difficulty difficulty;
+        do {
+            difficulty = menuManager.selectDifficulty();
+            if (difficulty == null) {
+                System.out.println("Seleccione una dificultad válida");
+            }
+        } while (difficulty == null);
+
+
+
 
         List<Hint> hintsList = new ArrayList<>();
         System.out.print("¿Cuántas pistas querés agregar?: ");
@@ -58,15 +92,16 @@ public class RoomInputCollector {
             System.out.print("Precio de la decoración: ");
             BigDecimal decoPrice = new BigDecimal(scanner.nextLine());
 
+
             decorations.add(new Decoration(desc, decoPrice));
         }
         return new ConcreteBuilder()
-                .setIdEscapeRoom_ref(idEscapeRoom_ref)
+                .setIdEscaperoom_ref(idEscaperoom_ref)
                 .setName(name)
+                .setDifficulty(difficulty)
+                .setPrice(price)
                 .setHints(hintsList)
                 .setDecorations(decorations)
-                .setDificulty(difficulty)
-                .setPrice(price)
                 .build();
     }
     public int collectRoomIdForUpdate() {
@@ -78,6 +113,5 @@ public class RoomInputCollector {
         System.out.print("ID de la sala a eliminar: ");
         return scanner.nextInt();
     }
-
 
 }

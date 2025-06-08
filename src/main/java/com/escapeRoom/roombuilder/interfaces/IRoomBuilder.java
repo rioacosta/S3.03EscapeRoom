@@ -10,11 +10,11 @@ import java.util.List;
 
 
 public interface IRoomBuilder {
-    IRoomBuilder setIdEscapeRoom_ref(int idEscapeRoom_ref);
+    IRoomBuilder setIdEscaperoom_ref(int idEscapeRoom_ref);
     IRoomBuilder setName(String name);
     IRoomBuilder setHints(List<Hint> hints);
     IRoomBuilder setDecorations(List<Decoration> decorations);
-    IRoomBuilder setDificulty(Difficulty dificulty);
+    IRoomBuilder setDifficulty(Difficulty difficulty);
     IRoomBuilder setPrice(BigDecimal price);
     Room build();
 }

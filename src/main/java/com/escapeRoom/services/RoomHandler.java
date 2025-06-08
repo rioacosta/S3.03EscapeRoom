@@ -1,26 +1,30 @@
 package com.escapeRoom.services;
 
+import com.escapeRoom.controllers.RoomController;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
-import com.escapeRoom.exceptions.InvalidSearchName;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.exceptions.NullOrEmptyException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class RoomHandler {
     private final IGenericDAO<Room, Integer> roomDAO;
+    private static final Logger logger = Logger.getLogger(RoomController.class.getName());
 
     public RoomHandler(IGenericDAO<Room, Integer>roomDAO){
         this.roomDAO = roomDAO;
-
     }
 
     public boolean createRoom(Room room){
-        if(room == null || room.getName() == null || room.getIdRoom() == 0) {
+
+        if(room == null || room.getName() == null ) {
             throw new NullOrEmptyException("Datos de la sala inválidos");
         }
+
         return roomDAO.create(room);
+
     }
 
     //tema exceptions revisarlos y personalizarlos

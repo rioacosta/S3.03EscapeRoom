@@ -8,14 +8,21 @@ import com.escapeRoom.manager.MenuManager;
 import com.escapeRoom.services.RoomHandler;
 
 
+import java.util.logging.Logger;
+
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+
+
+
 
 public class RoomController {
     private RoomHandler roomHandler;
     private RoomInputCollector inputCollector;
     private MenuManager menuManager;
+    private static final Logger logger = Logger.getLogger(RoomController.class.getName());
 
     public RoomController(Scanner scanner) {
         this.roomHandler = new RoomHandler(new MySQLRoomDAO(DatabaseConnection.getInstance()));
@@ -24,6 +31,8 @@ public class RoomController {
     }
 
     public void handleRoomOperations() {
+
+
         int option;
         do {
             option = menuManager.showRoomMenu();
@@ -36,6 +45,9 @@ public class RoomController {
                 case 3 -> updateRoom();
 
                 case 4 -> deleteRoom();
+
+
+
 
             }
         } while (option != 0);
@@ -78,6 +90,8 @@ public class RoomController {
 
         }
     }
+
+
     private void listAllRooms(){
         List<Room> rooms = roomHandler.getAllRooms();
         if (rooms.isEmpty()) {

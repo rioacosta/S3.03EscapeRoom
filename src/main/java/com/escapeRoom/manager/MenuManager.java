@@ -34,6 +34,7 @@ public class MenuManager {
                         0. Volver al menú principal
                         Selecciona opción:
                       """);
+        
         return scanner.nextInt();
     }
     public int showPlayersMenu(){
