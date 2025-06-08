@@ -25,7 +25,7 @@ CREATE TABLE `room` (
   `idRoom` int(11) NOT NULL,
   `idEscaperoom_ref` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `dificulty` enum('EASY','MEDIUM','HARD') NOT NULL,
+  `difficulty` enum('EASY','MEDIUM','HARD') NOT NULL,
   `price` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -68,7 +68,7 @@ CREATE TABLE `tickets` (
   `idRoom` int(11) DEFAULT NULL,
   `idPlayer` int(11) DEFAULT NULL,
   `boughtOn` datetime DEFAULT NULL,
-  `price` decimal(2,0) DEFAULT NULL
+  `price` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 

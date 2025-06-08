@@ -15,7 +15,7 @@ INSERT INTO `escaperoom` (`idEscaperoom`, `name`) VALUES
 (1, 'Escape Room');
 
 
-INSERT INTO `room` (`idRoom`, `idEscaperoom_ref`, `name`, `dificulty`, `price`) VALUES
+INSERT INTO `room` (`idRoom`, `idEscaperoom_ref`, `name`, `difficulty`, `price`) VALUES
 (1, 1, 'Sala Disney', 'EASY', 100.00);
 
 
