@@ -61,6 +61,7 @@ public class MenuManager {
                     2. Suscribir a la newsletter
                     3. Desuscribir jugador de la newsletter
                     4. Notificar a los jugadores de un evento
+                    5. Listar jugadores
                     0. Volver al menu principal
                 """);
 
@@ -121,7 +122,7 @@ public class MenuManager {
         }
     }
 
-    private int getValidatedIntegerInput() {
+    public int getValidatedIntegerInput() {
         while (true) {
             System.out.print("> ");
             String line = scanner.nextLine();

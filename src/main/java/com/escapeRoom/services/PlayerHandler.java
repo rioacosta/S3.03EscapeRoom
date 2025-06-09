@@ -44,6 +44,9 @@ public class PlayerHandler {
         }
         return playerDao.findById(id);
     }
+    public void showAllPlayers() {
+        playerDao.findAll().forEach(System.out::println);
+    }
 
     public Optional<Player> findPlayerByName(String name) {
         if(name == null || name.isEmpty()) {       throw new  NullOrEmptyException("Jugador no encontrado");

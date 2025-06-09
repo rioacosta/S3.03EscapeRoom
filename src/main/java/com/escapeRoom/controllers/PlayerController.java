@@ -33,6 +33,7 @@ public class PlayerController {
                 case 4 -> {       System.out.println("Escribe a continuacion el mensaje que quieres compartir: ");
                         playerHandler.notifySubscribers(scanner.nextLine());
                 }
+                case 5 -> playerHandler.showAllPlayers();
 
             }
         } while (option != 0);

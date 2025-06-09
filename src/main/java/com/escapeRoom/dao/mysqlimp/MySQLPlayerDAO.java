@@ -131,7 +131,7 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
 
     private Player mapResultSetToPlayer(ResultSet rs) throws SQLException {
         Player player = new Player(
-            //rs.getInt("idPlayer"),
+            rs.getInt("idPlayer"),
             rs.getString("name"),
             rs.getString("email")
         );
