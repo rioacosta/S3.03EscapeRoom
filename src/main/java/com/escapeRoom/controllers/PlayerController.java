@@ -33,13 +33,15 @@ public class PlayerController {
                 case 2 -> playerHandler.assignCertificateToPlayer(getPlayer().getName());
 
                 case 3 -> playerHandler.unsbscribePlayer(getPlayer());
+
+                case 4 -> playerHandler.notifySubscribers(scanner.nextLine());
             }
         } while (option != 0);
     }
 
     public Player getPlayer(){
         System.out.print("Introduzca el nombre del jugador: ");
-        String playerName = scanner.next();
+        String playerName = scanner.nextLine();
         //scanner.nextLine(); ------------sera necesario limpiar buffer?
 
         Optional<Player> playerOpt = playerHandler.findPlayerByName(playerName);

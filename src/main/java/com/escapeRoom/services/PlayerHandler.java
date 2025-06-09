@@ -33,6 +33,10 @@ public class PlayerHandler {
         }
     }
 
+    public void notifySubscribers (String notification) {
+    newsletter.notifyObservers(notification);
+    }
+
     public Optional<Player> findPlayerById(int id) {
         if(id <= 0) {
             throw new IllegalArgumentException("ID de jugador inválido");
