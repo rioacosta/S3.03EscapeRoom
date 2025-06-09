@@ -4,7 +4,9 @@ import com.escapeRoom.notifications.interfaces.Subscriber;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
+import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,16 +19,27 @@ public class Player implements Subscriber {
     private String email;
     private List<Certificate> certificates;
 
-    public Player(String name, String email) {   //
+    public Player(int idPlayer, String name, String email) {   //
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
         // fuera de aquí, usando los métodos que hay abajo en este documento
-        //InputUtils.getValidInt(idPlayer); comentado porque la base de datos ya esta generandoli
+        InputUtils.getValidInt(idPlayer); //comentado porque la base de datos ya esta generandoli
         InputUtils.getValidString(name);
         InputUtils.getValidEmail(email);
         playersCount++;
         this.idPlayer = playersCount;
         this.name = name;
         this.email = email;
+        this.certificates = new ArrayList<>();
+    }
+
+    public Player( String name, String email) {
+        InputUtils.getValidString(name);
+        InputUtils.getValidEmail(email);
+        playersCount++;
+        this.idPlayer = playersCount;
+        this.name = name;
+        this.email = email;
+        this.certificates = new ArrayList<>();
     }
 
     public void setCertificate(Certificate certificate) {
@@ -56,5 +69,10 @@ public class Player implements Subscriber {
     @Override
     public void update(String newsletterUpdate) {
         System.out.println("Nueva notificación de newsletter :D");
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador: " + name + "con ID: " + idPlayer + ", email: " + email + ", certificados: " + certificates;
     }
 }

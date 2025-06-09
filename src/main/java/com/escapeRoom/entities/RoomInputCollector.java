@@ -9,16 +9,31 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/*
 public class RoomInputCollector {
     private Scanner scanner;
     private MenuManager menuManager;
+
 
     public RoomInputCollector(Scanner scanner, MenuManager menuManager) {
         this.scanner = scanner;
         this.menuManager = menuManager;
     }
 
+
+    }
+
+
+
+ */
+    public class RoomInputCollector {
+        private final Scanner scanner;
+        private final MenuManager menuManager;
+
+        public RoomInputCollector(Scanner scanner, MenuManager menuManager) {
+            this.scanner = scanner;
+            this.menuManager = menuManager;
+        }
     public Room CollectNewRoomData() {
         System.out.println("=====CREAR NUEVA SALA=====");
 
@@ -169,5 +184,16 @@ public class RoomInputCollector {
         return scanner.nextInt();
     }
 
+    public int collectRoomIdForElementDelete() {
+        System.out.print("ID de la sala a eliminar elementos: ");
+        return menuManager.getValidatedIntegerInput();
+    }
+
+    public int collectElementIdToDelete() {
+        System.out.print("ID del elemento a eliminar: ");
+        return menuManager.getValidatedIntegerInput();
+    }
 }
+
+
 
