@@ -1,6 +1,7 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 import com.escapeRoom.exceptions.*;
 import com.escapeRoom.roombuilder.interfaces.IRoomBuilder;
 
@@ -16,6 +17,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     private List<Hint> hints;
     private List<Decoration>decorations;
     private Difficulty difficulty;
+    private Theme theme;
     private BigDecimal price;
 
     public ConcreteBuilder() {
@@ -64,6 +66,15 @@ public class ConcreteBuilder implements IRoomBuilder {
     }
 
     @Override
+    public IRoomBuilder setTheme(Theme theme){
+        if(theme == null){
+            throw new InvalidDificultyException("Debe tener una dificultad añadida");
+        }
+        this.theme = theme;
+        return this;
+    }
+
+    @Override
     public IRoomBuilder setPrice(BigDecimal price){
         if(price.compareTo(BigDecimal.ZERO) == 0){
             throw new InvalidPriceException("El precio no puede ser cero o negativo");
@@ -76,7 +87,7 @@ public class ConcreteBuilder implements IRoomBuilder {
     public Room build(){
 
         return new Room(idEscaperoom_ref, name, difficulty,
-                price, hints, decorations);
+                price,theme, hints, decorations);
 
     }
 }

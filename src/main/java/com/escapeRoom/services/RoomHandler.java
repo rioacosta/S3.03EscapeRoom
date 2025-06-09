@@ -2,9 +2,15 @@ package com.escapeRoom.services;
 
 import com.escapeRoom.controllers.RoomController;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Decoration;
+import com.escapeRoom.entities.Hint;
 import com.escapeRoom.entities.Room;
+import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 import com.escapeRoom.exceptions.NullOrEmptyException;
+import com.escapeRoom.entities.RoomInputCollector;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -15,6 +21,7 @@ public class RoomHandler {
 
     public RoomHandler(IGenericDAO<Room, Integer>roomDAO){
         this.roomDAO = roomDAO;
+
     }
 
     public boolean createRoom(Room room){
@@ -51,6 +58,32 @@ public class RoomHandler {
         // Actualizar en base de datos
         return roomDAO.update(room);
     }
+
+    public boolean updateRoomName(int roomId, String newName) {
+        return roomDAO.updateRoomName(roomId, newName);
+    }
+
+    public boolean updateRoomPrice(int roomId, BigDecimal newPrice) {
+        return roomDAO.updateRoomPrice(roomId, newPrice);
+    }
+
+    public boolean updateRoomDifficulty(int roomId, Difficulty difficulty) {
+        return roomDAO.updateRoomDifficulty(roomId, difficulty);
+    }
+
+    public boolean updateRoomTheme(int roomId, Theme theme) {
+        return roomDAO.updateRoomTheme(roomId, theme);
+    }
+
+    public boolean updateRoomHint(int roomId, Hint hint) {
+        return roomDAO.updateRoomHint(roomId, hint);
+    }
+
+    public boolean updateRoomDecoration(int roomId, Decoration decoration) {
+        return roomDAO.updateRoomDecoration(roomId, decoration);
+    }
+
+
 
     public boolean deleteRoom(int id){
 

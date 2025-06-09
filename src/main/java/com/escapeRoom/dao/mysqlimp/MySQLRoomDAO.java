@@ -6,6 +6,7 @@ import com.escapeRoom.entities.Decoration;
 import com.escapeRoom.entities.Hint;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -42,7 +43,7 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
             return false;
         }
 
-        String sql = "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, hint, decoration) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, theme) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 
@@ -50,10 +51,8 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
             stmt.setString(2, room.getName());
             stmt.setString(3, room.getDifficulty().name());
             stmt.setBigDecimal(4, room.getPrice());
-            stmt.setString(5, String.join(", ", room.getHints().stream()
-                    .map(Hint::toString).toList()));
-            stmt.setString(6, String.join( ", ", room.getDecorations().stream()
-                    .map(Decoration::toString).toList()));
+            stmt.setString(5, room.getTheme().name());
+
 
 
             int rowsAffected = stmt.executeUpdate();
@@ -81,6 +80,37 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
 
         }
 
+    public int saveAndReturnId(Room room) {
+        if (!escaperoomExists(room.getIdEscaperoom_ref())) {
+            return -1;
+        }
+
+        String sql = "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, theme) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, room.getIdEscaperoom_ref());
+            stmt.setString(2, room.getName());
+            stmt.setString(3, room.getDifficulty().name());
+            stmt.setBigDecimal(4, room.getPrice());
+            stmt.setString(5, room.getTheme().name());
+
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Acá obtenés el ID generado
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error insertando la sala y obteniendo ID", e);
+        }
+        return -1;
+    }
+
+
     @Override
     public Optional<Room> findById(Integer id) {
         String sql = "SELECT * FROM room WHERE idRoom = ?";
@@ -88,8 +118,18 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(mapResultSetToRoom(rs));
+                   System.out.println("Cargando decoraciones para roomId = " + id);
+
+                    MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
+                    MySQLDecorationDAO decoDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
+
+
+                    System.out.println(" decoraciones encontradas" + decoDAO.findByRoomId(id).size());
+                    return Optional.of(mapResultSetToRoom(rs,hintDAO,decoDAO));
+
+
                 }
+
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error encontrando la sala por ID: " + id, e);
@@ -141,20 +181,26 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
         }
     }
 
-    @Override
-    public List<Room> findAll() {
-        List<Room> rooms = new ArrayList<>();
-        String sql = "SELECT * FROM room";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                rooms.add(mapResultSetToRoom(rs));
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error recuperando todas las salas", e);
+@Override
+public List<Room> findAll() {
+    List<Room> rooms = new ArrayList<>();
+    String sql = "SELECT * FROM room";
+    try (Statement stmt = this.connection.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
+        MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
+
+
+        while (rs.next()) {
+            Room room = mapResultSetToRoom(rs, hintDAO, decorationDAO);
+            rooms.add(room);
         }
-        return rooms;
+    } catch (SQLException e) {
+        logger.log(Level.SEVERE, "Error recuperando todas las salas", e);
     }
+    return rooms;
+}
 
     @Override
     public boolean existsById(Integer id) {
@@ -169,31 +215,21 @@ public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
             return false;
         }
     }
-    private Room mapResultSetToRoom(ResultSet rs) throws SQLException {
+
+
+    private Room mapResultSetToRoom(ResultSet rs, MySQLHintDAO hintDAO, MySQLDecorationDAO decoDAO) throws SQLException {
         Room room = new Room();
-        room.setIdRoom(rs.getInt("idRoom"));
+        int roomId = rs.getInt("idRoom");
+
+        room.setIdRoom(roomId);
         room.setIdEscaperoom_ref(rs.getInt("idEscaperoom_ref"));
         room.setName(rs.getString("name"));
         room.setDifficulty(Difficulty.valueOf(rs.getString("difficulty")));
+        room.setTheme(Theme.valueOf(rs.getString("theme")));
         room.setPrice(rs.getBigDecimal("price"));
 
-
-        String hintStr = rs.getString("hint");
-        if (hintStr != null && !hintStr.isBlank()) {
-            List<Hint> hints = Arrays.stream(hintStr.split(",\\s*"))
-                    .map(Hint::new)
-                    .collect(Collectors.toList());
-            room.setHints(hints);
-        }
-
-
-        String decorationStr = rs.getString("decoration");
-        if (decorationStr != null && !decorationStr.isBlank()) {
-            List<Decoration> decorations = Arrays.stream(decorationStr.split(",\\s*"))
-                    .map(desc -> new Decoration(desc, BigDecimal.ZERO))
-                    .collect(Collectors.toList());
-            room.setDecorations(decorations);
-        }
+        room.setHints(hintDAO.findByRoomId(roomId));
+        room.setDecorations(decoDAO.findByRoomId(roomId));
 
         return room;
     }

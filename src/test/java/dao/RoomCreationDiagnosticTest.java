@@ -25,7 +25,7 @@ public class RoomCreationDiagnosticTest {
         System.out.println("Dificultad: " + room.getDifficulty());
         System.out.println("Precio: " + room.getPrice());
         System.out.println("Cantidad de hints: " + room.getHints().size());
-        System.out.println("Cantidad de decoraciones: " + room.getDecorationItems().size());
+        System.out.println("Cantidad de decoraciones: " + room.getDecorations().size());
 
         // 2. Segunda prueba: Persistencia en BD
         System.out.println("\n=== PRUEBA DE PERSISTENCIA ===");

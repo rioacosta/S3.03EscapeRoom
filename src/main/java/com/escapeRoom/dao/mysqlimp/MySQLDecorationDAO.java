@@ -155,4 +155,22 @@ public class MySQLDecorationDAO implements IGenericDAO<Decoration, Integer> {
         decoration.setPrice(rs.getBigDecimal("price"));
         return decoration;
     }
+
+    public List<Decoration> findByRoomId(int roomId) {
+        List<Decoration> decorations = new ArrayList<>();
+        String sql = "SELECT * FROM decoration WHERE idRoom_ref = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, roomId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                decorations.add(mapResultSetToDecoration(rs));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error obteniendo decoraciones para la sala: " + roomId, e);
+        }
+        return decorations;
+    }
+
+
+
 }

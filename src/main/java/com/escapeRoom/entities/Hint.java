@@ -14,25 +14,36 @@ import java.util.Scanner;
 public class Hint {
 
     private int idHint;
-    private int idRoom;
+    private int idRoom_ref;
     private String description;
     private Theme theme;
     private BigDecimal price;
 
-    public Hint(int idHint, int idRoom, String description, Theme theme, BigDecimal price) {
+    public Hint(int idHint, int idRoom_ref, String description, Theme theme, BigDecimal price) {
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
         // fuera de aquí, usando los métodos que hay abajo en este documento
         InputUtils.getValidInt(idHint);
-        InputUtils.getValidInt(idRoom);
+        InputUtils.getValidInt(idRoom_ref);
         InputUtils.getValidString(description);
         InputUtils.getValidBigDecimal(price);
 
         this.idHint = idHint;
-        this.idRoom = idRoom;
+        this.idRoom_ref = idRoom_ref;
         this.description = description;
         this.theme = theme;
         this.price = price;
     }
+    public Hint(String description, Theme theme, BigDecimal price) {
+        InputUtils.getValidString(description);
+        InputUtils.getValidBigDecimal(price);
+
+        this.description = description;
+        this.theme = theme;
+        this.price = price;
+    }
+
+
+
     public Hint(String description) {
         this.description = description;
         this.price = BigDecimal.ZERO;

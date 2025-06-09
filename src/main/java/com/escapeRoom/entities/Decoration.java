@@ -35,8 +35,14 @@ public class Decoration {
         this.price = price;
     }
 
-    public Decoration(String description, BigDecimal price) {
+    public Decoration(String description, String material, BigDecimal price) {
+        InputUtils.getValidString(description);
+        InputUtils.getValidString(material);
+        InputUtils.getValidBigDecimal(price);
+
+
         this.description = description;
+        this.material = material;
         this.price = price;
     }
 

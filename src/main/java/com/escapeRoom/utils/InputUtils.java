@@ -18,7 +18,7 @@ public class InputUtils {
     }
 
     public static void getValidInt(Integer input) {
-        if (input <= 0) {
+        if (input < 0) {
             throw new IllegalArgumentException("El número no puede ser negativo");
         }
     }

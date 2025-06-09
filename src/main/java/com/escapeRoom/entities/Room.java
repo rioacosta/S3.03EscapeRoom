@@ -1,6 +1,7 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class Room {
     private List<Hint> hints;
     private List<Decoration> decorations;
     private Difficulty difficulty;
+    private Theme theme;
     private BigDecimal price;
 
 
@@ -27,11 +29,12 @@ public class Room {
     }
 
     Room(int idEscaperoom_ref, String name, Difficulty difficulty,
-         BigDecimal price, List<Hint> hints, List<Decoration> decorations) {
+         BigDecimal price, Theme theme, List<Hint> hints, List<Decoration> decorations) {
         this.idEscaperoom_ref = idEscaperoom_ref;
         this.name = name;
         this.difficulty = difficulty;
         this.price = price;
+        this.theme = theme;
         this.hints = hints != null ? hints : new ArrayList<>();
         this.decorations = decorations != null ? decorations : new ArrayList<>();
     }
@@ -71,6 +74,7 @@ public class Room {
                 ", hints=" + hints +
                 ", decorations=" + decorations +
                 ", difficulty=" + difficulty +
+                ", theme= " + theme +
                 ", price=" + price +
                 '}';
     }
