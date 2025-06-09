@@ -26,6 +26,7 @@ public class EscapeRoomHandler {
         this.roomController = new RoomController(scanner);
         this.playerController = new PlayerController(scanner);
         this.ticketController = new TicketController(scanner);
+
     }
 
     public static EscapeRoomHandler getINSTANCE() {
@@ -48,7 +49,7 @@ public class EscapeRoomHandler {
             switch (option) {
                 case 1 -> roomController.handleRoomOperations();
 
-                //case 2 -> playerController.handleRoomOperations();
+                case 2 -> playerController.handlePlayerOperations();
               
                 case 3 -> ticketController.handleTicketOperations();
 

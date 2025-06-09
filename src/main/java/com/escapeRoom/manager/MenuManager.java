@@ -3,16 +3,17 @@ package com.escapeRoom.manager;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuManager {
     private Scanner scanner;
 
-    public MenuManager(Scanner scanner){
+    public MenuManager(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public int showMainMenu(){
+    public int showMainMenu() {
         System.out.println("""
                 ======ESCAPE ROOM MANAGEMENT=====
                     1- GESTIONAR SALAS
@@ -22,7 +23,8 @@ public class MenuManager {
                     0- SALIR
                 Seleccionar una opción:
                 """);
-        return scanner.nextInt();
+
+        return getValidatedIntegerInput();
     }
 
     public int showRoomMenu() {
@@ -35,12 +37,11 @@ public class MenuManager {
                         0. Volver al menú principal
                         Selecciona opción:
                       """);
-        
-        return scanner.nextInt();
+
+        return getValidatedIntegerInput();
     }
 
     public int showUpdateMenu() {
-
         System.out.println("""
                 ===== MODIFICAR SALAS =====
                     1. Cambiar nombre
@@ -51,17 +52,20 @@ public class MenuManager {
                     Selecciona opción:
                 """);
 
-        return scanner.nextInt();
-
+        return getValidatedIntegerInput();
     }
 
-    public int showPlayersMenu(){
-    System.out.println("""
+    public int showPlayersMenu() {
+        System.out.println("""
             ====GESTION DE JUGADORES====
-                1.Otorgar certificados
-                2.Subscribir a la newsletter
+                1. Otorgar certificados
+                2. Suscribir a la newsletter
+                3. Desuscribir jugador de la newsletter
+                4. Notificar a los jugadores de un evento
+                0. Volver al menu principal
             """);
-       return scanner.nextInt();
+
+        return getValidatedIntegerInput();
     }
 
     public int showTicketMenu() {
@@ -76,32 +80,63 @@ public class MenuManager {
 
 
     public int showInventoryMenu(){
+
         System.out.println("""
             ====GESTION DE INVENTARIO====
-                1.Mostrar el inventario
-                2.Mostrar el  valor total del inventario
+                1. Mostrar el inventario
+                2. Mostrar el valor total del inventario
             """);
-        return scanner.nextInt();
+
+        return getValidatedIntegerInput();
     }
-    public Difficulty selectDifficulty() {   //----------------Este metodo deberia ir aqui o en el controller de room???
+
+    public Difficulty selectDifficulty() {
         System.out.println("Selecciona dificultad:");
         Difficulty[] difficulties = Difficulty.values();
         for (int i = 0; i < difficulties.length; i++) {
             System.out.println((i + 1) + ". " + difficulties[i]);
         }
         System.out.print("Opción: ");
-        int choice = scanner.nextInt() - 1;
-        return difficulties[choice];
+        int choice = getValidatedIntegerInput();
+        if (choice > 0 && choice <= difficulties.length) {
+            return difficulties[choice - 1];
+        } else {
+            System.out.println("Opción inválida. Intente nuevamente.");
+            return selectDifficulty();
+        }
     }
 
-    public Theme selectTheme(){
-        System.out.println("Selecciona el tema");
+    public Theme selectTheme() {
+        System.out.println("Selecciona el tema:");
         Theme[] themes = Theme.values();
-        for (int i = 0; i <themes.length; i++){
-            System.out.println((i + 1) + ". "+themes[i]);
+        for (int i = 0; i < themes.length; i++) {
+            System.out.println((i + 1) + ". " + themes[i]);
         }
-        System.out.println("Opcion: ");
-        int choice = scanner.nextInt() - 1;
-        return themes[choice];
+        System.out.print("Opción: ");
+        int choice = getValidatedIntegerInput();
+        if (choice > 0 && choice <= themes.length) {
+            return themes[choice - 1];
+        } else {
+            System.out.println("Opción inválida. Intente nuevamente.");
+            return selectTheme();
+        }
+    }
+
+    /**
+     * Validates user input and ensures a valid integer is returned.
+     * If the input is invalid (e.g., non-integer), it prompts the user again.
+     */
+    private int getValidatedIntegerInput() {
+        while (true) {
+            try {
+                System.out.print("> "); // Input prompt
+                int input = scanner.nextInt();
+                scanner.nextLine(); // Consume the leftover newline
+                return input;
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Introduzca un número entero:");
+                scanner.nextLine(); // Consume the invalid input
+            }
+        }
     }
 }

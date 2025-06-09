@@ -2,6 +2,7 @@ package com.escapeRoom.entities;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
 
@@ -11,6 +12,7 @@ import java.util.Scanner;
 //@Builder
 @Getter
 @Setter
+@NoArgsConstructor
 public class Certificate {
 
     private int idCertificate;

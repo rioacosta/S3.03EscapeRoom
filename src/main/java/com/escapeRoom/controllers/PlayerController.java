@@ -2,54 +2,61 @@ package com.escapeRoom.controllers;
 
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
-import com.escapeRoom.entities.EscapeRoom;
 import com.escapeRoom.entities.Player;
-import com.escapeRoom.entities.RoomInputCollector;
-import com.escapeRoom.exceptions.NullOrEmptyException;
 import com.escapeRoom.manager.MenuManager;
 import com.escapeRoom.services.PlayerHandler;
 
-import java.util.Optional;
 import java.util.Scanner;
 
-public class PlayerController {   //---------------WORK IN PROGRESS----------------------------
-    /*
-    private PlayerHandler playerHandler;
-    private RoomInputCollector inputCollector;
-    private MenuManager menuManager;
-    private EscapeRoom escapeRoom = EscapeRoom.getInstance();
-    private Scanner scanner = new Scanner(System.in);
+public class PlayerController {
+    private final PlayerHandler playerHandler;
+    private final MenuManager menuManager;
+    private final Scanner scanner = new Scanner(System.in);
 
     public PlayerController(Scanner scanner){
         this.playerHandler = new PlayerHandler(new MySQLPlayerDAO(DatabaseConnection.getInstance()));
         this.menuManager = new MenuManager(scanner);
-        this.inputCollector = new RoomInputCollector(scanner, menuManager);
     }
+
     public void handlePlayerOperations() {
         int option;
         do {
-            option = menuManager.showRoomMenu();
+            option = menuManager.showPlayersMenu();
 
             switch (option) {
-                case 1 -> playerHandler.subscribePlayer();
+                case 1 -> playerHandler.assignCertificateToPlayer(getPlayerData().getName());
 
-                case 2 -> playerHandler.assignCertificateToPlayer();
+                case 2 -> playerHandler.subscribePlayer(getPlayerData());
+
+                case 3 -> playerHandler.unsbscribePlayer(getPlayerData());
+
+                case 4 -> playerHandler.notifySubscribers(scanner.nextLine());
+
             }
         } while (option != 0);
-    }
-    public Player getPlayerForSuscribe(String name) {
 
-        Optional<Player> player;
-        try {
-            player = playerHandler.findPlayerByName(name);
-            escapeRoom.getPlayers().get()
-        } catch (RuntimeException e) {
-            throw new NullOrEmptyException("El jugador no ha sido encontrado y no puede suscribirlo");
-        }
-        return player.isPresent();
     }
-    public Player getPlayerForCertificate(){
-        return
+
+    public Player getPlayerData(){
+        String playerName;
+        do {
+            System.out.print("Introduzca el nombre del jugador: ");
+            playerName = scanner.nextLine();
+            if (playerName.trim().isEmpty()) {
+                System.out.println("El nombre no puede estar vacío. Intente de nuevo.");
+            }
+        } while (playerName.trim().isEmpty());
+
+        String playerEmail;
+        do {
+            System.out.print("Introduzca el email del jugador: ");
+            playerEmail = scanner.nextLine();
+            if (!playerEmail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+                System.out.println("El correo electrónico no es válido. Intente de nuevo.");
+            }
+        } while (!playerEmail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"));
+
+        return new Player(playerName, playerEmail);
     }
-    */
+
 }
