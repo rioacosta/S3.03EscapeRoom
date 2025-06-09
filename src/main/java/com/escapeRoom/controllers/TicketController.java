@@ -37,8 +37,7 @@ public class TicketController {
                     case 2 -> ticketHandler.deleteTicket();
                     case 3 -> System.out.println(ticketHandler.calculateTotalProfit() + " euros de beneficio total");
                     //case 0 -> menuManager.showMainMenu();
-                    // comento porque me salta cada vez que le doy al 0
-                    // default -> System.err.println("Error: El número introducido debe ser del 1 al 4");
+                    //default -> System.err.println("Error: El número introducido debe ser del 1 al 4");
                 }
             } catch (EmptyInputException | IllegalArgumentException e) {
                 System.err.println(e.getMessage());

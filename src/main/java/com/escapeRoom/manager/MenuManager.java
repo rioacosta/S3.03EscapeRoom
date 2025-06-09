@@ -28,7 +28,11 @@ public class MenuManager {
 
     public int showRoomMenu() {
         System.out.println("""
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8ccac9c (TicketController menu loop normalized)
                     ===== GESTIÓN DE SALAS =====
                         1. Crear nueva sala
                         2. Listar salas
