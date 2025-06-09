@@ -3,6 +3,7 @@ package com.escapeRoom.controllers;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.entities.Player;
+import com.escapeRoom.exceptions.EmptyInputException;
 import com.escapeRoom.manager.MenuManager;
 import com.escapeRoom.services.PlayerHandler;
 
@@ -19,8 +20,9 @@ public class PlayerController {
     }
 
     public void handlePlayerOperations() {
-        int option;
+        int option = -1;
         do {
+            try {
             option = menuManager.showPlayersMenu();
 
             switch (option) {
@@ -34,10 +36,11 @@ public class PlayerController {
                         playerHandler.notifySubscribers(scanner.nextLine());
                 }
                 case 5 -> playerHandler.showAllPlayers();
-
+            }
+            } catch (EmptyInputException | IllegalArgumentException e) {
+                System.err.println(e.getMessage());
             }
         } while (option != 0);
-
     }
 
     public Player getPlayerData(){

@@ -69,20 +69,22 @@ public class RoomController {
             MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
             MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
 
-            int IdRoom = roomDAO.saveAndReturnId(room);
+            // Save the room and retrieve the generated idRoom
+            int idRoom = roomDAO.saveAndReturnId(room);
 
-            if (IdRoom > 0) {
+            if (idRoom > 0) {
+                // Ensure idRoom is assigned to Hints and Decorations before insertion
                 for (Hint hint : room.getHints()) {
-                    hint.setIdRoom_ref(IdRoom);
+                    hint.setIdRoom_ref(idRoom); // Assign the generated idRoom
                     hintDAO.create(hint);
                 }
 
                 for (Decoration decoration : room.getDecorations()) {
-                    decoration.setIdRoom_ref(IdRoom);
+                    decoration.setIdRoom_ref(idRoom); // Assign the generated idRoom
                     decorationDAO.create(decoration);
                 }
 
-                System.out.println("Sala creada exitosamente con ID: " + IdRoom);
+                System.out.println("Sala creada exitosamente con ID: " + idRoom);
             } else {
                 System.out.println("Error al guardar la sala.");
             }
