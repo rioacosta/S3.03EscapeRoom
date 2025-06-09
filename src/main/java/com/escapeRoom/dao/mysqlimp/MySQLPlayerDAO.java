@@ -135,7 +135,7 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             rs.getString("name"),
             rs.getString("email")
         );
-        //player.setIdPlayer(rs.getInt("idPlayer"));
+        player.setIdPlayer(rs.getInt("idPlayer"));
         player.setName(rs.getString("name"));
         player.setEmail(rs.getString("email"));
         return player;

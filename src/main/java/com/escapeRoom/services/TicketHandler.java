@@ -129,11 +129,17 @@ public class TicketHandler {
             System.out.println("¿Qué precio tiene?");
             BigDecimal price = InputUtils.readValidBigDecimal(scanner);
 
-            if (price.compareTo(BigDecimal.ZERO) > 0 && price.scale() <= 2) {
+            boolean positive = price.compareTo(BigDecimal.ZERO) > 0;
+            boolean validScale = price.scale() <= 2;
+            int integerDigits = price.precision() - price.scale();
+            boolean validIntegerDigits = integerDigits <= 3;
+
+            if (positive && validScale && validIntegerDigits && price.compareTo(new BigDecimal("999.99")) <= 0) {
                 return price;
             }
 
-            System.err.println("Precio inválido. Debe ser positivo y tener máximo dos decimales.");
+            System.err.println("Precio inválido. Debe ser positivo, máximo 3 dígitos antes del decimal," +
+                    "máximo 2 decimales y no mayor a 999.99.");
         }
     }
 

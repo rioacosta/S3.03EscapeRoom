@@ -3,7 +3,6 @@ package com.escapeRoom.manager;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuManager {
@@ -29,6 +28,7 @@ public class MenuManager {
 
     public int showRoomMenu() {
         System.out.println("""
+ feature/room-delete-refact
                     ===== GESTIÓN DE SALAS =====
                         1. Crear nueva sala
                         2. Listar salas
@@ -58,35 +58,35 @@ public class MenuManager {
 
     public int showPlayersMenu() {
         System.out.println("""
-            ====GESTION DE JUGADORES====
-                1. Otorgar certificados
-                2. Suscribir a la newsletter
-                3. Desuscribir jugador de la newsletter
-                4. Notificar a los jugadores de un evento
-                0. Volver al menu principal
-            """);
+                ====GESTION DE JUGADORES====
+                    1. Otorgar certificados
+                    2. Suscribir a la newsletter
+                    3. Desuscribir jugador de la newsletter
+                    4. Notificar a los jugadores de un evento
+                    0. Volver al menu principal
+                """);
 
         return getValidatedIntegerInput();
     }
 
     public int showTicketMenu() {
         System.out.println("""
-                        1 - Crear ticket
-                        2 - Borrar ticket
-                        3 - Calcular beneficio por venta de tickets
-                        4 - Volver al menú principal""");
-        return scanner.nextInt();
+                ====GESTION DE TICKETS====
+                    1 - Crear ticket
+                    2 - Borrar ticket
+                    3 - Calcular beneficio por venta de tickets
+                    0 - Volver al menú principal""");
+
+        return getValidatedIntegerInput();
     }
 
-
-
-    public int showInventoryMenu(){
+    public int showInventoryMenu() {
 
         System.out.println("""
-            ====GESTION DE INVENTARIO====
-                1. Mostrar el inventario
-                2. Mostrar el valor total del inventario
-            """);
+                ====GESTION DE INVENTARIO====
+                    1. Mostrar el inventario
+                    2. Mostrar el valor total del inventario
+                """);
 
         return getValidatedIntegerInput();
     }
@@ -123,21 +123,24 @@ public class MenuManager {
         }
     }
 
+ feature/room-delete-refact
     /**
      * Validates user input and ensures a valid integer is returned.
      * If the input is invalid (e.g., non-integer), it prompts the user again.
      */
     public int getValidatedIntegerInput() {
+
         while (true) {
+            System.out.print("> ");
+            String line = scanner.nextLine();
+
             try {
-                System.out.print("> "); // Input prompt
-                int input = scanner.nextInt();
-                scanner.nextLine(); // Consume the leftover newline
+                int input = Integer.parseInt(line.trim());
                 return input;
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Introduzca un número entero:");
-                scanner.nextLine(); // Consume the invalid input
             }
         }
     }
+
 }
