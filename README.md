@@ -1,8 +1,8 @@
 # Escape Room - Developers team
 
-Este es un proyecto de la IT Academy pensado para practicar en equipo. El objetivo es la creación de un programa de gestión de un escape room.
+Este es un proyecto de la IT Academy pensado para practicar el trabajo en equipo. El objetivo es la creación de un programa de gestión de un escape room.
 
-Está pensado para practicar:
+Está pensado para familiarizarse con:
 
 - Git flow
 - Comandos de Git: commit, push, merge, pull
