@@ -1,6 +1,7 @@
 package com.escapeRoom.services;
 
 import com.escapeRoom.controllers.RoomController;
+import com.escapeRoom.controllers.TicketController;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.manager.MenuManager;
 
@@ -13,7 +14,7 @@ public class EscapeRoomHandler {
     private MenuManager menuManager;
     private RoomController roomController;
 //    private PlayerController playerController;
-//    private TicketController ticketController;
+    private TicketController ticketController;
     private PlayerHandler playerHandler;
 
     private EscapeRoomHandler() {
@@ -46,9 +47,8 @@ public class EscapeRoomHandler {
 
                 //case 2 -> playerController.handleRoomOperations();
               
-              /*  case 3 -> ticketController.handleRoomOperations();
+                case 3 -> ticketController.handleTicketOperations();
 
-             */
             }
 
         } while (option != 0) ;
