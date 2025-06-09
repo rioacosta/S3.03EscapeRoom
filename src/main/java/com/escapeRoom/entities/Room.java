@@ -1,6 +1,7 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,30 +15,32 @@ import java.util.List;
 public class Room {
     private int idRoom;
     private int idEscaperoom_ref;
-    private String name;  // 45 max, gestionar
+    private String name;
     private List<Hint> hints;
-    private List<Decoration> decorationItems;
+    private List<Decoration> decorations;
     private Difficulty difficulty;
-    private BigDecimal price;  // 2 decimales max, gestionar
+    private Theme theme;
+    private BigDecimal price;
 
 
     public Room() {
         this.hints = new ArrayList<>();
-        this.decorationItems = new ArrayList<>();
+        this.decorations = new ArrayList<>();
     }
 
     Room(int idEscaperoom_ref, String name, Difficulty difficulty,
-         BigDecimal price, List<Hint> hints, List<Decoration> decorations) {
+         BigDecimal price, Theme theme, List<Hint> hints, List<Decoration> decorations) {
         this.idEscaperoom_ref = idEscaperoom_ref;
         this.name = name;
         this.difficulty = difficulty;
         this.price = price;
+        this.theme = theme;
         this.hints = hints != null ? hints : new ArrayList<>();
-        this.decorationItems = decorations != null ? decorations : new ArrayList<>();
+        this.decorations = decorations != null ? decorations : new ArrayList<>();
     }
 
     public void showDecorationItems() {
-        for (Decoration deco : decorationItems) {
+        for (Decoration deco : decorations) {
             System.out.println(deco.toString());
         }
     }
@@ -49,24 +52,30 @@ public class Room {
     }
 
     public BigDecimal getTotalFromDecorationPrice() {
-        if (decorationItems.isEmpty()) {
+        if (decorations.isEmpty()) {
             return BigDecimal.ZERO;
         }
-    BigDecimal price = BigDecimal.ZERO;
-        for(Decoration deco :decorationItems)    {
-        if (deco.getPrice() != null) {
-            price = price.add(deco.getPrice());
+        BigDecimal price = BigDecimal.ZERO;
+        for (Decoration deco : decorations) {
+            if (deco.getPrice() != null) {
+                price = price.add(deco.getPrice());
+            }
         }
-    }
-        return price.setScale(2,RoundingMode.HALF_UP);
+        return price.setScale(2, RoundingMode.HALF_UP);
 
     }
 
-        @Override
-        public String toString () {
-            return "Id de la habitación: " + idRoom + "\nNombre: " + name + "\nDificultad: " + difficulty.getDescription()
-                    + "\nPrecio: " + price + " euros" + "\nPistas: " + (hints != null ? hints.size() : 0) +
-                    "\nDecoraciones: " + (decorationItems != null ? decorationItems.size() : 0);
-        }
-
+    @Override
+    public String toString() {
+        return "Room{" +
+                "idRoom=" + idRoom +
+                ", idEscaperoom_ref=" + idEscaperoom_ref +
+                ", name='" + name + '\'' +
+                ", hints=" + hints +
+                ", decorations=" + decorations +
+                ", difficulty=" + difficulty +
+                ", theme= " + theme +
+                ", price=" + price +
+                '}';
     }
+}

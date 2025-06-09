@@ -23,13 +23,13 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
 
     @Override
     public boolean create(Hint hint) {
-        String sql = "INSERT INTO hint (idHint, idRoom, description, theme, price) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, hint.getIdHint());
-            stmt.setInt(2, hint.getIdRoom());
-            stmt.setString(3, hint.getDescription());
-            stmt.setString(4, hint.getTheme().name());
-            stmt.setBigDecimal(5, hint.getPrice());
+        String sql = "INSERT INTO hint (idRoom_ref, description, theme, price) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+
+            stmt.setInt(1, hint.getIdRoom_ref());
+            stmt.setString(2, hint.getDescription());
+            stmt.setString(3, hint.getTheme().name());
+            stmt.setBigDecimal(4, hint.getPrice());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -73,7 +73,7 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
         String sql = "UPDATE hint SET idHint = ?, idRoom = ?, theme = ?, price = ? WHERE idHint = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, hint.getIdHint());
-            stmt.setInt(2, hint.getIdRoom());
+            stmt.setInt(2, hint.getIdRoom_ref());
             stmt.setString(3, hint.getDescription());
             stmt.setString(4, hint.getTheme().name());
             stmt.setBigDecimal(5, hint.getPrice());
@@ -131,12 +131,42 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
     private Hint mapResultSetToHint(ResultSet rs) throws SQLException {
         return new Hint(
                 rs.getInt("idHint"),
-                rs.getInt("idRoom"),
+                rs.getInt("idRoom_ref"),
                 rs.getString("description"),
                 Theme.valueOf(rs.getString("theme")),
                 rs.getBigDecimal("price")
         );
     }
+
+    public List<Hint> findByRoomId(int roomId) {
+        List<Hint> hints = new ArrayList<>();
+        String sql = "SELECT * FROM hint WHERE idRoom_ref = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, roomId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                hints.add(mapResultSetToHint(rs));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error obteniendo las pistas para la sala: " + roomId, e);
+        }
+        return hints;
+    }
+
+    public boolean updateRoomHint(int idHint, Hint hint) {
+        String sql = "UPDATE hint SET text = ?, theme = ? WHERE idHint = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, hint.getText());
+            stmt.setString(2, hint.getTheme().name());
+            stmt.setInt(3, idHint);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error actualizando la pista con ID " + idHint, e);
+            return false;
+        }
+    }
+
+
 
 
 }

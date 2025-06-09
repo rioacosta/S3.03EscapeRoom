@@ -1,6 +1,7 @@
 package com.escapeRoom.manager;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 
 import java.util.Scanner;
 
@@ -34,8 +35,27 @@ public class MenuManager {
                         0. Volver al menú principal
                         Selecciona opción:
                       """);
+        
         return scanner.nextInt();
     }
+
+    public int showUpdateMenu() {
+
+        System.out.println("""
+                ===== MODIFICAR SALAS =====
+                    1. Cambiar nombre
+                    2. Cambiar precio
+                    3. Cambiar dificultad
+                    4. Cambiar decoración
+                    5. Cambiar tema
+                    0. Volver al menú principal
+                    Selecciona opción:
+                """);
+
+        return scanner.nextInt();
+
+    }
+
     public int showPlayersMenu(){
     System.out.println("""
             ====GESTION DE JUGADORES====
@@ -62,5 +82,16 @@ public class MenuManager {
         System.out.print("Opción: ");
         int choice = scanner.nextInt() - 1;
         return difficulties[choice];
+    }
+
+    public Theme selectTheme(){
+        System.out.println("Selecciona el tema");
+        Theme[] themes = Theme.values();
+        for (int i = 0; i <themes.length; i++){
+            System.out.println((i + 1) + ". "+themes[i]);
+        }
+        System.out.println("Opcion: ");
+        int choice = scanner.nextInt() - 1;
+        return themes[choice];
     }
 }

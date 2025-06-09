@@ -1,6 +1,7 @@
 package com.escapeRoom.entities;
 
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 import com.escapeRoom.exceptions.*;
 import com.escapeRoom.roombuilder.interfaces.IRoomBuilder;
 
@@ -11,11 +12,12 @@ import java.util.List;
 
 public class ConcreteBuilder implements IRoomBuilder {
     private int idRoom;
-    private int idEscapeRoom_ref;
+    private int idEscaperoom_ref;
     private String name;
     private List<Hint> hints;
     private List<Decoration>decorations;
-    private Difficulty dificulty;
+    private Difficulty difficulty;
+    private Theme theme;
     private BigDecimal price;
 
     public ConcreteBuilder() {
@@ -24,8 +26,8 @@ public class ConcreteBuilder implements IRoomBuilder {
     }
 
     @Override
-    public IRoomBuilder setIdEscapeRoom_ref(int idEscapeRoom_ref){
-        this.idEscapeRoom_ref = idEscapeRoom_ref;
+    public IRoomBuilder setIdEscaperoom_ref(int idEscaperoom_ref){
+        this.idEscaperoom_ref = idEscaperoom_ref;
         return this;
     }
 
@@ -41,29 +43,34 @@ public class ConcreteBuilder implements IRoomBuilder {
 
     @Override
     public IRoomBuilder setHints(List<Hint> hints) {
-        if (hints == null || hints.isEmpty()) {
-            throw new NullOrEmptyException("La lista de pistas no puede estar vacía.");
-        }
-        this.hints.addAll(hints);
+
+        this.hints = hints != null ? hints : new ArrayList<>();
         return this;
     }
 
     @Override
     public IRoomBuilder setDecorations(List<Decoration> decorations) {
-        if (decorations == null || decorations.isEmpty()) {
-            throw new NullOrEmptyException("La lista de decoraciones no puede estar vacía.");
-        }
-        this.decorations.addAll(decorations);
+
+        this.decorations = decorations != null ? decorations : new ArrayList<>();
         return this;
     }
 
 
     @Override
-    public IRoomBuilder setDificulty(Difficulty dificulty){
-        if(dificulty == null){
+    public IRoomBuilder setDifficulty(Difficulty difficulty){
+        if(difficulty == null){
             throw new InvalidDificultyException("Debe tener una dificultad añadida");
         }
-        this.dificulty = dificulty;
+        this.difficulty = difficulty;
+        return this;
+    }
+
+    @Override
+    public IRoomBuilder setTheme(Theme theme){
+        if(theme == null){
+            throw new InvalidDificultyException("Debe tener una dificultad añadida");
+        }
+        this.theme = theme;
         return this;
     }
 
@@ -79,8 +86,8 @@ public class ConcreteBuilder implements IRoomBuilder {
     @Override
     public Room build(){
 
-        return new Room(idEscapeRoom_ref, name, dificulty,
-                price, hints, decorations);
+        return new Room(idEscaperoom_ref, name, difficulty,
+                price,theme, hints, decorations);
 
     }
 }

@@ -1,0 +1,159 @@
+jun 07, 2025 11:39:06 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 07, 2025 11:44:30 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 07, 2025 11:52:29 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 07, 2025 11:52:32 P. M. com.escapeRoom.controllers.RoomController handleRoomOperations
+INFORMACIÓN: Método create(Room) llamado
+jun 07, 2025 11:59:31 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 07, 2025 11:59:34 P. M. com.escapeRoom.controllers.RoomController handleRoomOperations
+INFORMACIÓN: Método create(Room) llamado
+jun 07, 2025 11:59:51 P. M. com.escapeRoom.services.RoomHandler createRoom
+INFORMACIÓN: RoomHandler: Enviando Room al DAO para insertar
+jun 08, 2025 12:03:18 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 12:03:21 A. M. com.escapeRoom.controllers.RoomController handleRoomOperations
+INFORMACIÓN: Método create(Room) llamado
+jun 08, 2025 12:03:34 A. M. com.escapeRoom.services.RoomHandler createRoom
+INFORMACIÓN: RoomHandler: Enviando Room al DAO para insertar
+jun 08, 2025 12:03:34 A. M. com.escapeRoom.services.RoomHandler createRoom
+INFORMACIÓN: RoomHandler: Verificando datos del Room
+jun 08, 2025 12:03:34 A. M. com.escapeRoom.services.RoomHandler createRoom
+ADVERTENCIA: RoomHandler: Room inválido detectado. ID: 0, Name: sala
+jun 08, 2025 12:06:04 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 12:06:07 A. M. com.escapeRoom.controllers.RoomController handleRoomOperations
+INFORMACIÓN: Método create(Room) llamado
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.services.RoomHandler createRoom
+INFORMACIÓN: RoomHandler: Enviando Room al DAO para insertar
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.services.RoomHandler createRoom
+INFORMACIÓN: RoomHandler: Verificando datos del Room
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN: MySQLRoomDAO: Entrando a create()
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN: Insertando Room con valores:
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN:   idEscaperoom_ref = 1
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN:   name = sala por fin
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN:   difficulty = EASY
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN:   price = 13
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN: Intentando insertar en la tabla room...
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN: Filas afectadas por el INSERT: 1
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN: Room created with ID: 5
+jun 08, 2025 12:06:26 A. M. com.escapeRoom.services.RoomHandler createRoom
+INFORMACIÓN: RoomHandler: Resultado de create = true
+jun 08, 2025 12:55:00 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 12:55:03 A. M. com.escapeRoom.controllers.RoomController handleRoomOperations
+INFORMACIÓN: Método create(Room) llamado
+jun 08, 2025 12:56:34 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 1:00:00 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 1:12:33 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 1:13:27 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+GRAVE: Error en la inserción SQL: S1009 - Parameter index out of range (5 > number of parameters, which is 4).
+java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1345)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1358)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1714)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.create(MySQLRoomDAO.java:50)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.create(MySQLRoomDAO.java:19)
+	at com.escapeRoom.services.RoomHandler.createRoom(RoomHandler.java:27)
+	at com.escapeRoom.controllers.RoomController.createRoom(RoomController.java:59)
+	at com.escapeRoom.controllers.RoomController.handleRoomOperations(RoomController.java:41)
+	at com.escapeRoom.services.EscapeRoomHandler.start(EscapeRoomHandler.java:45)
+	at com.escapeRoom.Main.main(Main.java:13)
+
+jun 08, 2025 1:23:27 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 1:23:58 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 1:25:02 A. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+INFORMACIÓN: Room created with ID: 6
+jun 08, 2025 1:31:08 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 2:01:54 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 2:17:12 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 3:28:17 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 3:41:56 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 3:48:59 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 7:15:44 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 7:20:32 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 7:21:17 P. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO create
+GRAVE: Error en la inserción SQL: S1009 - Parameter index out of range (5 > number of parameters, which is 4).
+java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1345)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1358)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1714)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.create(MySQLRoomDAO.java:54)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.create(MySQLRoomDAO.java:23)
+	at com.escapeRoom.services.RoomHandler.createRoom(RoomHandler.java:26)
+	at com.escapeRoom.controllers.RoomController.createRoom(RoomController.java:59)
+	at com.escapeRoom.controllers.RoomController.handleRoomOperations(RoomController.java:43)
+	at com.escapeRoom.services.EscapeRoomHandler.start(EscapeRoomHandler.java:45)
+	at com.escapeRoom.Main.main(Main.java:13)
+
+jun 08, 2025 7:23:00 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 7:58:00 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 10:00:13 P. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO findAll
+GRAVE: Error recuperando todas las salas
+java.sql.SQLException: Column 'hint' not found.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.findColumn(ResultSetImpl.java:584)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getString(ResultSetImpl.java:896)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.mapResultSetToRoom(MySQLRoomDAO.java:211)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.findAll(MySQLRoomDAO.java:181)
+	at com.escapeRoom.services.RoomHandler.getAllRooms(RoomHandler.java:40)
+	at com.escapeRoom.controllers.RoomController.listAllRooms(RoomController.java:111)
+	at com.escapeRoom.controllers.RoomController.handleRoomOperations(RoomController.java:45)
+	at com.escapeRoom.services.EscapeRoomHandler.start(EscapeRoomHandler.java:45)
+	at com.escapeRoom.Main.main(Main.java:13)
+
+jun 08, 2025 10:41:10 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 10:47:23 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 11:21:13 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 11:33:08 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 11:40:40 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 11:44:27 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 11:48:45 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 08, 2025 11:50:19 P. M. com.escapeRoom.dao.mysqlimp.MySQLDecorationDAO create
+INFORMACIÓN: Decoración creado con ID: 2
+jun 09, 2025 12:16:03 A. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
