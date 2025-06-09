@@ -3,23 +3,20 @@ package com.escapeRoom.dao.mysqlimp;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.dao.interfaces.IRoomDao;
-import com.escapeRoom.entities.Decoration;
-import com.escapeRoom.entities.Hint;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
-import com.escapeRoom.services.RoomHandler;
+
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
 
 
 public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {

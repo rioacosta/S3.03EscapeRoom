@@ -130,14 +130,18 @@ public class MenuManager {
     public int getValidatedIntegerInput() {
         while (true) {
             try {
-                System.out.print("> "); // Input prompt
+                System.out.print("> ");
                 int input = scanner.nextInt();
-                scanner.nextLine(); // Consume the leftover newline
+                scanner.nextLine();
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Introduzca un número entero:");
-                scanner.nextLine(); // Consume the invalid input
+                scanner.nextLine();
             }
         }
+    }
+
+    public boolean isExit(String input){
+        return input.equals("0")|| input.equalsIgnoreCase("cancelar");
     }
 }

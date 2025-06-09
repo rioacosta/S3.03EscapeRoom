@@ -9,23 +9,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-/*
-public class RoomInputCollector {
-    private Scanner scanner;
-    private MenuManager menuManager;
-
-
-    public RoomInputCollector(Scanner scanner, MenuManager menuManager) {
-        this.scanner = scanner;
-        this.menuManager = menuManager;
-    }
-
-
-    }
-
-
-
- */
     public class RoomInputCollector {
         private final Scanner scanner;
         private final MenuManager menuManager;
@@ -37,18 +20,50 @@ public class RoomInputCollector {
     public Room CollectNewRoomData() {
         System.out.println("=====CREAR NUEVA SALA=====");
 
+        //ver si mantiene el texto ya que cancelar aún no funciona
+        System.out.println("(Podés escribir 'cancelar' o '0' en cualquier momento para volver al menú)");
         System.out.println("ID del escapeRoom");
+        /*
         int idEscaperoom_ref = scanner.nextInt();
         scanner.nextLine();
 
+        if (menuManager.isExit(idEscaperoom_ref)){
+            System.out.println("carga cancelada");
+            return;
+        }
+
+
+         */
+        //prueba de la salida cuando desea el usuario
+        String inputId = scanner.nextLine();
+        if (menuManager.isExit(inputId)) {
+            System.out.println("Carga cancelada");
+            return null;
+        }
+        int idEscaperoom_ref = Integer.parseInt(inputId);
+
+
+
+
         System.out.println("Nombre de la sala");
-        String name = scanner.next();
+        String name = scanner.nextLine();
+
+        if(menuManager.isExit(name)){
+            System.out.println("Carga cancelada");
+            return null;
+        }
 
         BigDecimal price;
         while (true) {
             try {
                 System.out.print("Precio base: ");
                 String input = scanner.nextLine().trim();
+
+
+                if(menuManager.isExit(input)){
+                    System.out.println("Carga cancelada");
+                    return null;
+                }
 
                 if (input.isEmpty()) {
                     throw new IllegalArgumentException("El precio no puede estar vacío.");
@@ -78,8 +93,11 @@ public class RoomInputCollector {
             difficulty = menuManager.selectDifficulty();
             if (difficulty == null) {
                 System.out.println("Seleccione una dificultad válida");
+                return null;
+
             }
         } while (difficulty == null);
+
 
 
         Theme theme;

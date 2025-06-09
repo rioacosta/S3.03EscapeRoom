@@ -65,6 +65,12 @@ public class RoomController {
         try {
             Room room = inputCollector.CollectNewRoomData();
 
+            if (room == null) {
+                System.out.println("No se creó ninguna sala.");
+                return;
+            }
+
+
             MySQLRoomDAO roomDAO = new MySQLRoomDAO(DatabaseConnection.getInstance());
             MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
             MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
