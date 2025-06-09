@@ -14,9 +14,10 @@ USE `escaperoomdb`;
 /* ---- ESCAPEROOM ---- */
 
 CREATE TABLE `escaperoom` (
-  `idEscaperoom` int(11) NOT NULL,
+  `idEscaperoom_ref` int(11) NOT NULL,
   `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
 
 /* ---- ROOM ---- */
@@ -25,9 +26,11 @@ CREATE TABLE `room` (
   `idRoom` int(11) NOT NULL,
   `idEscaperoom_ref` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `difficulty` enum('EASY','MEDIUM','HARD') NOT NULL,
-  `price` decimal(5,2) NOT NULL
+  `difficulty` varchar(255) DEFAULT NULL,
+  `price` decimal(5,2) NOT NULL,
+  `theme` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
 
 /* ---- DECORATION ---- */
@@ -41,16 +44,6 @@ CREATE TABLE `decoration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
-/* ---- HINT ---- */
-
-CREATE TABLE `hint` (
-  `idHint` int(11) NOT NULL,
-  `idRoom` int(11) NOT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `theme` enum('HORROR','DISNEY','TERROR','') DEFAULT NULL,
-  `price` decimal(5,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 
 /* ---- PLAYER ---- */
 
@@ -61,6 +54,7 @@ CREATE TABLE `player` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+
 /* ---- TICKETS ---- */
 
 CREATE TABLE `tickets` (
@@ -68,63 +62,128 @@ CREATE TABLE `tickets` (
   `idRoom` int(11) DEFAULT NULL,
   `idPlayer` int(11) DEFAULT NULL,
   `boughtOn` datetime DEFAULT NULL,
-  `price` decimal(5,2) DEFAULT NULL
+  `price` decimal(2,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+/* ---- HINT ---- */
 
+CREATE TABLE `hint` (
+  `idHint` int(11) NOT NULL,
+  `idRoom_ref` int(11) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `theme` enum('HORROR','DISNEY','TERROR','') DEFAULT NULL,
+  `price` decimal(5,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+--
+-- Indices de la tabla `decoration`
+--
 ALTER TABLE `decoration`
   ADD PRIMARY KEY (`idDecoration`),
   ADD KEY `IdRoom_idx` (`idRoom_ref`);
 
+--
+-- Indices de la tabla `escaperoom`
+--
 ALTER TABLE `escaperoom`
-  ADD PRIMARY KEY (`idEscaperoom`);
+  ADD PRIMARY KEY (`idEscaperoom_ref`);
 
+--
+-- Indices de la tabla `hint`
+--
 ALTER TABLE `hint`
   ADD PRIMARY KEY (`idHint`),
-  ADD KEY `idRoom` (`idRoom`);
+  ADD KEY `idRoom` (`idRoom_ref`);
 
+--
+-- Indices de la tabla `player`
+--
 ALTER TABLE `player`
   ADD PRIMARY KEY (`idPlayer`);
 
+--
+-- Indices de la tabla `room`
+--
 ALTER TABLE `room`
   ADD PRIMARY KEY (`idRoom`),
   ADD KEY `idEscaperoom_idx` (`idEscaperoom_ref`);
 
+--
+-- Indices de la tabla `tickets`
+--
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`idTickets`),
   ADD KEY `IdRoom_idx` (`idRoom`),
   ADD KEY `idPlayer` (`idPlayer`);
 
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
 
+--
+-- AUTO_INCREMENT de la tabla `decoration`
+--
 ALTER TABLE `decoration`
-  MODIFY `idDecoration` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idDecoration` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
+--
+-- AUTO_INCREMENT de la tabla `escaperoom`
+--
 ALTER TABLE `escaperoom`
-  MODIFY `idEscaperoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idEscaperoom_ref` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
+--
+-- AUTO_INCREMENT de la tabla `hint`
+--
 ALTER TABLE `hint`
-  MODIFY `idHint` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idHint` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
+--
+-- AUTO_INCREMENT de la tabla `player`
+--
 ALTER TABLE `player`
-  MODIFY `idPlayer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idPlayer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
+--
+-- AUTO_INCREMENT de la tabla `room`
+--
 ALTER TABLE `room`
-  MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
+--
+-- AUTO_INCREMENT de la tabla `tickets`
+--
 ALTER TABLE `tickets`
-  MODIFY `idTickets` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idTickets` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
+--
+-- Restricciones para tablas volcadas
+--
 
+--
+-- Filtros para la tabla `decoration`
+--
 ALTER TABLE `decoration`
   ADD CONSTRAINT `IdRoom_ref` FOREIGN KEY (`idRoom_ref`) REFERENCES `room` (`idRoom`);
 
+--
+-- Filtros para la tabla `hint`
+--
 ALTER TABLE `hint`
-  ADD CONSTRAINT `hint_ibfk_1` FOREIGN KEY (`idRoom`) REFERENCES `room` (`idRoom`);
+  ADD CONSTRAINT `fk_hint_room` FOREIGN KEY (`idRoom_ref`) REFERENCES `room` (`idRoom`),
+  ADD CONSTRAINT `hint_ibfk_1` FOREIGN KEY (`idRoom_ref`) REFERENCES `room` (`idRoom`);
 
+--
+-- Filtros para la tabla `room`
+--
 ALTER TABLE `room`
-  ADD CONSTRAINT `idEscaperoom` FOREIGN KEY (`idEscaperoom_ref`) REFERENCES `escaperoom` (`idEscaperoom`);
+  ADD CONSTRAINT `idEscaperoom` FOREIGN KEY (`idEscaperoom_ref`) REFERENCES `escaperoom` (`idEscaperoom_ref`);
 
+--
+-- Filtros para la tabla `tickets`
+--
 ALTER TABLE `tickets`
   ADD CONSTRAINT `IdRoom` FOREIGN KEY (`idRoom`) REFERENCES `room` (`idRoom`),
   ADD CONSTRAINT `idPlayer` FOREIGN KEY (`idPlayer`) REFERENCES `player` (`idPlayer`);

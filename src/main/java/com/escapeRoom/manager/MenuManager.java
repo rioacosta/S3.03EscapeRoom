@@ -46,8 +46,7 @@ public class MenuManager {
                     1. Cambiar nombre
                     2. Cambiar precio
                     3. Cambiar dificultad
-                    4. Cambiar decoración
-                    5. Cambiar tema
+                    4. Cambiar tema
                     0. Volver al menú principal
                     Selecciona opción:
                 """);
@@ -65,6 +64,16 @@ public class MenuManager {
                 4.Notificar a los jugadores de un evento
             """);
        return scanner.nextInt();
+    }
+
+    public String showTicketMenu() {
+        System.out.println("""
+                        1 - Crear ticket
+                        2 - Borrar ticket
+                        3 - Calcular beneficio por venta de tickets
+                        4 - Volver al menú principal""");
+
+        return scanner.nextLine();
     }
 
     public int showInventoryMenu(){

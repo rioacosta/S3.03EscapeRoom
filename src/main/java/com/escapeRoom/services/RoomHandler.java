@@ -2,6 +2,8 @@ package com.escapeRoom.services;
 
 import com.escapeRoom.controllers.RoomController;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.dao.interfaces.IRoomDao;
+import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
 import com.escapeRoom.entities.Decoration;
 import com.escapeRoom.entities.Hint;
 import com.escapeRoom.entities.Room;
@@ -16,13 +18,23 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public class RoomHandler {
+    /*
     private final IGenericDAO<Room, Integer> roomDAO;
     private static final Logger logger = Logger.getLogger(RoomController.class.getName());
 
     public RoomHandler(IGenericDAO<Room, Integer>roomDAO){
         this.roomDAO = roomDAO;
 
+
+     */
+
+    private final IRoomDao roomDAO;
+
+    public RoomHandler(IRoomDao roomDAO) {
+        this.roomDAO = roomDAO;
     }
+
+
 
     public boolean createRoom(Room room){
 
@@ -61,6 +73,7 @@ public class RoomHandler {
 
     public boolean updateRoomName(int roomId, String newName) {
         return roomDAO.updateRoomName(roomId, newName);
+
     }
 
     public boolean updateRoomPrice(int roomId, BigDecimal newPrice) {
@@ -75,13 +88,7 @@ public class RoomHandler {
         return roomDAO.updateRoomTheme(roomId, theme);
     }
 
-    public boolean updateRoomHint(int roomId, Hint hint) {
-        return roomDAO.updateRoomHint(roomId, hint);
-    }
 
-    public boolean updateRoomDecoration(int roomId, Decoration decoration) {
-        return roomDAO.updateRoomDecoration(roomId, decoration);
-    }
 
 
 

@@ -153,20 +153,5 @@ public class MySQLHintDAO  implements IGenericDAO<Hint, Integer> {
         return hints;
     }
 
-    public boolean updateRoomHint(int idHint, Hint hint) {
-        String sql = "UPDATE hint SET text = ?, theme = ? WHERE idHint = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, hint.getText());
-            stmt.setString(2, hint.getTheme().name());
-            stmt.setInt(3, idHint);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error actualizando la pista con ID " + idHint, e);
-            return false;
-        }
-    }
-
-
-
 
 }
