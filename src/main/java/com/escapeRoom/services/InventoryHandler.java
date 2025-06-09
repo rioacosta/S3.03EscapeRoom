@@ -21,8 +21,9 @@ public class InventoryHandler {
      total.setScale(2,RoundingMode.HALF_UP);
         System.out.println("El total de inventario es de: " + total);
     }
+
     public void showInventory() {
-        if (escapeRoom.getRooms().isEmpty()) {         System.out.println("No hay cuartos en el scaperoom");
+        if (escapeRoom.getRooms().isEmpty()) {         System.out.println("No hay cuartos en el scaperoom\n");
         }
         for (Room room : rooms) {
             System.out.println("La sala " + room.getName() + " contiene:" +

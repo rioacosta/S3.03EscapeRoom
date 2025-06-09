@@ -28,11 +28,6 @@ public class MenuManager {
 
     public int showRoomMenu() {
         System.out.println("""
-<<<<<<< HEAD
- 
-=======
-
->>>>>>> 8ccac9c (TicketController menu loop normalized)
                     ===== GESTIÓN DE SALAS =====
                         1. Crear nueva sala
                         2. Listar salas
@@ -90,8 +85,8 @@ public class MenuManager {
 
         System.out.println("""
                 ====GESTION DE INVENTARIO====
-                    1. Mostrar el inventario
-                    2. Mostrar el valor total del inventario
+                    1. Mostrar el valor total del inventario
+                    2. Mostrar el inventario
                     0. Volver al menu principal
                 """);
 

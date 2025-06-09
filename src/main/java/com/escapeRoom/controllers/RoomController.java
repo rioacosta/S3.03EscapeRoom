@@ -6,10 +6,7 @@ import com.escapeRoom.dao.interfaces.IRoomDao;
 import com.escapeRoom.dao.mysqlimp.MySQLDecorationDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLHintDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
-import com.escapeRoom.entities.Decoration;
-import com.escapeRoom.entities.Hint;
-import com.escapeRoom.entities.Room;
-import com.escapeRoom.entities.RoomInputCollector;
+import com.escapeRoom.entities.*;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
 import com.escapeRoom.manager.MenuManager;
@@ -85,6 +82,7 @@ public class RoomController {
                 }
 
                 System.out.println("Sala creada exitosamente con ID: " + idRoom);
+                EscapeRoom.getInstance().addRoom(room);
             } else {
                 System.out.println("Error al guardar la sala.");
             }
