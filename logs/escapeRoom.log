@@ -165,3 +165,67 @@ jun 09, 2025 12:54:24 P. M. com.escapeRoom.dao.DatabaseConnection <init>
 INFORMACIÓN: Conexión a la base de datos establecida exitosamente
 jun 09, 2025 12:55:01 P. M. com.escapeRoom.dao.DatabaseConnection <init>
 INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 4:01:38 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 4:06:19 P. M. com.escapeRoom.dao.mysqlimp.MySQLDecorationDAO create
+INFORMACIÓN: Decoración creado con ID: 4
+jun 09, 2025 4:21:09 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+GRAVE: Error al conectar con la base de datos: Access denied for user 'root'@'localhost' (using password: YES)
+jun 09, 2025 4:27:02 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+GRAVE: Error al conectar con la base de datos: Access denied for user 'root'@'localhost' (using password: YES)
+jun 09, 2025 4:28:03 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 4:48:20 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 4:48:33 P. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO deleteById
+GRAVE: Error borrando sala ID: 11
+java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`escaperoomdb`.`hint`, CONSTRAINT `fk_hint_room` FOREIGN KEY (`idRoom_ref`) REFERENCES `room` (`idRoom`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1009)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1320)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:994)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.deleteById(MySQLRoomDAO.java:173)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.deleteById(MySQLRoomDAO.java:25)
+	at com.escapeRoom.services.RoomHandler.deleteRoom(RoomHandler.java:104)
+	at com.escapeRoom.controllers.RoomController.deleteRoom(RoomController.java:134)
+	at com.escapeRoom.controllers.RoomController.handleRoomOperations(RoomController.java:52)
+	at com.escapeRoom.services.EscapeRoomHandler.start(EscapeRoomHandler.java:50)
+	at com.escapeRoom.Main.main(Main.java:13)
+
+jun 09, 2025 4:49:07 P. M. com.escapeRoom.dao.mysqlimp.MySQLRoomDAO deleteById
+GRAVE: Error borrando sala ID: 12
+java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`escaperoomdb`.`hint`, CONSTRAINT `fk_hint_room` FOREIGN KEY (`idRoom_ref`) REFERENCES `room` (`idRoom`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1009)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1320)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:994)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.deleteById(MySQLRoomDAO.java:173)
+	at com.escapeRoom.dao.mysqlimp.MySQLRoomDAO.deleteById(MySQLRoomDAO.java:25)
+	at com.escapeRoom.services.RoomHandler.deleteRoom(RoomHandler.java:104)
+	at com.escapeRoom.controllers.RoomController.deleteRoom(RoomController.java:134)
+	at com.escapeRoom.controllers.RoomController.handleRoomOperations(RoomController.java:52)
+	at com.escapeRoom.services.EscapeRoomHandler.start(EscapeRoomHandler.java:50)
+	at com.escapeRoom.Main.main(Main.java:13)
+
+jun 09, 2025 4:51:10 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 4:59:41 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 5:14:50 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 5:17:05 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 5:25:08 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 5:31:48 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 6:56:36 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente
+jun 09, 2025 7:05:51 P. M. com.escapeRoom.dao.DatabaseConnection <init>
+INFORMACIÓN: Conexión a la base de datos establecida exitosamente

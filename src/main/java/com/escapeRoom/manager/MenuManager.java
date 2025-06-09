@@ -34,6 +34,7 @@ public class MenuManager {
                         2. Listar salas
                         3. Modificar sala
                         4. Eliminar sala
+                        5. Eliminar elementos sala
                         0. Volver al menú principal
                         Selecciona opción:
                       """);
@@ -126,7 +127,7 @@ public class MenuManager {
      * Validates user input and ensures a valid integer is returned.
      * If the input is invalid (e.g., non-integer), it prompts the user again.
      */
-    private int getValidatedIntegerInput() {
+    public int getValidatedIntegerInput() {
         while (true) {
             try {
                 System.out.print("> "); // Input prompt
