@@ -23,11 +23,13 @@ public class PlayerHandler {
         }
         playerDao.create(player);
                 newsletter.addObserver(player);
+                    System.out.println("Jugador " +player.getName() + " suscrito");
     }
     public void unsbscribePlayer(Player player) {
         if (player != null) {
             newsletter.removeObserver(player);
             playerDao.deleteById(player.getIdPlayer());
+            System.out.println("Jugador " +player.getName() + " des-suscrito");
         } else { throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir");
         }
     }
@@ -41,6 +43,9 @@ public class PlayerHandler {
             throw new IllegalArgumentException("ID de jugador inválido");
         }
         return playerDao.findById(id);
+    }
+    public void showAllPlayers() {
+        playerDao.findAll().forEach(System.out::println);
     }
 
     public Optional<Player> findPlayerByName(String name) {
@@ -61,6 +66,6 @@ public class PlayerHandler {
         newCertificate.setName(name);
         playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
 
-        System.out.println("Asignando certificado al jugador " + playerName);
+        System.out.println("Asignado certificado al jugador " + playerName);
     }
 }

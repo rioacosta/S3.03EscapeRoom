@@ -63,6 +63,7 @@ public class MenuManager {
                     2. Suscribir a la newsletter
                     3. Desuscribir jugador de la newsletter
                     4. Notificar a los jugadores de un evento
+                    5. Listar jugadores
                     0. Volver al menu principal
                 """);
 
@@ -123,11 +124,7 @@ public class MenuManager {
         }
     }
 
- feature/room-delete-refact
-    /**
-     * Validates user input and ensures a valid integer is returned.
-     * If the input is invalid (e.g., non-integer), it prompts the user again.
-     */
+
     public int getValidatedIntegerInput() {
 
         while (true) {
