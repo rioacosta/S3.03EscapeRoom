@@ -27,10 +27,17 @@ public class PlayerHandler {
     }
     public void unsbscribePlayer(Player player) {
         if (player != null) {
+            // Remove from the observer notification list
             newsletter.removeObserver(player);
-            playerDao.deleteById(player.getIdPlayer());
-            System.out.println("Jugador " +player.getName() + " des-suscrito");
-        } else { throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir");
+            // Attempt to delete the player and handle the result
+            boolean result = playerDao.deleteById(player.getIdPlayer());
+            if (result) {
+                System.out.println("Jugador " + player.getName() + " des-suscrito.");
+            } else {
+                System.err.println("No se pudo des-suscribir al jugador " + player.getName() + ". Asegúrate de eliminar las entradas asociadas.");
+            }
+        } else {
+            throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir.");
         }
     }
 
@@ -61,7 +68,7 @@ public class PlayerHandler {
         }
         String name = playerOpt.get().getName();
 
-        Certificate newCertificate = new Certificate(); //(certificateId, name, LocalDate.now(), playerId);
+        Certificate newCertificate = new Certificate();
         newCertificate.setDateOfDelivery(LocalDate.now());
         newCertificate.setName(name);
         playerOpt.ifPresent(p -> p.setCertificate(newCertificate));

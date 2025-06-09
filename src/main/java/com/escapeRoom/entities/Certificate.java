@@ -1,40 +1,41 @@
 package com.escapeRoom.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import com.escapeRoom.utils.InputUtils;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-//@Builder
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Certificate {
 
     private int idCertificate;
     private String name;
     private LocalDate dateOfDelivery;
-    private boolean giftCoupon;
     private int idPlayer;
+
+    public Certificate(String name, LocalDate dateOfDelivery) {
+        InputUtils.getValidInt(idCertificate);
+        InputUtils.getValidString(name);
+        InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
+        InputUtils.getValidInt(idPlayer);
+        this.name = name;
+        this.dateOfDelivery = dateOfDelivery;
+        this.idPlayer = idPlayer;
+    }
 
     public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, int idPlayer) {
         InputUtils.getValidInt(idCertificate);
-        // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
-        // usando el method que hay abajo en este documento
         InputUtils.getValidString(name);
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
-        InputUtils.checkEmptyInput(String.valueOf(giftCoupon));
-        //InputUtils.getValidByte(giftCoupon);
         InputUtils.getValidInt(idPlayer);
 
         this.idCertificate = idCertificate;
         this.name = name;
         this.dateOfDelivery = dateOfDelivery;
-        this.giftCoupon = true;
         this.idPlayer = idPlayer;
     }
 

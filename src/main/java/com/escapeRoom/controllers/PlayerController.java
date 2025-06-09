@@ -49,7 +49,7 @@ public class PlayerController {
             System.out.print("Introduzca el nombre del jugador: ");
             playerName = scanner.nextLine();
             if (playerName.trim().isEmpty()) {
-                System.out.println("El nombre no puede estar vacío. Intente de nuevo.");
+                System.err.println("El nombre no puede estar vacío. Intente de nuevo.");
             }
         } while (playerName.trim().isEmpty());
 
@@ -58,7 +58,7 @@ public class PlayerController {
             System.out.print("Introduzca el email del jugador: ");
             playerEmail = scanner.nextLine();
             if (!playerEmail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-                System.out.println("El correo electrónico no es válido. Intente de nuevo.");
+                System.err.println("El correo electrónico no es válido. Intente de nuevo.");
             }
         } while (!playerEmail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"));
 
