@@ -4,7 +4,6 @@ import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.entities.EscapeRoom;
 import com.escapeRoom.entities.Player;
-import com.escapeRoom.entities.RoomInputCollector;
 import com.escapeRoom.exceptions.NullOrEmptyException;
 import com.escapeRoom.manager.MenuManager;
 import com.escapeRoom.services.PlayerHandler;
@@ -12,44 +11,40 @@ import com.escapeRoom.services.PlayerHandler;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class PlayerController {   //---------------WORK IN PROGRESS----------------------------
-    /*
+public class PlayerController {
     private PlayerHandler playerHandler;
-    private RoomInputCollector inputCollector;
     private MenuManager menuManager;
-    private EscapeRoom escapeRoom = EscapeRoom.getInstance();
+    private final EscapeRoom escapeRoom = EscapeRoom.getInstance();
     private Scanner scanner = new Scanner(System.in);
 
     public PlayerController(Scanner scanner){
         this.playerHandler = new PlayerHandler(new MySQLPlayerDAO(DatabaseConnection.getInstance()));
         this.menuManager = new MenuManager(scanner);
-        this.inputCollector = new RoomInputCollector(scanner, menuManager);
     }
+
     public void handlePlayerOperations() {
         int option;
         do {
             option = menuManager.showRoomMenu();
 
             switch (option) {
-                case 1 -> playerHandler.subscribePlayer();
+                case 1 -> playerHandler.subscribePlayer(getPlayer());
 
-                case 2 -> playerHandler.assignCertificateToPlayer();
+                case 2 -> playerHandler.assignCertificateToPlayer(getPlayer().getName());
             }
         } while (option != 0);
     }
-    public Player getPlayerForSuscribe(String name) {
 
-        Optional<Player> player;
-        try {
-            player = playerHandler.findPlayerByName(name);
-            escapeRoom.getPlayers().get()
-        } catch (RuntimeException e) {
-            throw new NullOrEmptyException("El jugador no ha sido encontrado y no puede suscribirlo");
+    public Player getPlayer(){
+        System.out.print("Introduzca el nombre del jugador: ");
+        String playerName = scanner.next();
+        //scanner.nextLine(); ------------sera necesario limpiar buffer?
+
+        Optional<Player> playerOpt = playerHandler.findPlayerByName(playerName);
+        if (playerOpt.isEmpty()) {
+            throw new NullOrEmptyException("Jugador no encontrado por nombre: " + playerName);
         }
-        return player.isPresent();
+        return playerOpt.get();
     }
-    public Player getPlayerForCertificate(){
-        return
-    }
-    */
+
 }
