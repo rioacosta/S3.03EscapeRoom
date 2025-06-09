@@ -18,22 +18,11 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public class RoomHandler {
-    /*
-    private final IGenericDAO<Room, Integer> roomDAO;
-    private static final Logger logger = Logger.getLogger(RoomController.class.getName());
-
-    public RoomHandler(IGenericDAO<Room, Integer>roomDAO){
-        this.roomDAO = roomDAO;
-
-
-     */
-
     private final IRoomDao roomDAO;
 
     public RoomHandler(IRoomDao roomDAO) {
         this.roomDAO = roomDAO;
     }
-
 
 
     public boolean createRoom(Room room){
@@ -46,7 +35,6 @@ public class RoomHandler {
 
     }
 
-    //tema exceptions revisarlos y personalizarlos
     public Optional<Room> findRoomById(int id) {
 
         if(id <= 0) {
@@ -59,6 +47,7 @@ public class RoomHandler {
         return roomDAO.findAll();
     }
 
+    /*
     public boolean updateRoom(Room room) {
 
         if (!roomDAO.existsById(room.getIdRoom())) {
@@ -71,6 +60,8 @@ public class RoomHandler {
         return roomDAO.update(room);
     }
 
+
+     */
     public boolean updateRoomName(int roomId, String newName) {
         return roomDAO.updateRoomName(roomId, newName);
 
@@ -89,18 +80,12 @@ public class RoomHandler {
     }
 
 
-
-
-
     public boolean deleteRoom(int id){
 
         if (!roomDAO.existsById(id)) {
             throw new IllegalArgumentException("La sala con ID " + id + " no existe");
         }
-        // Validaciones de negocio
-        // validateRoom(room);
 
-        // Actualizar en base de datos
         return roomDAO.deleteById(id);
     }
     }

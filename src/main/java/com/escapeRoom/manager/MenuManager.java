@@ -28,14 +28,16 @@ public class MenuManager {
 
     public int showRoomMenu() {
         System.out.println("""
-                ===== GESTIÓN DE SALAS =====
-                    1. Crear nueva sala
-                    2. Listar salas
-                    3. Modificar sala
-                    4. Eliminar sala
-                    0. Volver al menú principal
-                    Selecciona opción:
-                """);
+ feature/room-delete-refact
+                    ===== GESTIÓN DE SALAS =====
+                        1. Crear nueva sala
+                        2. Listar salas
+                        3. Modificar sala
+                        4. Eliminar sala
+                        5. Eliminar elementos sala
+                        0. Volver al menú principal
+                        Selecciona opción:
+                      """);
 
         return getValidatedIntegerInput();
     }
@@ -122,7 +124,9 @@ public class MenuManager {
         }
     }
 
+
     public int getValidatedIntegerInput() {
+
         while (true) {
             System.out.print("> ");
             String line = scanner.nextLine();
