@@ -5,27 +5,26 @@ import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
 
-import javax.security.auth.Subject;
 import java.util.List;
 import java.util.Scanner;
 
 @Getter
 @Setter
 public class Player implements Subscriber {
-
+    private static int playersCount = 0;
     private int idPlayer;
     private String name;
     private String email;
     private List<Certificate> certificates;
 
-    public Player(int idPlayer, String name, String email) {
+    public Player(String name, String email) {   //
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
         // fuera de aquí, usando los métodos que hay abajo en este documento
-        InputUtils.getValidInt(idPlayer);
+        //InputUtils.getValidInt(idPlayer); comentado porque la base de datos ya esta generandoli
         InputUtils.getValidString(name);
         InputUtils.getValidEmail(email);
-
-        this.idPlayer = idPlayer;
+        playersCount++;
+        this.idPlayer = playersCount;
         this.name = name;
         this.email = email;
     }

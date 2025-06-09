@@ -17,13 +17,12 @@ public class PlayerHandler {
         this.playerDao = playerDao;
     }
 
-    public boolean subscribePlayer(Player player) {
+    public void subscribePlayer(Player player) {
         if(player == null || player.getName() == null || player.getEmail() == null) {
             throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
         playerDao.create(player);
                 newsletter.addObserver(player);
-        return true;
     }
     public void unsbscribePlayer(Player player) {
         if (player != null) {
@@ -50,7 +49,7 @@ public class PlayerHandler {
         return playerDao.findByName(name);
     }
 
-    public boolean assignCertificateToPlayer(String playerName) {
+    public void assignCertificateToPlayer(String playerName) {
 
         Optional<Player> playerOpt = findPlayerByName(playerName);
         if(playerOpt.isEmpty()) {   throw new RuntimeException("Jugador no encontrado");
@@ -63,6 +62,5 @@ public class PlayerHandler {
         playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
 
         System.out.println("Asignando certificado al jugador " + playerName);
-        return true;
     }
 }
