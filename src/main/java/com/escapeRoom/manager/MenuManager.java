@@ -46,8 +46,7 @@ public class MenuManager {
                     1. Cambiar nombre
                     2. Cambiar precio
                     3. Cambiar dificultad
-                    4. Cambiar decoración
-                    5. Cambiar tema
+                    4. Cambiar tema
                     0. Volver al menú principal
                     Selecciona opción:
                 """);

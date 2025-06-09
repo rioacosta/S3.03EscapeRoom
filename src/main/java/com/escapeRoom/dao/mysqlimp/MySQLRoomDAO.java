@@ -2,11 +2,13 @@ package com.escapeRoom.dao.mysqlimp;
 
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.dao.interfaces.IRoomDao;
 import com.escapeRoom.entities.Decoration;
 import com.escapeRoom.entities.Hint;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
+import com.escapeRoom.services.RoomHandler;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -20,7 +22,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
-public class MySQLRoomDAO implements IGenericDAO<Room, Integer> {
+public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
     private static final Logger logger = Logger.getLogger(MySQLRoomDAO.class.getName());
     private final Connection connection;
 
@@ -247,5 +249,56 @@ public List<Room> findAll() {
         }
         return false;
     }
+
+
+
+    public boolean updateRoomName(int roomId, String newName) {
+        String sql = "UPDATE room SET name = ? WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, newName);
+            stmt.setInt(2, roomId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error actualizando nombre de sala", e);
+            return false;
+        }
+    }
+
+    public boolean updateRoomPrice(int roomId, BigDecimal newPrice) {
+        String sql = "UPDATE room SET price = ? WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setBigDecimal(1, newPrice);
+            stmt.setInt(2, roomId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error actualizando precio de sala", e);
+            return false;
+        }
+    }
+
+    public boolean updateRoomDifficulty(int roomId, Difficulty difficulty) {
+        String sql = "UPDATE room SET difficulty = ? WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, difficulty.name());
+            stmt.setInt(2, roomId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error actualizando dificultad de sala", e);
+            return false;
+        }
+    }
+
+    public boolean updateRoomTheme(int roomId, Theme theme) {
+        String sql = "UPDATE room SET theme = ? WHERE idRoom = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, theme.name());
+            stmt.setInt(2, roomId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error actualizando tema de sala", e);
+            return false;
+        }
+    }
+
 
 }

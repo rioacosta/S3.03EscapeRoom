@@ -142,6 +142,7 @@ public class RoomInputCollector {
     }
     public String askForNewName(){
         System.out.println("Cual es el nuevo nombre");
+        scanner.nextLine();
         return scanner.nextLine();
     }
     public BigDecimal askForNewPrice() {
@@ -156,39 +157,11 @@ public class RoomInputCollector {
     }
 
     public Theme askForNewTheme() {
-        System.out.print("¿Nuevo tema (DISNEY, HORROR, etc.)? ");
+        System.out.print("¿Nuevo tema (DISNEY, HORROR, TERROR)? ");
         String input = scanner.next().toUpperCase();
         return Theme.valueOf(input);
     }
 
-    public Hint askForNewHint() {
-        System.out.print("Texto de la pista: ");
-        scanner.nextLine();
-        String texto = scanner.nextLine();
-
-        Theme tema = askForNewTheme();
-        return new Hint(texto);
-    }
-
-    public Decoration askForNewDecoration(){
-        System.out.print("Descripción de la decoración: ");
-        scanner.nextLine();
-        String description = scanner.nextLine();
-
-        System.out.print("Material: ");
-        String material = scanner.nextLine();
-
-        System.out.print("Precio: ");
-        BigDecimal price = scanner.nextBigDecimal();
-        scanner.nextLine();
-
-        Decoration decoration = new Decoration(description, material, price);
-        decoration.setDescription(description);
-        decoration.setMaterial(material);
-        decoration.setPrice(price);
-
-        return decoration;
-    }
 
 
     public int collectRoomIdForDelete() {

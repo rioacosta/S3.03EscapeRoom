@@ -2,6 +2,7 @@ package com.escapeRoom.controllers;
 
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.dao.interfaces.IRoomDao;
 import com.escapeRoom.dao.mysqlimp.MySQLDecorationDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLHintDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
@@ -27,7 +28,9 @@ public class RoomController {
         private static final Logger logger = Logger.getLogger(RoomController.class.getName());
 
         public RoomController(Scanner scanner) {
-            this.roomHandler = new RoomHandler(new MySQLRoomDAO(DatabaseConnection.getInstance()));
+           // this.roomHandler = new RoomHandler(new MySQLRoomDAO(DatabaseConnection.getInstance()));
+            IRoomDao roomDAO = new MySQLRoomDAO(DatabaseConnection.getInstance());
+            this.roomHandler = new RoomHandler(roomDAO);
             this.menuManager = new MenuManager(scanner);
             this.inputCollector = new RoomInputCollector(scanner, menuManager);
         }
@@ -107,21 +110,13 @@ public class RoomController {
                     boolean difficultyUpdated = roomHandler.updateRoomDifficulty(id, newDifficulty);
                     System.out.println( difficultyUpdated? "Dificultad actualizada." : "Error al actualizar nombre.");
                 }
+
                 case 4 -> {
-                    Decoration newDecoration = inputCollector.askForNewDecoration();
-                    boolean decorationUpdated = roomHandler.updateRoomDecoration(id, newDecoration);
-                    System.out.println(decorationUpdated ? "Decoration actualizada." : "Error al actualizar nombre.");
-                }
-                case 5 -> {
                     Theme newTheme = inputCollector.askForNewTheme();
                     boolean themeUpdated = roomHandler.updateRoomTheme(id, newTheme);
                     System.out.println(themeUpdated ? "Tema actualizado." : "Error al actualizar precio.");
                 }
-                case 6 -> {
-                    Hint newHint = inputCollector.askForNewHint();
-                    boolean themeUpdated = roomHandler.updateRoomHint(id, newHint);
-                    System.out.println(themeUpdated ? "Pista actualizada." : "Error al actualizar precio.");
-                }
+
 
                 default -> System.out.println("Opción no válida.");
             }
