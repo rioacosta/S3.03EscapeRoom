@@ -64,15 +64,16 @@ public class MenuManager {
        return scanner.nextInt();
     }
 
-    public String showTicketMenu() {
+    public int showTicketMenu() {
         System.out.println("""
                         1 - Crear ticket
                         2 - Borrar ticket
                         3 - Calcular beneficio por venta de tickets
                         4 - Volver al menú principal""");
-
-        return scanner.nextLine();
+        return scanner.nextInt();
     }
+
+
 
     public int showInventoryMenu(){
         System.out.println("""

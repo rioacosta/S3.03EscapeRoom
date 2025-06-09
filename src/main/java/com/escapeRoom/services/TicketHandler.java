@@ -3,8 +3,10 @@ package com.escapeRoom.services;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
+import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLTicketDAO;
 import com.escapeRoom.entities.Player;
+import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.Tickets;
 import com.escapeRoom.utils.InputUtils;
 
@@ -14,111 +16,133 @@ import java.util.*;
 
 public class TicketHandler {
 
-    private final IGenericDAO<Tickets, Integer> ticketDao;
-    private Scanner scanner = new Scanner(System.in);
-    private DatabaseConnection dbConnection = DatabaseConnection.getInstance();
-    private MySQLTicketDAO ticketDAO = new MySQLTicketDAO(dbConnection);
-    private MySQLPlayerDAO playerDAO = new MySQLPlayerDAO(dbConnection);
+    private final Scanner scanner = new Scanner(System.in);
+    private final MySQLTicketDAO ticketDAO;
+    private final MySQLPlayerDAO playerDAO;
+    private final MySQLRoomDAO roomDAO;
 
     public TicketHandler(IGenericDAO<Tickets, Integer> ticketDao) {
-        this.ticketDao = ticketDao;
+        DatabaseConnection dbConnection = DatabaseConnection.getInstance();
+        this.ticketDAO = new MySQLTicketDAO(dbConnection);
+        this.playerDAO = new MySQLPlayerDAO(dbConnection);
+        this.roomDAO = new MySQLRoomDAO(dbConnection);
     }
 
     public void createTicket() {
-        int idRoom = getRoom();
-        int idPlayer = getPlayer();
+        int roomId = getValidRoomId();
+        int playerId = getValidPlayerId();
+        BigDecimal price = getValidPrice();
         LocalDate boughtOn = LocalDate.now();
-        BigDecimal price = getPrice();
 
-        Tickets newTicket = new Tickets(idRoom, idPlayer, boughtOn, price);
-        boolean result = ticketDAO.create(newTicket);
+        Tickets ticket = new Tickets(roomId, playerId, boughtOn, price);
+        boolean created = ticketDAO.create(ticket);
 
-        if (result) {
-            System.out.println("Ticket creado");
-        } else {
-            System.err.println("Error: El ticket no se pudo crear");
-        }
+        System.out.println(created ? "Ticket creado" : "Error: El ticket no se pudo crear");
     }
 
     public void deleteTicket() {
-        // COMPROBAR QUE ESTO FUNCIONA
-        // Ahora debería mostrar el jugador por nombre, no por id
-        // Si funciona, refactorizar
-        // Si no funciona, volver al commit anterior. Se veía feucho pero funcionaba
-        System.out.println("Qué ticket quieres borrar?");
-        List<Tickets> tickets = ticketDAO.findAll();
+        System.out.println("¿Qué ticket quieres borrar?");
+        showTickets();
 
-        List<Player> players = playerDAO.findAll();
-        Map<Integer, String> playerNamesById = new HashMap<>();
-        for (Player player : players) {
-            playerNamesById.put(player.getIdPlayer(), player.getName());
+        int ticketId = InputUtils.readValidInt(scanner);
+
+        boolean deleted = ticketDAO.deleteById(ticketId);
+        System.out.println(deleted ? "Ticket eliminado" : "Error: El ticket no se pudo eliminar");
+    }
+
+    public void showTickets() {
+        List<Tickets> tickets = ticketDAO.findAll();
+        Map<Integer, String> playerNames = getPlayerNamesById();
+
+        if (tickets.isEmpty()) {
+            System.out.println("No hay tickets registrados.");
+            return;
         }
 
         for (Tickets ticket : tickets) {
-            String playerName = playerNamesById.getOrDefault(ticket.getIdPlayer(), "Jugador desconocido");
-
-            System.out.println(ticket.getIdTickets() + " - Vendido a " + playerName
-                    + ". Precio de " + ticket.getPrice());
-        }
-
-        int newTicketId = scanner.nextInt();
-        scanner.nextLine();
-        InputUtils.getValidInt(newTicketId);
-
-        boolean result = ticketDAO.deleteById(newTicketId);
-
-        if (result) {
-            System.out.println("Ticket eliminado");
-        } else {
-            System.err.println("Error: El ticket no se pudo eliminar");
+            String playerName = playerNames.getOrDefault(ticket.getIdPlayer(), "Jugador desconocido");
+            System.out.printf("%d - Vendido a %s. Precio: %s%n",
+                    ticket.getIdTickets(), playerName, ticket.getPrice());
         }
     }
 
     public BigDecimal calculateTotalProfit() {
-        BigDecimal totalProfit = BigDecimal.ZERO;
-        List<Tickets> tickets = ticketDao.findAll();
+        return ticketDAO.findAll().stream()
+                .map(Tickets::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
-        for (Tickets ticket : tickets) {
-            totalProfit = totalProfit.add(ticket.getPrice());
+    private int getValidRoomId() {
+        List<Room> rooms = roomDAO.findAll();
+        if (rooms.isEmpty()) {
+            System.err.println("No hay habitaciones disponibles.");
+            return -1;
         }
 
-        return totalProfit;
+        showRooms(rooms);
+
+        while (true) {
+            System.out.println("Ingresa el ID de la sala:");
+            int roomId = InputUtils.readValidInt(scanner);
+
+            boolean exists = rooms.stream().anyMatch(room -> room.getIdRoom() == roomId);
+            if (exists) {
+                return roomId;
+            }
+
+            System.err.println("ID de sala no válido. Intenta de nuevo.");
+        }
     }
 
-    public int getRoom() {
-        System.out.println("Para qué habitación es?");
-        // mostrar lista de habitaciones
-
-        int idRoom = scanner.nextInt();
-        scanner.nextLine();
-        // validar la respuesta no está vacía
-        InputUtils.getValidInt(idRoom);
-        // validar que la habitación existe
-
-        return idRoom;
+    private void showRooms(List<Room> rooms) {
+        for (Room room : rooms) {
+            System.out.printf("%d - %s | Dificultad: %s | Tema: %s | Precio: %s%n",
+                    room.getIdRoom(), room.getName(), room.getDifficulty(),
+                    room.getTheme(), room.getPrice());
+        }
     }
 
-    public int getPlayer() {
-        System.out.println("Dime qué jugador compra el ticket");
-        // mostrar lista de jugadores
-        int idPlayer = scanner.nextInt();
-        scanner.nextLine();
-        // validar que no está vacío
-        InputUtils.getValidInt(idPlayer);
-        // validar que el jugador existe
+    private int getValidPlayerId() {
+        Map<Integer, String> playerNames = getPlayerNamesById();
 
-        return idPlayer;
+        if (playerNames.isEmpty()) {
+            System.err.println("No hay jugadores registrados.");
+            return -1;
+        }
+
+        playerNames.forEach((id, name) -> System.out.printf("%d - %s%n", id, name));
+
+        while (true) {
+            System.out.println("Dime qué jugador compra el ticket:");
+            int playerId = InputUtils.readValidInt(scanner);
+
+            if (playerNames.containsKey(playerId)) {
+                return playerId;
+            }
+
+            System.err.println("ID de jugador no válido. Intenta de nuevo.");
+        }
     }
 
-    public BigDecimal getPrice() {
-        System.out.println("Qué precio tiene?");
-        BigDecimal price = scanner.nextBigDecimal();
-        scanner.nextLine();
-        // validar que no está vacío
-        InputUtils.getValidBigDecimal(price);
-        // validar que no sobrepasa las cifras permitidas por la base de datos
+    private BigDecimal getValidPrice() {
+        while (true) {
+            System.out.println("¿Qué precio tiene?");
+            BigDecimal price = InputUtils.readValidBigDecimal(scanner);
 
-        return price;
+            if (price.compareTo(BigDecimal.ZERO) > 0 && price.scale() <= 2) {
+                return price;
+            }
+
+            System.err.println("Precio inválido. Debe ser positivo y tener máximo dos decimales.");
+        }
+    }
+
+    private Map<Integer, String> getPlayerNamesById() {
+        Map<Integer, String> namesById = new HashMap<>();
+        for (Player player : playerDAO.findAll()) {
+            namesById.put(player.getIdPlayer(), player.getName());
+        }
+        return namesById;
     }
 
 }
