@@ -21,10 +21,11 @@ public class NewNewsletter implements Newsletter {
     }
 
     @Override
-    public void notifyObservers(String newsletterUpdate) {
+    public String notifyObservers(String newsletterUpdate) {
         for (Subscriber subscriber : subscribers) {
             subscriber.update(newsletterUpdate);
         }
+        return newsletterUpdate;
     }
 
 }
