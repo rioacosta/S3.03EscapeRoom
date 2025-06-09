@@ -14,15 +14,17 @@ public class EscapeRoomHandler {
     private Scanner scanner;
     private MenuManager menuManager;
     private RoomController roomController;
+
     private PlayerController playerController;
     private TicketController ticketController;
+
     private PlayerHandler playerHandler;
 
     private EscapeRoomHandler() {
         this.scanner = new Scanner(System.in);
         this.menuManager = new MenuManager(scanner);
         this.roomController = new RoomController(scanner);
-//        this.playerController = new PlayerController(scanner);
+        this.playerController = new PlayerController(scanner);
         this.ticketController = new TicketController(scanner);
     }
 
