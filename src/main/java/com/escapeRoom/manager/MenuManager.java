@@ -28,7 +28,7 @@ public class MenuManager {
 
     public int showRoomMenu() {
         System.out.println("""
- feature/room-delete-refact
+
                     ===== GESTIÓN DE SALAS =====
                         1. Crear nueva sala
                         2. Listar salas
@@ -123,7 +123,7 @@ public class MenuManager {
         }
     }
 
- feature/room-delete-refact
+
     /**
      * Validates user input and ensures a valid integer is returned.
      * If the input is invalid (e.g., non-integer), it prompts the user again.
