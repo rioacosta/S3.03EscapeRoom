@@ -71,7 +71,8 @@ public class MenuManager {
                         1 - Crear ticket
                         2 - Borrar ticket
                         3 - Calcular beneficio por venta de tickets
-                        4 - Volver al menú principal""");
+                        4 - Volver al menú principal
+                        """);
 
         return scanner.nextLine();
     }
