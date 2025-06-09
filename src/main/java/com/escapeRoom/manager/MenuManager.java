@@ -59,7 +59,9 @@ public class MenuManager {
     System.out.println("""
             ====GESTION DE JUGADORES====
                 1.Otorgar certificados
-                2.Subscribir a la newsletter
+                2.Suscribir a la newsletter
+                3.Desuscribir jugador de la newsletter
+                4.Notificar a los jugadores de un evento
             """);
        return scanner.nextInt();
     }
@@ -78,7 +80,7 @@ public class MenuManager {
         System.out.println("""
             ====GESTION DE INVENTARIO====
                 1.Mostrar el inventario
-                2.Mostrar el  valor total del inventario
+                2.Mostrar el valor total del inventario
             """);
         return scanner.nextInt();
     }

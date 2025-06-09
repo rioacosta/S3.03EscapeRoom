@@ -4,11 +4,14 @@ import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.entities.Certificate;
 import com.escapeRoom.entities.Player;
 import com.escapeRoom.exceptions.NullOrEmptyException;
+import com.escapeRoom.notifications.concreteSubject.NewNewsletter;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class PlayerHandler {
     private final IGenericDAO<Player, Integer> playerDao;
+    private final NewNewsletter newsletter = new NewNewsletter();
 
     public PlayerHandler(IGenericDAO<Player, Integer> playerDao) {
         this.playerDao = playerDao;
@@ -16,9 +19,22 @@ public class PlayerHandler {
 
     public boolean subscribePlayer(Player player) {
         if(player == null || player.getName() == null || player.getEmail() == null) {
-            throw new NullOrEmptyException("Datos del jugador inválidos");
+            throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
-        return playerDao.create(player);
+        playerDao.create(player);
+                newsletter.addObserver(player);
+        return true;
+    }
+    public void unsbscribePlayer(Player player) {
+        if (player != null) {
+            newsletter.removeObserver(player);
+            playerDao.deleteById(player.getIdPlayer());
+        } else { throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir");
+        }
+    }
+
+    public void notifySubscribers (String notification) {
+    newsletter.notifyObservers(notification);
     }
 
     public Optional<Player> findPlayerById(int id) {
@@ -34,18 +50,19 @@ public class PlayerHandler {
         return playerDao.findByName(name);
     }
 
-    public boolean assignCertificateToPlayer(int playerId, int certificateId) {
+    public boolean assignCertificateToPlayer(String playerName) {
 
-        Optional<Player> playerOpt = findPlayerById(playerId);
+        Optional<Player> playerOpt = findPlayerByName(playerName);
         if(playerOpt.isEmpty()) {   throw new RuntimeException("Jugador no encontrado");
         }
         String name = playerOpt.get().getName();
 
-        Certificate newCertificate = new Certificate(certificateId, name, LocalDate.now(), playerId);
-
+        Certificate newCertificate = new Certificate(); //(certificateId, name, LocalDate.now(), playerId);
+        newCertificate.setDateOfDelivery(LocalDate.now());
+        newCertificate.setName(name);
         playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
 
-        System.out.println("Asignando certificado " + certificateId + " al jugador " + playerId);
+        System.out.println("Asignando certificado al jugador " + playerName);
         return true;
     }
 }
