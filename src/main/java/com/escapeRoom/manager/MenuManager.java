@@ -74,10 +74,8 @@ public class MenuManager {
                         2 - Borrar ticket
                         3 - Calcular beneficio por venta de tickets
                         4 - Volver al menú principal""");
-        return scanner.nextInt();
+        return getValidatedIntegerInput();
     }
-
-
 
     public int showInventoryMenu(){
 
