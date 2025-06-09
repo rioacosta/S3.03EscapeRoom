@@ -4,12 +4,15 @@ import com.escapeRoom.notifications.interfaces.Subscriber;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
+import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 @Getter
 @Setter
+@ToString
 public class Player implements Subscriber {
     private static int playersCount = 0;
     private int idPlayer;
@@ -20,13 +23,14 @@ public class Player implements Subscriber {
     public Player(String name, String email) {   //
         // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
         // fuera de aquí, usando los métodos que hay abajo en este documento
-        //InputUtils.getValidInt(idPlayer); comentado porque la base de datos ya esta generandoli
+        InputUtils.getValidInt(idPlayer); //comentado porque la base de datos ya esta generandoli
         InputUtils.getValidString(name);
         InputUtils.getValidEmail(email);
         playersCount++;
         this.idPlayer = playersCount;
         this.name = name;
         this.email = email;
+        this.certificates = new ArrayList<>();
     }
 
     public void setCertificate(Certificate certificate) {

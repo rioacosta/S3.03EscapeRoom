@@ -30,7 +30,9 @@ public class PlayerController {
 
                 case 3 -> playerHandler.unsbscribePlayer(getPlayerData());
 
-                case 4 -> playerHandler.notifySubscribers(scanner.nextLine());
+                case 4 -> {       System.out.println("Escribe a continuacion el mensaje que quieres compartir: ");
+                        playerHandler.notifySubscribers(scanner.nextLine());
+                }
 
             }
         } while (option != 0);
