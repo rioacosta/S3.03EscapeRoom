@@ -1,5 +1,6 @@
 package com.escapeRoom.services;
 
+import com.escapeRoom.controllers.PlayerController;
 import com.escapeRoom.controllers.RoomController;
 import com.escapeRoom.controllers.TicketController;
 import com.escapeRoom.entities.Room;
@@ -13,7 +14,7 @@ public class EscapeRoomHandler {
     private Scanner scanner;
     private MenuManager menuManager;
     private RoomController roomController;
-//    private PlayerController playerController;
+    private PlayerController playerController;
     private TicketController ticketController;
     private PlayerHandler playerHandler;
 
