@@ -25,7 +25,8 @@ public class EscapeRoomHandler {
         this.menuManager = new MenuManager(scanner);
         this.roomController = new RoomController(scanner);
         this.playerController = new PlayerController(scanner);
-        this.ticketController = new TicketController();
+        this.ticketController = new TicketController(scanner);
+
     }
 
     public static EscapeRoomHandler getINSTANCE() {

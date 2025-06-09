@@ -11,23 +11,28 @@ import java.util.Scanner;
 
 public class TicketController {
 
-    private Scanner scanner = new Scanner(System.in);
-    private DatabaseConnection dbConnection = DatabaseConnection.getInstance();
-    private MySQLTicketDAO ticketDAO = new MySQLTicketDAO(dbConnection);
+    private Scanner scanner;
+    private DatabaseConnection dbConnection;
+    private MySQLTicketDAO ticketDAO;
     private MenuManager menuManager;
-    private TicketHandler ticketHandler = new TicketHandler(ticketDAO);
+    private TicketHandler ticketHandler;
 
-    private int selection = 0;
+    public TicketController(Scanner scanner) {
+        this.scanner = scanner;
+        this.menuManager = new MenuManager(scanner);
+        this.dbConnection = DatabaseConnection.getInstance();
+        this.ticketDAO = new MySQLTicketDAO(dbConnection);
+        this.ticketHandler = new TicketHandler(ticketDAO);
+    }
 
     public void handleTicketOperations() {
-        String input;
+        int option = 0;
 
         do {
             try {
-                input = menuManager.showTicketMenu();
-                selection = checkInput(input);
+                option = menuManager.showTicketMenu();
 
-                switch (selection) {
+                switch (option) {
                     case 1 -> ticketHandler.createTicket();
                     case 2 -> ticketHandler.deleteTicket();
                     case 3 -> System.out.println(ticketHandler.calculateTotalProfit() + " euros de beneficio total");
@@ -37,19 +42,7 @@ public class TicketController {
             } catch (EmptyInputException | IllegalArgumentException e) {
                 System.err.println(e.getMessage());
             }
-        } while (selection != 4);
+        } while (option != 4);
     }
 
-    public int checkInput(String input) {
-        InputUtils.checkEmptyInput(input);
-
-        try {
-            selection = Integer.parseInt(input);
-            InputUtils.getValidInt(selection);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Error: Debes introducir un número");
-        }
-
-        return selection;
-    }
 }

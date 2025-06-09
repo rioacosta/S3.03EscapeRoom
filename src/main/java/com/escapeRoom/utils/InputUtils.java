@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class InputUtils {
@@ -20,6 +21,28 @@ public class InputUtils {
     public static void getValidInt(Integer input) {
         if (input < 0) {
             throw new IllegalArgumentException("El número no puede ser negativo");
+        }
+    }
+
+    public static int readValidInt(Scanner scanner) {
+        while (true) {
+            String line = scanner.nextLine();
+            try {
+                return Integer.parseInt(line.trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Entrada inválida. Intenta nuevamente: ");
+            }
+        }
+    }
+
+    public static BigDecimal readValidBigDecimal(Scanner scanner) {
+        while (true) {
+            String line = scanner.nextLine();
+            try {
+                return new BigDecimal(line.trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Precio inválido. Intenta nuevamente: ");
+            }
         }
     }
 

@@ -68,18 +68,19 @@ public class MenuManager {
         return getValidatedIntegerInput();
     }
 
-    public String showTicketMenu() {
+    public int showTicketMenu() {
         System.out.println("""
                         1 - Crear ticket
                         2 - Borrar ticket
                         3 - Calcular beneficio por venta de tickets
-                        4 - Volver al menú principal
-                        """);
-
-        return scanner.nextLine().trim(); // Clean trailing and leading whitespace
+                        4 - Volver al menú principal""");
+        return scanner.nextInt();
     }
 
-    public int showInventoryMenu() {
+
+
+    public int showInventoryMenu(){
+
         System.out.println("""
             ====GESTION DE INVENTARIO====
                 1. Mostrar el inventario

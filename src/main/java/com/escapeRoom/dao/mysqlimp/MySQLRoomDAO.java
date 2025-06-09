@@ -56,7 +56,6 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
             stmt.setString(5, room.getTheme().name());
 
 
-
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected == 0) {
@@ -75,12 +74,12 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
             }
             return true;
 
-        } catch(SQLException e){
-                logger.log(Level.SEVERE, "Error en la inserción SQL: " + e.getSQLState() + " - " + e.getMessage(), e);
-                return false;
-            }
-
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error en la inserción SQL: " + e.getSQLState() + " - " + e.getMessage(), e);
+            return false;
         }
+
+    }
 
     public int saveAndReturnId(Room room) {
         if (!escaperoomExists(room.getIdEscaperoom_ref())) {
@@ -120,14 +119,14 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                   System.out.println("Cargando decoraciones para roomId = " + id);
+                    System.out.println("Cargando decoraciones para roomId = " + id);
 
                     MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
                     MySQLDecorationDAO decoDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
 
 
                     System.out.println(" decoraciones encontradas" + decoDAO.findByRoomId(id).size());
-                    return Optional.of(mapResultSetToRoom(rs,hintDAO,decoDAO));
+                    return Optional.of(mapResultSetToRoom(rs, hintDAO, decoDAO));
 
 
                 }
@@ -183,26 +182,26 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
         }
     }
 
-@Override
-public List<Room> findAll() {
-    List<Room> rooms = new ArrayList<>();
-    String sql = "SELECT * FROM room";
-    try (Statement stmt = this.connection.createStatement();
-         ResultSet rs = stmt.executeQuery(sql)) {
+    @Override
+    public List<Room> findAll() {
+        List<Room> rooms = new ArrayList<>();
+        String sql = "SELECT * FROM room";
+        try (Statement stmt = this.connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
-        MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
-        MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
+            MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
+            MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
 
 
-        while (rs.next()) {
-            Room room = mapResultSetToRoom(rs, hintDAO, decorationDAO);
-            rooms.add(room);
+            while (rs.next()) {
+                Room room = mapResultSetToRoom(rs, hintDAO, decorationDAO);
+                rooms.add(room);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error recuperando todas las salas", e);
         }
-    } catch (SQLException e) {
-        logger.log(Level.SEVERE, "Error recuperando todas las salas", e);
+        return rooms;
     }
-    return rooms;
-}
 
     @Override
     public boolean existsById(Integer id) {
@@ -249,7 +248,6 @@ public List<Room> findAll() {
         }
         return false;
     }
-
 
 
     public boolean updateRoomName(int roomId, String newName) {
