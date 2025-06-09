@@ -60,7 +60,8 @@ public class MenuManager {
     System.out.println("""
             ====GESTION DE JUGADORES====
                 1.Otorgar certificados
-                2.Subscribir a la newsletter
+                2.Suscribir a la newsletter
+                3.Desuscribir jugador de la newsletter
             """);
        return scanner.nextInt();
     }

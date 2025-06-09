@@ -4,11 +4,14 @@ import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.entities.Certificate;
 import com.escapeRoom.entities.Player;
 import com.escapeRoom.exceptions.NullOrEmptyException;
+import com.escapeRoom.notifications.concreteSubject.NewNewsletter;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class PlayerHandler {
     private final IGenericDAO<Player, Integer> playerDao;
+    private final NewNewsletter newsletter = new NewNewsletter();
 
     public PlayerHandler(IGenericDAO<Player, Integer> playerDao) {
         this.playerDao = playerDao;
@@ -16,9 +19,18 @@ public class PlayerHandler {
 
     public boolean subscribePlayer(Player player) {
         if(player == null || player.getName() == null || player.getEmail() == null) {
-            throw new NullOrEmptyException("Datos del jugador inválidos");
+            throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
-        return playerDao.create(player);
+        playerDao.create(player);
+                newsletter.addObserver(player);
+        return true;
+    }
+    public void unsbscribePlayer(Player player) {
+        if (player != null) {
+            newsletter.removeObserver(player);
+            playerDao.deleteById(player.getIdPlayer());
+        } else { throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir");
+        }
     }
 
     public Optional<Player> findPlayerById(int id) {

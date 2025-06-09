@@ -31,6 +31,8 @@ public class PlayerController {
                 case 1 -> playerHandler.subscribePlayer(getPlayer());
 
                 case 2 -> playerHandler.assignCertificateToPlayer(getPlayer().getName());
+
+                case 3 -> playerHandler.unsbscribePlayer(getPlayer());
             }
         } while (option != 0);
     }
