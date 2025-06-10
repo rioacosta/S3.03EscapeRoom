@@ -9,30 +9,30 @@ import java.util.Scanner;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Certificate {
 
     private int idCertificate;
     private String name;
+    private String description;
     private LocalDate dateOfDelivery;
     private int idPlayer;
 
-    public Certificate(String name, LocalDate dateOfDelivery) {
+    public Certificate(String name, String description, LocalDate dateOfDelivery) {
         InputUtils.getValidInt(idCertificate);
         InputUtils.getValidString(name);
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.getValidInt(idPlayer);
         this.name = name;
+        this.description = "";
         this.dateOfDelivery = dateOfDelivery;
         this.idPlayer = idPlayer;
     }
 
-    public Certificate(int idCertificate, String name, LocalDate dateOfDelivery, int idPlayer) {
+    public Certificate(int idCertificate, String name, String description, LocalDate dateOfDelivery, int idPlayer) {
         InputUtils.getValidInt(idCertificate);
         InputUtils.getValidString(name);
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.getValidInt(idPlayer);
-
         this.idCertificate = idCertificate;
         this.name = name;
         this.dateOfDelivery = dateOfDelivery;
@@ -49,4 +49,9 @@ public class Certificate {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "El jugador " + name + ", ha superado todos los retos y ha ganado el reconocimiento por : "
+                + description + " el dia, " + dateOfDelivery;
+    }
 }
