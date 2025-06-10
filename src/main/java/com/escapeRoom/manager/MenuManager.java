@@ -123,11 +123,6 @@ public class MenuManager {
         }
     }
 
-
-    /**
-     * Validates user input and ensures a valid integer is returned.
-     * If the input is invalid (e.g., non-integer), it prompts the user again.
-     */
     public int getValidatedIntegerInput() {
 
         while (true) {

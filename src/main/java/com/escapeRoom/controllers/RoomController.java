@@ -6,10 +6,7 @@ import com.escapeRoom.dao.interfaces.IRoomDao;
 import com.escapeRoom.dao.mysqlimp.MySQLDecorationDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLHintDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
-import com.escapeRoom.entities.Decoration;
-import com.escapeRoom.entities.Hint;
-import com.escapeRoom.entities.Room;
-import com.escapeRoom.entities.RoomInputCollector;
+import com.escapeRoom.entities.*;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
 import com.escapeRoom.manager.MenuManager;
@@ -69,20 +66,23 @@ public class RoomController {
             MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
             MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
 
-            int IdRoom = roomDAO.saveAndReturnId(room);
+            // Save the room and retrieve the generated idRoom
+            int idRoom = roomDAO.saveAndReturnId(room);
 
-            if (IdRoom > 0) {
+            if (idRoom > 0) {
+                // Ensure idRoom is assigned to Hints and Decorations before insertion
                 for (Hint hint : room.getHints()) {
-                    hint.setIdRoom_ref(IdRoom);
+                    hint.setIdRoom_ref(idRoom); // Assign the generated idRoom
                     hintDAO.create(hint);
                 }
 
                 for (Decoration decoration : room.getDecorations()) {
-                    decoration.setIdRoom_ref(IdRoom);
+                    decoration.setIdRoom_ref(idRoom); // Assign the generated idRoom
                     decorationDAO.create(decoration);
                 }
 
-                System.out.println("Sala creada exitosamente con ID: " + IdRoom);
+                System.out.println("Sala creada exitosamente con ID: " + idRoom);
+                EscapeRoom.getInstance().addRoom(room);
             } else {
                 System.out.println("Error al guardar la sala.");
             }

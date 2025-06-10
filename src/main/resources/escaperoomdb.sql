@@ -77,6 +77,16 @@ CREATE TABLE `hint` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+/* ---- CERTIFICATE ---- */
+
+CREATE TABLE `certificate` (
+  `idCertificate` int(11) NOT NULL,
+  `idPlayer` int(11) NOT NULL,
+  `name`varchar(45)NOT NULL,
+  `description` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
 --
 -- Indices de la tabla `decoration`
 --
@@ -118,6 +128,15 @@ ALTER TABLE `tickets`
   ADD KEY `IdRoom_idx` (`idRoom`),
   ADD KEY `idPlayer` (`idPlayer`);
 
+
+--
+-- Indices de la tabla `certificate`
+--
+ALTER TABLE `certificate`
+  ADD PRIMARY KEY (`idCertificate`),
+  ADD KEY `idPlayer` (`idPlayer`);
+
+
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
@@ -157,6 +176,13 @@ ALTER TABLE `room`
 --
 ALTER TABLE `tickets`
   MODIFY `idTickets` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `certificate`
+--
+ALTER TABLE `certificate`
+  MODIFY `idCertificate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 
 --
 -- Restricciones para tablas volcadas

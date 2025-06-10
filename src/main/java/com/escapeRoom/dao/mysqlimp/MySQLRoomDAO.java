@@ -40,10 +40,10 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
     @Override
     public boolean create(Room room) {
 
-        if (!escaperoomExists(room.getIdEscaperoom_ref())) {
+        /*if (!escaperoomExists(room.getIdEscaperoom_ref())) {
 
             return false;
-        }
+        }*/
 
         String sql = "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, theme) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -82,10 +82,6 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
     }
 
     public int saveAndReturnId(Room room) {
-        if (!escaperoomExists(room.getIdEscaperoom_ref())) {
-            return -1;
-        }
-
         String sql = "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, theme) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -95,18 +91,20 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
             stmt.setBigDecimal(4, room.getPrice());
             stmt.setString(5, room.getTheme().name());
 
-
             int rowsAffected = stmt.executeUpdate();
 
-            if (rowsAffected > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        return rs.getInt(1); // Acá obtenés el ID generado
-                    }
+            if (rowsAffected == 0) {
+                logger.warning("Failed to insert room, no rows affected.");
+                return -1;
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Get the generated ID
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error insertando la sala y obteniendo ID", e);
+            logger.log(Level.SEVERE, "Error inserting room and getting ID", e);
         }
         return -1;
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class NewNewsletter implements Newsletter {
 
-    private List<Subscriber> subscribers = new ArrayList<>();
+    private static final List<Subscriber> subscribers = new ArrayList<>();
 
     @Override
     public void addObserver(Subscriber subscriber) {
@@ -21,10 +21,11 @@ public class NewNewsletter implements Newsletter {
     }
 
     @Override
-    public void notifyObservers(String newsletterUpdate) {
+    public String notifyObservers(String newsletterUpdate) {
         for (Subscriber subscriber : subscribers) {
             subscriber.update(newsletterUpdate);
         }
+        return newsletterUpdate;
     }
 
 }

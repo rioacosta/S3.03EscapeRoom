@@ -1,6 +1,9 @@
 package com.escapeRoom.services;
 
+import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.dao.mysqlimp.MySQLCertificateDAO;
+import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.entities.Certificate;
 import com.escapeRoom.entities.Player;
 import com.escapeRoom.exceptions.NullOrEmptyException;
@@ -11,56 +14,84 @@ import java.util.Optional;
 
 public class PlayerHandler {
     private final IGenericDAO<Player, Integer> playerDao;
+    private final MySQLCertificateDAO certificateDao;
     private final NewNewsletter newsletter = new NewNewsletter();
 
     public PlayerHandler(IGenericDAO<Player, Integer> playerDao) {
         this.playerDao = playerDao;
+        this.certificateDao = new MySQLCertificateDAO(DatabaseConnection.getInstance());
+    }
+
+    public void createPlayer(Player player) {
+        playerDao.create(player);
     }
 
     public void subscribePlayer(Player player) {
-        if(player == null || player.getName() == null || player.getEmail() == null) {
+        if (player == null || player.getName() == null || player.getEmail() == null) {
             throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
         playerDao.create(player);
-                newsletter.addObserver(player);
+        newsletter.addObserver(player);
+        System.out.println("Jugador " + player.getName() + " suscrito");
     }
+
     public void unsbscribePlayer(Player player) {
         if (player != null) {
             newsletter.removeObserver(player);
-            playerDao.deleteById(player.getIdPlayer());
-        } else { throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir");
+            boolean result = playerDao.deleteById(player.getIdPlayer());
+            if (result) {
+                System.out.println("Jugador " + player.getName() + " des-suscrito.");
+            } else {
+                System.err.println("No se pudo des-suscribir al jugador " + player.getName() + ". Asegúrate de eliminar las entradas asociadas.");
+            }
+        } else {
+            throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir.");
         }
     }
 
-    public void notifySubscribers (String notification) {
-    newsletter.notifyObservers(notification);
+    public void notifySubscribers(String notification) {
+        newsletter.notifyObservers(notification);
     }
 
     public Optional<Player> findPlayerById(int id) {
-        if(id <= 0) {
+        if (id <= 0) {
             throw new IllegalArgumentException("ID de jugador inválido");
         }
         return playerDao.findById(id);
     }
 
+    public void showAllPlayers() {
+        playerDao.findAll().forEach(System.out::println);
+    }
+
+
     public Optional<Player> findPlayerByName(String name) {
-        if(name == null || name.isEmpty()) {       throw new  NullOrEmptyException("Jugador no encontrado");
+        if (name == null || name.isEmpty()) {
+            throw new NullOrEmptyException("Jugador no encontrado");
         }
         return playerDao.findByName(name);
     }
 
     public void assignCertificateToPlayer(String playerName) {
+        try {//Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+            Optional<Player> playerOpt = findPlayerByName(playerName);
+            if (playerOpt.isEmpty()) {
+                throw new RuntimeException("Jugador no encontrado");
+            }
+            String name = playerOpt.get().getName();
 
-        Optional<Player> playerOpt = findPlayerByName(playerName);
-        if(playerOpt.isEmpty()) {   throw new RuntimeException("Jugador no encontrado");
+            Certificate newCertificate = new Certificate();
+            newCertificate.setDateOfDelivery(LocalDate.now());
+            newCertificate.setName(name);
+            System.out.println("Jugador antes de asignar certificado: " + playerOpt);
+
+            playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
+            System.out.println("Jugador después de asignar certificado: " + playerOpt);
+            certificateDao.create(newCertificate);
+            playerDao.update(playerOpt.get());
+            System.out.println("Asignado certificado al jugador " + playerName);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
-        String name = playerOpt.get().getName();
-
-        Certificate newCertificate = new Certificate(); //(certificateId, name, LocalDate.now(), playerId);
-        newCertificate.setDateOfDelivery(LocalDate.now());
-        newCertificate.setName(name);
-        playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
-
-        System.out.println("Asignando certificado al jugador " + playerName);
     }
 }
