@@ -3,6 +3,7 @@ package com.escapeRoom.dao.mysqlimp;
 
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.entities.Certificate;
 import com.escapeRoom.entities.Player;
 
 import java.sql.*;
@@ -90,18 +91,18 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
 
     @Override
     public boolean deleteById(Integer id) {
-        // Check for existing tickets and delete them first
+
         String checkTicketsSql = "SELECT COUNT(*) FROM tickets WHERE idPlayer = ?";
         String deleteTicketsSql = "DELETE FROM tickets WHERE idPlayer = ?";
         String deletePlayerSql = "DELETE FROM player WHERE idPlayer = ?";
 
         try {
-            // Step 1: Check if tickets exist for the player
+
             try (PreparedStatement checkStmt = connection.prepareStatement(checkTicketsSql)) {
                 checkStmt.setInt(1, id);
                 ResultSet rs = checkStmt.executeQuery();
                 if (rs.next() && rs.getInt(1) > 0) {
-                    // Step 2: If tickets exist, delete them
+
                     try (PreparedStatement deleteTicketsStmt = connection.prepareStatement(deleteTicketsSql)) {
                         deleteTicketsStmt.setInt(1, id);
                         deleteTicketsStmt.executeUpdate();
@@ -109,7 +110,6 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
                 }
             }
 
-            // Step 3: Delete the player
             try (PreparedStatement deletePlayerStmt = connection.prepareStatement(deletePlayerSql)) {
                 deletePlayerStmt.setInt(1, id);
                 int rowsAffected = deletePlayerStmt.executeUpdate();
@@ -149,6 +149,26 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             return false;
         }
     }
+    private void loadPlayerCertificates(Player player) {
+        String sql = "SELECT * FROM certificate WHERE idPlayer = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, player.getIdPlayer());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Certificate certificate = new Certificate(
+                            rs.getInt("idCertificate"),
+                            rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getDate("dateOfDelivery").toLocalDate(),
+                            rs.getInt("idPlayer")
+                    );
+                    player.setCertificate(certificate);
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error cargando certificados para jugador ID: " + player.getIdPlayer(), e);
+        }
+    }
 
     private Player mapResultSetToPlayer(ResultSet rs) throws SQLException {
         Player player = new Player(
@@ -159,6 +179,7 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
         player.setIdPlayer(rs.getInt("idPlayer"));
         player.setName(rs.getString("name"));
         player.setEmail(rs.getString("email"));
+        loadPlayerCertificates(player);
         return player;
     }
 
