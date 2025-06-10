@@ -90,16 +90,37 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
 
     @Override
     public boolean deleteById(Integer id) {
-        String sql = "DELETE FROM player WHERE idPlayer = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+        // Check for existing tickets and delete them first
+        String checkTicketsSql = "SELECT COUNT(*) FROM tickets WHERE idPlayer = ?";
+        String deleteTicketsSql = "DELETE FROM tickets WHERE idPlayer = ?";
+        String deletePlayerSql = "DELETE FROM player WHERE idPlayer = ?";
+
+        try {
+            // Step 1: Check if tickets exist for the player
+            try (PreparedStatement checkStmt = connection.prepareStatement(checkTicketsSql)) {
+                checkStmt.setInt(1, id);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    // Step 2: If tickets exist, delete them
+                    try (PreparedStatement deleteTicketsStmt = connection.prepareStatement(deleteTicketsSql)) {
+                        deleteTicketsStmt.setInt(1, id);
+                        deleteTicketsStmt.executeUpdate();
+                    }
+                }
+            }
+
+            // Step 3: Delete the player
+            try (PreparedStatement deletePlayerStmt = connection.prepareStatement(deletePlayerSql)) {
+                deletePlayerStmt.setInt(1, id);
+                int rowsAffected = deletePlayerStmt.executeUpdate();
+                return rowsAffected > 0;
+            }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error borrando el jugador ID: " + id, e);
+            logger.log(Level.SEVERE, "Error deleting player ID: " + id, e);
             return false;
         }
     }
+
 
     @Override
     public List<Player> findAll() {

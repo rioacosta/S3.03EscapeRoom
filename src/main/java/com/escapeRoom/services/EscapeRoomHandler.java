@@ -1,9 +1,9 @@
 package com.escapeRoom.services;
 
+import com.escapeRoom.controllers.InventoryController;
 import com.escapeRoom.controllers.PlayerController;
 import com.escapeRoom.controllers.RoomController;
 import com.escapeRoom.controllers.TicketController;
-import com.escapeRoom.entities.Room;
 import com.escapeRoom.manager.MenuManager;
 
 
@@ -14,11 +14,9 @@ public class EscapeRoomHandler {
     private Scanner scanner;
     private MenuManager menuManager;
     private RoomController roomController;
-
+    private InventoryController inventoryController;
     private PlayerController playerController;
     private TicketController ticketController;
-
-    private PlayerHandler playerHandler;
 
     private EscapeRoomHandler() {
         this.scanner = new Scanner(System.in);
@@ -26,7 +24,7 @@ public class EscapeRoomHandler {
         this.roomController = new RoomController(scanner);
         this.playerController = new PlayerController(scanner);
         this.ticketController = new TicketController(scanner);
-
+        this.inventoryController = new InventoryController();
     }
 
     public static EscapeRoomHandler getINSTANCE() {
@@ -52,6 +50,8 @@ public class EscapeRoomHandler {
                 case 2 -> playerController.handlePlayerOperations();
               
                 case 3 -> ticketController.handleTicketOperations();
+
+                case 4 -> inventoryController.handleInventoryOperations();
 
             }
 

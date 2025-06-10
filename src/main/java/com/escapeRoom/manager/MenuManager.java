@@ -28,7 +28,6 @@ public class MenuManager {
 
     public int showRoomMenu() {
         System.out.println("""
- feature/room-delete-refact
                     ===== GESTIÓN DE SALAS =====
                         1. Crear nueva sala
                         2. Listar salas
@@ -37,7 +36,7 @@ public class MenuManager {
                         5. Eliminar elementos sala
                         0. Volver al menú principal
                         Selecciona opción:
-                      """);
+                    """);
 
         return getValidatedIntegerInput();
     }
@@ -59,11 +58,12 @@ public class MenuManager {
     public int showPlayersMenu() {
         System.out.println("""
                 ====GESTION DE JUGADORES====
-                    1. Otorgar certificados
-                    2. Suscribir a la newsletter
-                    3. Desuscribir jugador de la newsletter
-                    4. Notificar a los jugadores de un evento
-                    5. Listar jugadores
+                    1. Agregar jugador
+                    2. Otorgar certificados
+                    3. Suscribir a la newsletter
+                    4. Desuscribir jugador de la newsletter
+                    5. Notificar a los jugadores de un evento
+                    6. Listar jugadores
                     0. Volver al menu principal
                 """);
 
@@ -76,7 +76,8 @@ public class MenuManager {
                     1 - Crear ticket
                     2 - Borrar ticket
                     3 - Calcular beneficio por venta de tickets
-                    0 - Volver al menú principal""");
+                    0 - Volver al menú principal
+                """);
 
         return getValidatedIntegerInput();
     }
@@ -85,8 +86,9 @@ public class MenuManager {
 
         System.out.println("""
                 ====GESTION DE INVENTARIO====
-                    1. Mostrar el inventario
-                    2. Mostrar el valor total del inventario
+                    1. Mostrar el valor total del inventario
+                    2. Mostrar el inventario
+                    0. Volver al menu principal
                 """);
 
         return getValidatedIntegerInput();
