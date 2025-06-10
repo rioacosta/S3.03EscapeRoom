@@ -23,8 +23,7 @@ public class NewSubscriber implements Subscriber {
 
     @Override
     public void update(String newsletterUpdate) {
-        newsletter.notifyObservers(newsletterUpdate);
-        System.out.println("Nueva notificación de newsletter enviada :D");
+        System.out.println("Nueva notificación de newsletter enviada :D   = " + newsletterUpdate);
 
     }
 

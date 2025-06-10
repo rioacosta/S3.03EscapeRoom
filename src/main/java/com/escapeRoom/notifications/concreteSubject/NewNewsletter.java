@@ -2,13 +2,15 @@ package com.escapeRoom.notifications.concreteSubject;
 
 import com.escapeRoom.notifications.interfaces.Newsletter;
 import com.escapeRoom.notifications.interfaces.Subscriber;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class NewNewsletter implements Newsletter {
 
-    private static final List<Subscriber> subscribers = new ArrayList<>();
+    public static final List<Subscriber> subscribers = new ArrayList<>();
 
     @Override
     public void addObserver(Subscriber subscriber) {

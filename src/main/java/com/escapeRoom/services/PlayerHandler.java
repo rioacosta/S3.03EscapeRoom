@@ -28,7 +28,7 @@ public class PlayerHandler {
         if (player == null || player.getName() == null || player.getEmail() == null) {
             throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
-        playerDao.create(player);
+        //playerDao.create(player);
         newsletter.addObserver(player);
         System.out.println("Jugador " + player.getName() + " suscrito");
     }
@@ -36,11 +36,12 @@ public class PlayerHandler {
     public void unsbscribePlayer(Player player) {
         if (player != null) {
             newsletter.removeObserver(player);
-            boolean result = playerDao.deleteById(player.getIdPlayer());
+            boolean result = NewNewsletter.subscribers.contains(player); //playerDao.deleteById(player.getIdPlayer());
             if (result) {
                 System.out.println("Jugador " + player.getName() + " des-suscrito.");
             } else {
-                System.err.println("No se pudo des-suscribir al jugador " + player.getName() + ". Asegúrate de eliminar las entradas asociadas.");
+                System.err.println("No se pudo des-suscribir al jugador " + player.getName() +
+                        ". Asegúrate de eliminar las entradas asociadas.");
             }
         } else {
             throw new RuntimeException("Jugador no encontrado, no se puede des-suscribir.");
