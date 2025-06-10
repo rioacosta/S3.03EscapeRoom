@@ -14,9 +14,9 @@ import java.util.List;
 public class InventoryHandler {
     public EscapeRoom escapeRoom = EscapeRoom.getInstance();
     List<Room> rooms = escapeRoom.getRooms();
+    MySQLRoomDAO roomDao = new MySQLRoomDAO(DatabaseConnection.getInstance());
 
     public void getTotalInventory() {
-        MySQLRoomDAO roomDao = new MySQLRoomDAO(DatabaseConnection.getInstance());
         List<Room> rooms = roomDao.findAll();
 
         BigDecimal total = BigDecimal.ZERO;
@@ -28,7 +28,9 @@ public class InventoryHandler {
     }
 
     public void showInventory() {
-        if (escapeRoom.getRooms().isEmpty()) {         System.out.println("No hay cuartos en el scaperoom\n");
+        List<Room> rooms = roomDao.findAll();
+
+        if (rooms.isEmpty()) {         System.out.println("No hay cuartos en el scaperoom\n");
         }
         for (Room room : rooms) {
             System.out.println("La sala " + room.getName() + " contiene:" +
