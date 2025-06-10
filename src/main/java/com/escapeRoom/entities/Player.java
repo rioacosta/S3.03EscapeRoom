@@ -78,7 +78,7 @@ public class Player implements Subscriber {
         System.out.println("Nueva notificación de newsletter :D");
     }
 
-    /*@Override
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Jugador: ").append(name)
@@ -94,10 +94,10 @@ public class Player implements Subscriber {
             sb.append("\nNo tiene certificados asignados\n");
         }
         return sb.toString();
-    }*/
+    }
 
-    @Override
+    /*@Override
     public String toString() {
      return "Jugador: " + name + " con ID: " + idPlayer + ", email: " + email + "\ncertificados: " + certificates + "\n";
-    }
+    }*/
 }
