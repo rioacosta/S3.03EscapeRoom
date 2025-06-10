@@ -80,12 +80,10 @@ public class PlayerHandler {
             Player player = playerOpt.get();
 
             Certificate newCertificate = new Certificate();
-            System.out.println("DEBUG - Certificado a guardar: " + newCertificate);
             newCertificate.setDateOfDelivery(LocalDate.now());
             newCertificate.setName(player.getName());
-            newCertificate.setDescription(certification); // Asegurar que se asigna la descripción
+            newCertificate.setDescription(certification); 
             newCertificate.setIdPlayer(player.getIdPlayer());
-            System.out.println("DEBUG - Certificado guardado con ID: " + newCertificate.getDescription());
 
             player.setCertificate(newCertificate);
             certificateDao.create(newCertificate);
