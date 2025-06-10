@@ -125,8 +125,9 @@ public class TicketHandler {
     }
 
     private BigDecimal getValidPrice() {
+        System.out.println("¿Qué precio tiene?");
+
         while (true) {
-            System.out.println("¿Qué precio tiene?");
             BigDecimal price = InputUtils.readValidBigDecimal(scanner);
 
             boolean positive = price.compareTo(BigDecimal.ZERO) > 0;
