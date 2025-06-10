@@ -23,7 +23,7 @@ public class Certificate {
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.getValidInt(idPlayer);
         this.name = name;
-        this.description = "";
+        this.description = description;
         this.dateOfDelivery = dateOfDelivery;
         this.idPlayer = idPlayer;
     }
@@ -35,6 +35,7 @@ public class Certificate {
         InputUtils.getValidInt(idPlayer);
         this.idCertificate = idCertificate;
         this.name = name;
+        this.description = description;
         this.dateOfDelivery = dateOfDelivery;
         this.idPlayer = idPlayer;
     }
