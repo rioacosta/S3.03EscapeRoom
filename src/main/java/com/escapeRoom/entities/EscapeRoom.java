@@ -14,11 +14,9 @@ public final class EscapeRoom {
     private int idEscaperoom;
     private String name;
     private List<Room> rooms;
-    private ArrayList<Player> players;   //Rio: agrego la lista de jugadores que no esta en ningun lugar,
-    //se puede mover de esta clase a otra si no lo ven claro
+    private ArrayList<Player> players;
 
     public EscapeRoom() {
-
         InputUtils.getValidInt(idEscaperoom);
         // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
         // usando el method que hay abajo en este documento
@@ -45,11 +43,9 @@ public final class EscapeRoom {
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
-
     public int getIdEscaperoom() {
         return idEscaperoom;
     }
-
     public String getName() {
         return name;
     }
@@ -57,11 +53,9 @@ public final class EscapeRoom {
         this.name = nameCharacterLimit(name);
     }
     public void setName(int name) { this.name = String.valueOf(name);}
-
     public List<Room> getRooms() {
         return rooms;
     }
-
     public void addRoom(Room room) {    this.rooms.add(room);    }
 
     @Override
