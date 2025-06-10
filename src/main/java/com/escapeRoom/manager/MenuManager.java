@@ -133,6 +133,10 @@ public class MenuManager {
             System.out.print("> ");
             String line = scanner.nextLine();
 
+            if (line.trim().isEmpty()) {
+                continue;
+            }
+
             try {
                 int input = Integer.parseInt(line.trim());
                 return input;
@@ -141,5 +145,14 @@ public class MenuManager {
             }
         }
     }
+    public String collectNonEmptyLine(String mensaje) {
+        String input = "";
+        while (input.isBlank()) {
+            System.out.println(mensaje);
+            input = scanner.nextLine();
+        }
+        return input;
+    }
+
 
 }
