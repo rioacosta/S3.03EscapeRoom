@@ -150,14 +150,25 @@ public class RoomController {
         }
     }
 
+    // METHOD ANTERIOR
+//    private void listAllRooms() {
+//        List<Room> rooms = roomHandler.getAllRooms();
+//        if (rooms.isEmpty()) {
+//            System.out.println("No hay salas registradas actualmente.");
+//        } else {
+//            System.out.println("===== LISTADO DE SALAS =====");
+//            rooms.forEach(System.out::println);
+//        }
+//    }
 
-    private void listAllRooms() {
-        List<Room> rooms = roomHandler.getAllRooms();
-        if (rooms.isEmpty()) {
+    public void listAllRooms() {
+        List<String> formattedRooms = roomHandler.getAllRoomsFormatted();
+
+        if (formattedRooms.isEmpty()) {
             System.out.println("No hay salas registradas actualmente.");
         } else {
             System.out.println("===== LISTADO DE SALAS =====");
-            rooms.forEach(System.out::println);
+            formattedRooms.forEach(System.out::println);
         }
     }
 
