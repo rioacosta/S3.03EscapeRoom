@@ -3,12 +3,10 @@ package com.escapeRoom.services;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLCertificateDAO;
-import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.entities.Certificate;
 import com.escapeRoom.entities.Player;
 import com.escapeRoom.exceptions.NullOrEmptyException;
 import com.escapeRoom.notifications.concreteSubject.NewNewsletter;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -53,12 +51,12 @@ public class PlayerHandler {
         newsletter.notifyObservers(notification);
     }
 
-    public Optional<Player> findPlayerById(int id) {
+   /* public Optional<Player> findPlayerById(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("ID de jugador inválido");
         }
         return playerDao.findById(id);
-    }
+    }*/
 
     public void showAllPlayers() {
         playerDao.findAll().forEach(System.out::println);
@@ -72,26 +70,30 @@ public class PlayerHandler {
         return playerDao.findByName(name);
     }
 
-    public void assignCertificateToPlayer(String playerName) {
-        try {//Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+    public void assignCertificateToPlayer(String playerName, String certification) {
+        try {
             Optional<Player> playerOpt = findPlayerByName(playerName);
             if (playerOpt.isEmpty()) {
                 throw new RuntimeException("Jugador no encontrado");
             }
-            String name = playerOpt.get().getName();
+
+            Player player = playerOpt.get();
 
             Certificate newCertificate = new Certificate();
+            System.out.println("DEBUG - Certificado a guardar: " + newCertificate);
             newCertificate.setDateOfDelivery(LocalDate.now());
-            newCertificate.setName(name);
-            System.out.println("Jugador antes de asignar certificado: " + playerOpt);
+            newCertificate.setName(player.getName());
+            newCertificate.setDescription(certification); // Asegurar que se asigna la descripción
+            newCertificate.setIdPlayer(player.getIdPlayer());
+            System.out.println("DEBUG - Certificado guardado con ID: " + newCertificate.getDescription());
 
-            playerOpt.ifPresent(p -> p.setCertificate(newCertificate));
-            System.out.println("Jugador después de asignar certificado: " + playerOpt);
+            player.setCertificate(newCertificate);
             certificateDao.create(newCertificate);
-            playerDao.update(playerOpt.get());
-            System.out.println("Asignado certificado al jugador " + playerName);
+            playerDao.update(player);
+
+            System.out.println("Certificado asignado correctamente a " + playerName);
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error asignando certificado: " + e.getMessage(), e);
         }
     }
 }

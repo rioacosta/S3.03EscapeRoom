@@ -51,7 +51,7 @@ public class Certificate {
 
     @Override
     public String toString() {
-        return "El jugador " + name + ", ha superado todos los retos y ha ganado el reconocimiento por : "
-                + description + " el dia, " + dateOfDelivery;
+        return "El jugador " + name + ", ha superado todos los retos y ha ganado el reconocimiento por "
+                + description + " el dia, " + dateOfDelivery + "/n";
     }
 }
