@@ -19,9 +19,9 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class RoomController {
-    private RoomHandler roomHandler;
-    private RoomInputCollector inputCollector;
-    private MenuManager menuManager;
+    private final RoomHandler roomHandler;
+    private final RoomInputCollector inputCollector;
+    private final MenuManager menuManager;
     private final MySQLHintDAO hintDAO;
     private final MySQLDecorationDAO decorationDAO;
     private static final Logger logger = Logger.getLogger(RoomController.class.getName());
@@ -37,7 +37,6 @@ public class RoomController {
     }
 
     public void handleRoomOperations() {
-
 
         int option;
         do {
@@ -81,8 +80,9 @@ public class RoomController {
                     decorationDAO.create(decoration);
                 }
 
-                System.out.println("Sala creada exitosamente con ID: " + idRoom);
                 EscapeRoom.getInstance().addRoom(room);
+                System.out.println("Sala creada exitosamente con ID: " + idRoom);
+
             } else {
                 System.out.println("Error al guardar la sala.");
             }

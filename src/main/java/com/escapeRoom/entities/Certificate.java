@@ -23,7 +23,7 @@ public class Certificate {
         InputUtils.getValidLocalDate(String.valueOf(dateOfDelivery));
         InputUtils.getValidInt(idPlayer);
         this.name = name;
-        this.description = "";
+        this.description = description;
         this.dateOfDelivery = dateOfDelivery;
         this.idPlayer = idPlayer;
     }
@@ -35,6 +35,7 @@ public class Certificate {
         InputUtils.getValidInt(idPlayer);
         this.idCertificate = idCertificate;
         this.name = name;
+        this.description = description;
         this.dateOfDelivery = dateOfDelivery;
         this.idPlayer = idPlayer;
     }
@@ -51,7 +52,7 @@ public class Certificate {
 
     @Override
     public String toString() {
-        return "El jugador " + name + ", ha superado todos los retos y ha ganado el reconocimiento por : "
-                + description + " el dia, " + dateOfDelivery;
+        return "El jugador " + name + ", ha superado todos los retos y ha ganado el reconocimiento por "
+                + description + " el dia, " + dateOfDelivery + "/n";
     }
 }

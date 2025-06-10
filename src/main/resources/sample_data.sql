@@ -42,5 +42,5 @@ INSERT INTO `tickets` (`idTickets`, `idRoom`, `idPlayer`, `boughtOn`, `price`) V
 (2, 2, 2, '2025-06-07 14:13:31', 37.50);
 
 
-INSERT INTO `certificate` (`idCertificate`, `idPlayer`, `name`, `description`) VALUES
-(1, 1, 'Certificado por la superación de la sala Disney', 'Creías que no lo ibas a conseguir... pero lo lograste! :D Pluto se sentiría orgulloso');
+INSERT INTO `certificate` (`idCertificate`, `idPlayer`, `name`, `description`, `dateOfDelivery`) VALUES
+(1, 1, 'Certificado por la superación de la sala Disney', 'Creías que no lo ibas a conseguir... pero lo lograste! :D Pluto se sentiría orgulloso', '2025-06-07 14:13:31');

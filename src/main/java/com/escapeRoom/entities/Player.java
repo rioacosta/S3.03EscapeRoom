@@ -1,10 +1,11 @@
 package com.escapeRoom.entities;
 
+import com.escapeRoom.dao.interfaces.IGenericDAO;
+import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.notifications.interfaces.Subscriber;
 import lombok.Getter;
 import lombok.Setter;
 import com.escapeRoom.utils.InputUtils;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,10 @@ public class Player implements Subscriber {
     private String name;
     private String email;
     private List<Certificate> certificates;
+    private MySQLPlayerDAO playerDAO;
 
-    public Player(int idPlayer, String name, String email) {   //
-        // Las validaciones de que no se sobrepasa del número máximo de caracteres o cifras tendrán que hacerse
-        // fuera de aquí, usando los métodos que hay abajo en este documento
-        InputUtils.getValidInt(idPlayer); //comentado porque la base de datos ya esta generandoli
+    public Player(int idPlayer, String name, String email) {
+        InputUtils.getValidInt(idPlayer);
         InputUtils.getValidString(name);
         InputUtils.getValidEmail(email);
         playersCount++;
@@ -43,8 +43,15 @@ public class Player implements Subscriber {
     }
 
     public void setCertificate(Certificate certificate) {
-        certificates.add(certificate);
+        if (certificate != null) {
+            if (certificates == null) {
+                certificates = new ArrayList<>();
+            }
+            certificates.add(certificate);
+        }
     }
+
+
 
     private String nameCharacterLimit(String name) {
         Scanner scanner = new Scanner(System.in);
@@ -73,6 +80,24 @@ public class Player implements Subscriber {
 
     @Override
     public String toString() {
-        return "Jugador: " + name + "con ID: " + idPlayer + ", email: " + email + ", certificados: " + certificates;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jugador: ").append(name)
+                .append(" con ID: ").append(idPlayer)
+                .append(", email: ").append(email);
+
+        if (certificates != null && !certificates.isEmpty()) {
+            sb.append("\nCertificados:\n");
+            for (Certificate cert : certificates) {
+                sb.append(" - ").append(cert.toString()).append("\n");
+            }
+        } else {
+            sb.append("\nNo tiene certificados asignados\n");
+        }
+        return sb.toString();
     }
+
+    /*@Override
+    public String toString() {
+     return "Jugador: " + name + " con ID: " + idPlayer + ", email: " + email + "\ncertificados: " + certificates + "\n";
+    }*/
 }

@@ -42,11 +42,12 @@ public class RoomInputCollector {
         scanner.nextLine();
 
         System.out.println("Nombre de la sala");
-        String name = scanner.next();
+        String name = scanner.nextLine();
 
         BigDecimal price;
         while (true) {
             try {
+                scanner.nextLine();
                 System.out.print("Precio base: ");
                 String input = scanner.nextLine().trim();
 
@@ -88,7 +89,7 @@ public class RoomInputCollector {
             if (theme == null){
                 System.out.println("Selecciona un tema de sala valido");
             }
-        }while (theme == null);
+        } while (theme == null);
 
         List<Hint> hintsList = new ArrayList<>();
         System.out.print("¿Cuántas pistas querés agregar?: ");
@@ -105,7 +106,6 @@ public class RoomInputCollector {
 
             hintsList.add(new Hint(0, 0, desc, theme, hintPrice));
         }
-
 
         List<Decoration> decorations = new ArrayList<>();
         System.out.print("¿Cuántas decoraciones querés agregar?: ");
@@ -176,8 +176,6 @@ public class RoomInputCollector {
         String input = scanner.next().toUpperCase();
         return Theme.valueOf(input);
     }
-
-
 
     public int collectRoomIdForDelete() {
         System.out.print("ID de la sala a eliminar: ");

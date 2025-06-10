@@ -3,7 +3,6 @@ package com.escapeRoom.controllers;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.entities.Player;
-import com.escapeRoom.exceptions.EmptyInputException;
 import com.escapeRoom.exceptions.NullOrEmptyException;
 import com.escapeRoom.manager.MenuManager;
 import com.escapeRoom.services.PlayerHandler;
@@ -30,7 +29,7 @@ public class PlayerController {
             switch (option) {
                 case 1 -> playerHandler.createPlayer(getPlayerData());
 
-                case 2 -> playerHandler.assignCertificateToPlayer(getPlayerData().getName());
+                case 2 -> playerHandler.assignCertificateToPlayer(getPlayerForCertificate(), getCertification());
 
                 case 3 -> playerHandler.subscribePlayer(getPlayerForSuscribe());
 
@@ -75,7 +74,7 @@ public class PlayerController {
 
     public String getPlayerForCertificate() {
         System.out.print("Introduzca el nombre del jugador: ");
-        String playerName = scanner.next();
+        String playerName = scanner.nextLine();
 
         Optional<Player> playerOpt = playerHandler.findPlayerByName(playerName);
         if (playerOpt.isEmpty()) {
@@ -93,5 +92,10 @@ public class PlayerController {
             throw new NullOrEmptyException("El jugador no ha sido encontrado y no puede suscribirlo");
         }
         return playerOpt.get();
+    }
+
+    public String getCertification() {
+        System.out.print("Introduzca el merito a certificar del jugador: ");
+        return scanner.nextLine();
     }
 }

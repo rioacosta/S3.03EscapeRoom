@@ -1,5 +1,7 @@
 package com.escapeRoom.services;
 
+import com.escapeRoom.dao.DatabaseConnection;
+import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
 import com.escapeRoom.entities.EscapeRoom;
 import com.escapeRoom.entities.Room;
 import lombok.NoArgsConstructor;
@@ -8,22 +10,27 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-//@NoArgsConstructor
+@NoArgsConstructor
 public class InventoryHandler {
     public EscapeRoom escapeRoom = EscapeRoom.getInstance();
     List<Room> rooms = escapeRoom.getRooms();
+    MySQLRoomDAO roomDao = new MySQLRoomDAO(DatabaseConnection.getInstance());
 
     public void getTotalInventory() {
-     BigDecimal total = new BigDecimal(0);
+        List<Room> rooms = roomDao.findAll();
+
+        BigDecimal total = BigDecimal.ZERO;
         for (Room room : rooms) {
             total = total.add(room.getTotalFromDecorationPrice());
         }
-     total.setScale(2,RoundingMode.HALF_UP);
-        System.out.println("El total de inventario es de: " + total);
+
+        System.out.println("El total de inventario es de: " + total.setScale(2, RoundingMode.HALF_UP));
     }
 
     public void showInventory() {
-        if (escapeRoom.getRooms().isEmpty()) {         System.out.println("No hay cuartos en el scaperoom\n");
+        List<Room> rooms = roomDao.findAll();
+
+        if (rooms.isEmpty()) {         System.out.println("No hay cuartos en el scaperoom\n");
         }
         for (Room room : rooms) {
             System.out.println("La sala " + room.getName() + " contiene:" +
