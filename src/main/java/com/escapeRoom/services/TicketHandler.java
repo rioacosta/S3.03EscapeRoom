@@ -41,13 +41,22 @@ public class TicketHandler {
     }
 
     public void deleteTicket() {
-        System.out.println("¿Qué ticket quieres borrar?");
-        showTickets();
+        boolean ticketExists = false;
 
-        int ticketId = InputUtils.readValidInt(scanner);
+        do {
+            System.out.println("¿Qué ticket quieres borrar?");
+            showTickets();
 
-        boolean deleted = ticketDAO.deleteById(ticketId);
-        System.out.println(deleted ? "Ticket eliminado" : "Error: El ticket no se pudo eliminar");
+            int ticketId = InputUtils.readValidInt(scanner);
+
+            if (!ticketDAO.existsById(ticketId)) {
+                System.out.println("El ticket no existe, ingresa un número válido");
+            } else {
+                boolean deleted = ticketDAO.deleteById(ticketId);
+                System.out.println(deleted ? "Ticket eliminado" : "Error: El ticket no se pudo eliminar");
+                ticketExists = true;
+            }
+        } while (!ticketExists);
     }
 
     public void showTickets() {
