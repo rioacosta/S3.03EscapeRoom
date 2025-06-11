@@ -1,7 +1,6 @@
 package com.escapeRoom.controllers;
 
 import com.escapeRoom.dao.DatabaseConnection;
-import com.escapeRoom.entities.EscapeRoom;
 import com.escapeRoom.services.EscapeRoomHandler;
 
 import static com.escapeRoom.dao.DatabaseConnection.logger;
