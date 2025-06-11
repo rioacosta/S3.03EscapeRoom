@@ -17,11 +17,10 @@ Está pensado para familiarizarse con:
 
 ## Equipo
 
-- @FlavioKde
-  
-- @martorrijos
-  
-- @rioacosta
+- [@FlavioKde](https://github.com/FlavioKde)  
+- [@martorrijos](https://github.com/martorrijos)  
+- [@rioacosta](https://github.com/rioacosta)
+
 
 ---
 
