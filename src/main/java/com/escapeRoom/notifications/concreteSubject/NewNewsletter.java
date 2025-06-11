@@ -8,7 +8,7 @@ import java.util.List;
 
 public class NewNewsletter implements Newsletter {
 
-    private static final List<Subscriber> subscribers = new ArrayList<>();
+    public static final List<Subscriber> subscribers = new ArrayList<>();
 
     @Override
     public void addObserver(Subscriber subscriber) {

@@ -35,9 +35,10 @@ public class PlayerHandler {
 
     public void unsbscribePlayer(Player player) {
         if (player != null) {
-            newsletter.removeObserver(player);
-            boolean result = playerDao.deleteById(player.getIdPlayer());
+            boolean result = NewNewsletter.subscribers.contains(player);
+
             if (result) {
+                newsletter.removeObserver(player);
                 System.out.println("Jugador " + player.getName() + " des-suscrito.");
             } else {
                 System.err.println("No se pudo des-suscribir al jugador " + player.getName() + ". Asegúrate de eliminar las entradas asociadas.");
