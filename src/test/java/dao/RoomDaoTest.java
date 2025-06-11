@@ -4,6 +4,7 @@ import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
+import com.escapeRoom.entities.enums.Theme;
 
 import java.math.BigDecimal;
 
@@ -23,6 +24,7 @@ public class RoomDaoTest {
         testRoom.setName("TEST ROOM");
         testRoom.setDifficulty(Difficulty.EASY);
         testRoom.setPrice(new BigDecimal("50.00"));
+        testRoom.setTheme(Theme.HORROR);
 
         boolean result = dao.create(testRoom);
         System.out.println("Resultado: " + result);

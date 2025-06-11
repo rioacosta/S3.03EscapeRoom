@@ -68,7 +68,10 @@ public class PlayerController {
             }
         } while (!playerEmail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"));
 
+        System.out.println("Jugador confirmado con nombre "+ playerName + " email "+ playerEmail);
+
         return new Player(playerName, playerEmail);
+
     }
 
 
