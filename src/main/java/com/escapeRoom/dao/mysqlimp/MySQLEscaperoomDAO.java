@@ -4,7 +4,6 @@ package com.escapeRoom.dao.mysqlimp;
 import com.escapeRoom.dao.DatabaseConnection;
 import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.entities.EscapeRoom;
-import com.escapeRoom.entities.Room;
 
 import java.sql.*;
 import java.util.ArrayList;

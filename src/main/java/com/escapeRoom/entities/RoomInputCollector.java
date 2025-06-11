@@ -3,7 +3,6 @@ package com.escapeRoom.entities;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
 import com.escapeRoom.manager.MenuManager;
-import com.escapeRoom.roombuilder.interfaces.IRoomBuilder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,9 +17,6 @@ import java.util.Scanner;
             this.scanner = scanner;
             this.menuManager = menuManager;
         }
-
-
-
 
 
         public Room CollectNewRoomData() {
@@ -75,7 +71,7 @@ import java.util.Scanner;
         private List<Hint> collectRoomHints(Theme theme) {
             List<Hint> hintsList = new ArrayList<>();
             System.out.print("¿Cuántas pistas querés agregar?: ");
-            int cantidadHints = menuManager.getValidatedIntegerInput(); // Cambiado a método seguro
+            int cantidadHints = menuManager.getValidatedIntegerInput();
 
             for (int i = 0; i < cantidadHints; i++) {
                 System.out.print("Descripción de la pista #" + (i + 1) + ": ");
@@ -92,7 +88,7 @@ import java.util.Scanner;
         private List<Decoration> collectRoomDecorations() {
             List<Decoration> decorations = new ArrayList<>();
             System.out.print("¿Cuántas decoraciones querés agregar?: ");
-            int cantidadDecoraciones = menuManager.getValidatedIntegerInput(); // Cambiado a método seguro
+            int cantidadDecoraciones = menuManager.getValidatedIntegerInput();
 
             for (int i = 0; i < cantidadDecoraciones; i++) {
                 System.out.print("Descripción de la decoración #" + (i + 1) + ": ");
@@ -123,7 +119,7 @@ import java.util.Scanner;
                 int updateOption = menuManager.showUpdateMenu();
 
                 if (updateOption == 0) {
-                    return 0;  // Salir
+                    return 0;
                 }
 
                 if (updateOption >= 1 && updateOption <= 4) {

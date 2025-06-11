@@ -18,10 +18,6 @@ public final class EscapeRoom {
 
     public EscapeRoom() {
         InputUtils.getValidInt(idEscaperoom);
-        // La validación de que name no se sobrepasa del número máximo de caracteres tendrá que hacerse fuera de aquí,
-        // usando el method que hay abajo en este documento
-        //InputUtils.getValidString(name);
-        //InputUtils.getValidList(rooms);-------> la he comentado porque me saltaba un error no mas iniciar el programa
         this.idEscaperoom = 1;
         this.name = "";
         this.rooms = new ArrayList<>();

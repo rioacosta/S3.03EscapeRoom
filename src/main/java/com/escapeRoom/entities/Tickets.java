@@ -13,7 +13,6 @@ public class Tickets {
     private LocalDate boughtOn;
     private BigDecimal price;
 
-    // Constructor para nuevos tickets (sin ID)
     public Tickets(int idRoom, int idPlayer, LocalDate boughtOn, BigDecimal price) {
         setIdRoom(idRoom);
         setIdPlayer(idPlayer);
@@ -21,7 +20,6 @@ public class Tickets {
         setPrice(price);
     }
 
-    // Constructor para tickets existentes (con ID)
     public Tickets(int idTickets, int idRoom, int idPlayer, LocalDate boughtOn, BigDecimal price) {
         setIdTickets(idTickets);
         setIdRoom(idRoom);

@@ -27,7 +27,6 @@ public class RoomController {
     private static final Logger logger = Logger.getLogger(RoomController.class.getName());
 
     public RoomController(Scanner scanner) {
-        // this.roomHandler = new RoomHandler(new MySQLRoomDAO(DatabaseConnection.getInstance()));
         IRoomDao roomDAO = new MySQLRoomDAO(DatabaseConnection.getInstance());
         this.roomHandler = new RoomHandler(roomDAO);
         this.menuManager = new MenuManager(scanner);
@@ -65,18 +64,16 @@ public class RoomController {
             MySQLHintDAO hintDAO = new MySQLHintDAO(DatabaseConnection.getInstance());
             MySQLDecorationDAO decorationDAO = new MySQLDecorationDAO(DatabaseConnection.getInstance());
 
-            // Save the room and retrieve the generated idRoom
             int idRoom = roomDAO.saveAndReturnId(room);
 
             if (idRoom > 0) {
-                // Ensure idRoom is assigned to Hints and Decorations before insertion
                 for (Hint hint : room.getHints()) {
-                    hint.setIdRoom_ref(idRoom); // Assign the generated idRoom
+                    hint.setIdRoom_ref(idRoom);
                     hintDAO.create(hint);
                 }
 
                 for (Decoration decoration : room.getDecorations()) {
-                    decoration.setIdRoom_ref(idRoom); // Assign the generated idRoom
+                    decoration.setIdRoom_ref(idRoom);
                     decorationDAO.create(decoration);
                 }
 
@@ -149,17 +146,6 @@ public class RoomController {
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
-
-    // METHOD ANTERIOR
-//    private void listAllRooms() {
-//        List<Room> rooms = roomHandler.getAllRooms();
-//        if (rooms.isEmpty()) {
-//            System.out.println("No hay salas registradas actualmente.");
-//        } else {
-//            System.out.println("===== LISTADO DE SALAS =====");
-//            rooms.forEach(System.out::println);
-//        }
-//    }
 
     public void listAllRooms() {
         List<String> formattedRooms = roomHandler.getAllRoomsFormatted();
@@ -252,9 +238,6 @@ public class RoomController {
             System.out.println("Error al eliminar la decoración: " + e.getMessage());
         }
     }
-
-
-
 
 }
 

@@ -145,14 +145,5 @@ public class MenuManager {
             }
         }
     }
-    public String collectNonEmptyLine(String mensaje) {
-        String input = "";
-        while (input.isBlank()) {
-            System.out.println(mensaje);
-            input = scanner.nextLine();
-        }
-        return input;
-    }
-
 
 }

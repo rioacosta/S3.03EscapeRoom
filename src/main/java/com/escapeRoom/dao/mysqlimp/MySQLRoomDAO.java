@@ -39,12 +39,6 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
 
     @Override
     public boolean create(Room room) {
-
-        /*if (!escaperoomExists(room.getIdEscaperoom_ref())) {
-
-            return false;
-        }*/
-
         String sql = "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, theme) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -100,7 +94,7 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    return rs.getInt(1); // Get the generated ID
+                    return rs.getInt(1);
                 }
             }
         } catch (SQLException e) {
@@ -232,21 +226,6 @@ public class MySQLRoomDAO implements IRoomDao, IGenericDAO<Room, Integer> {
 
         return room;
     }
-
-
-    private boolean escaperoomExists(int idEscaperoom_ref) {
-        String query = "SELECT COUNT(*) FROM escaperoom WHERE idEscaperoom_ref = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, idEscaperoom_ref);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error verificando existencia de escaperoom", e);
-        }
-        return false;
-    }
-
 
     public boolean updateRoomName(int roomId, String newName) {
         String sql = "UPDATE room SET name = ? WHERE idRoom = ?";

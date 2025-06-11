@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 public class DatabaseConnection {
     private static volatile DatabaseConnection instance;
     private Connection connection;
-    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
+    public static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
     private static final String URL = "jdbc:mysql://localhost:3306/escaperoomdb";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "654321Hola";
 
     private DatabaseConnection() {
         try {

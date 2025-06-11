@@ -30,7 +30,6 @@ public class PlayerHandler {
         if (player == null || player.getName() == null || player.getEmail() == null) {
             throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
-        //playerDao.create(player);
         newsletter.addObserver(player);
         System.out.println("Jugador " + player.getName() + " suscrito");
     }
@@ -53,13 +52,6 @@ public class PlayerHandler {
     public void notifySubscribers(String notification) {
         newsletter.notifyObservers(notification);
     }
-
-   /* public Optional<Player> findPlayerById(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("ID de jugador inválido");
-        }
-        return playerDao.findById(id);
-    }*/
 
     public void showAllPlayers() {
         playerDao.findAll().forEach(System.out::println);

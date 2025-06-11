@@ -52,27 +52,6 @@ public class InputUtils {
         }
     }
 
-    public static void checkEmptyInput(String input) {
-        if (input.trim().isEmpty()) {
-            throw new EmptyInputException("No puedes responder en blanco");
-        }
-    }
-
-    public static void getValidByte(byte input) {
-        if (input < -128 || input > 127) {
-            throw new IllegalArgumentException("El valor debe estar en el rango de un byte (-128 a 127)");
-        }
-    }
-
-    public static void getValidList(List<?> input) {
-        if (input == null) {
-            throw new EmptyInputException("La lista no puede ser nula");
-        }
-        if (input.isEmpty()) {
-            throw new EmptyInputException("La lista no puede estar vacía");
-        }
-    }
-
     public static void getValidLocalDate(String input) {
         if (input == null || input.trim().isEmpty()) {
             throw new EmptyInputException("La fecha no puede estar vacía");

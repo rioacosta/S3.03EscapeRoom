@@ -1,27 +1,14 @@
 package com.escapeRoom.services;
 
-import com.escapeRoom.controllers.RoomController;
-import com.escapeRoom.dao.DatabaseConnection;
-import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.dao.interfaces.IRoomDao;
-import com.escapeRoom.dao.mysqlimp.MySQLDecorationDAO;
-import com.escapeRoom.dao.mysqlimp.MySQLHintDAO;
-import com.escapeRoom.dao.mysqlimp.MySQLRoomDAO;
 import com.escapeRoom.entities.Decoration;
 import com.escapeRoom.entities.Hint;
 import com.escapeRoom.entities.Room;
 import com.escapeRoom.entities.enums.Difficulty;
 import com.escapeRoom.entities.enums.Theme;
-import com.escapeRoom.exceptions.NullOrEmptyException;
-import com.escapeRoom.entities.RoomInputCollector;
-
-import java.beans.Statement;
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class RoomHandler {
@@ -32,17 +19,6 @@ public class RoomHandler {
         this.roomDAO = roomDAO;
     }
 
-
-    public boolean createRoom(Room room) {
-
-        if (room == null || room.getName() == null) {
-            throw new NullOrEmptyException("Datos de la sala inválidos");
-        }
-
-        return roomDAO.create(room);
-
-    }
-
     public Optional<Room> findRoomById(int id) {
 
         if (id <= 0) {
@@ -50,7 +26,6 @@ public class RoomHandler {
         }
         return roomDAO.findById(id);
     }
-
 
     public List<Room> getAllRooms(){
         return roomDAO.findAll();
@@ -93,28 +68,12 @@ public class RoomHandler {
     private String formatDecorations(List<Decoration> decorations) {
         return decorations.stream()
                 .map(deco -> String.format("- \"%s\" Material: %s, Valor: %.2f €)", deco.getDescription(),
-                        deco.getMaterial(), deco.getPrice()))
+                 deco.getMaterial(), deco.getPrice()))
                 .collect(Collectors.joining("\n", "", ""));
     }
 
-    /*
-    public boolean updateRoom(Room room) {
-
-        if (!roomDAO.existsById(room.getIdRoom())) {
-            throw new IllegalArgumentException("La sala con ID " + room.getIdRoom() + " no existe");
-        }
-        // Validaciones de negocio
-       // validateRoom(room);
-
-        // Actualizar en base de datos
-        return roomDAO.update(room);
-    }
-
-
-     */
     public boolean updateRoomName(int roomId, String newName) {
         return roomDAO.updateRoomName(roomId, newName);
-
     }
 
     public boolean updateRoomPrice(int roomId, BigDecimal newPrice) {
@@ -130,11 +89,9 @@ public class RoomHandler {
     }
 
     public boolean deleteRoom(int id) {
-
         if (!roomDAO.existsById(id)) {
             throw new IllegalArgumentException("La sala con ID " + id + " no existe");
         }
-
         return roomDAO.deleteById(id);
     }
 

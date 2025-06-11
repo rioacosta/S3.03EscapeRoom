@@ -1,6 +1,5 @@
 package com.escapeRoom.entities;
 
-import com.escapeRoom.dao.interfaces.IGenericDAO;
 import com.escapeRoom.dao.mysqlimp.MySQLPlayerDAO;
 import com.escapeRoom.notifications.interfaces.Subscriber;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import com.escapeRoom.utils.InputUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @Getter
 @Setter
@@ -52,27 +50,6 @@ public class Player implements Subscriber {
     }
 
 
-
-    private String nameCharacterLimit(String name) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (name.length() > 45) {
-            System.out.println("El nombre no puede tener más de 45 caracteres. Introduce un nombre válido");
-            name = scanner.nextLine();
-        }
-        return name;
-    }
-
-    private String emailCharacterLimit(String email) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (email.length() > 45) {
-            System.out.println("El mail no puede tener más de 45 caracteres. Introduce un mail válido");
-            email = scanner.nextLine();
-        }
-        return email;
-    }
-
     @Override
     public void update(String newsletterUpdate) {
         System.out.println("Nueva notificación de newsletter :D");
@@ -96,8 +73,4 @@ public class Player implements Subscriber {
         return sb.toString();
     }
 
-    /*@Override
-    public String toString() {
-     return "Jugador: " + name + " con ID: " + idPlayer + ", email: " + email + "\ncertificados: " + certificates + "\n";
-    }*/
 }

@@ -23,7 +23,7 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
 
     @Override
     public boolean create(Player player) {
-        String sql = "INSERT INTO player (name, email) VALUES (?, ?)"; // ID auto-generado
+        String sql = "INSERT INTO player (name, email) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, player.getName());
             stmt.setString(2, player.getEmail());
@@ -32,7 +32,7 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
             if (rowsAffected > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        player.setIdPlayer(rs.getInt(1)); // Asignar ID generado
+                        player.setIdPlayer(rs.getInt(1));
                     }
                 }
                 return true;
@@ -182,6 +182,5 @@ public class MySQLPlayerDAO implements IGenericDAO<Player, Integer> {
         loadPlayerCertificates(player);
         return player;
     }
-
 
 }
