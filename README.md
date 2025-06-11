@@ -28,7 +28,7 @@ Está pensado para familiarizarse con:
 
 ## Tecnologías usadas
 
-- Java 21
+- Java 24
 
 - Maven
 
@@ -59,10 +59,8 @@ Está pensado para familiarizarse con:
 
 1 - Clona o descarga el repositorio
 
-2 - Importa la base de datos, localizada en src/main/resources, con un programa como phpMyAdmin o Workbench
+2 - Crea una base de datos llamada escaperoomdb e importa el archivo con el mismo nombre localizado en src/main/resources
 
-3 - Importa la sample_data a la base de datos
+3 - Modifica el usuario y contraseña del archivo DatabaseConnection por tus credenciales de MySQL
 
-4 - Modifica el usuario y contraseña del archivo DatabaseConnection por tus credenciales de MySQL
-
-5 - Ejecutar el programa en tu IDE
+4 - Ejecuta el programa en tu IDE
