@@ -5,13 +5,13 @@ import com.escapeRoom.services.EscapeRoomHandler;
 
 import static com.escapeRoom.dao.DatabaseConnection.logger;
 
-public class AppHandler {
+public class AppController {
 
-    private static AppHandler instance;
+    private static AppController instance;
 
-    public static AppHandler getInstance() {
+    public static AppController getInstance() {
         if(instance == null) {
-            instance = new AppHandler();
+            instance = new AppController();
         }
         return instance;
     }

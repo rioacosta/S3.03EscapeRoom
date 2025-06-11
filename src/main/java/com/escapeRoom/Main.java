@@ -1,10 +1,10 @@
 package com.escapeRoom;
 
-import com.escapeRoom.controllers.AppHandler;
+import com.escapeRoom.controllers.AppController;
 
 public class Main {
 
     public static void main(String[] args) {
-        AppHandler.getInstance().startApp();
+        AppController.getInstance().startApp();
     }
 }
