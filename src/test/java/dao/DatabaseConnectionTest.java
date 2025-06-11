@@ -1,6 +1,6 @@
 package dao;
 
-import dao.mysqlimp.DatabaseConnection;
+import com.escapeRoom.dao.DatabaseConnection;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
@@ -32,12 +32,9 @@ class DatabaseConnectionIntegrationTest {
     @Order(1)
     @DisplayName("Integration Test - Database Schema Validation")
     void testDatabaseSchemaValidation() {
-        // Arrange
         Connection connection = databaseConnection.getConnection();
 
-        // Act & Assert
         assertDoesNotThrow(() -> {
-            // Verificar que las tablas principales existen
             String[] expectedTables = {"escaperoom", "room", "decoration", "player", "tickets"};
 
             for (String tableName : expectedTables) {
@@ -60,14 +57,11 @@ class DatabaseConnectionIntegrationTest {
     @Order(2)
     @DisplayName("Integration Test - Basic CRUD Operations")
     void testBasicCrudOperations() {
-        // Arrange
         Connection connection = databaseConnection.getConnection();
 
-        // Act & Assert
         assertDoesNotThrow(() -> {
             databaseConnection.beginTransaction();
 
-            // Test INSERT
             try (PreparedStatement insertStmt = connection.prepareStatement(
                     "INSERT INTO escaperoom (name) VALUES (?)")) {
                 insertStmt.setString(1, "Test Escape Room");
@@ -75,9 +69,8 @@ class DatabaseConnectionIntegrationTest {
                 assertEquals(1, rowsAffected, "Debe insertar exactamente una fila");
             }
 
-            // Test SELECT
             try (PreparedStatement selectStmt = connection.prepareStatement(
-                    "SELECT id, name FROM escaperoom WHERE name = ?")) {
+                    "SELECT idEscaperoom_ref, name FROM escaperoom WHERE name = ?")) {
                 selectStmt.setString(1, "Test Escape Room");
                 try (ResultSet rs = selectStmt.executeQuery()) {
                     assertTrue(rs.next(), "Debe encontrar el registro insertado");
@@ -85,7 +78,6 @@ class DatabaseConnectionIntegrationTest {
                 }
             }
 
-            // Test UPDATE
             try (PreparedStatement updateStmt = connection.prepareStatement(
                     "UPDATE escaperoom SET name = ? WHERE name = ?")) {
                 updateStmt.setString(1, "Updated Test Escape Room");
@@ -94,7 +86,6 @@ class DatabaseConnectionIntegrationTest {
                 assertEquals(1, rowsAffected, "Debe actualizar exactamente una fila");
             }
 
-            // Test DELETE
             try (PreparedStatement deleteStmt = connection.prepareStatement(
                     "DELETE FROM escaperoom WHERE name = ?")) {
                 deleteStmt.setString(1, "Updated Test Escape Room");
@@ -111,12 +102,9 @@ class DatabaseConnectionIntegrationTest {
     @Order(3)
     @DisplayName("Integration Test - Transaction Rollback")
     void testTransactionRollback() {
-        // Arrange
         Connection connection = databaseConnection.getConnection();
 
-        // Act & Assert
         assertDoesNotThrow(() -> {
-            // Contar registros antes de la transacción
             int initialCount;
             try (PreparedStatement countStmt = connection.prepareStatement(
                     "SELECT COUNT(*) FROM escaperoom")) {
@@ -128,17 +116,14 @@ class DatabaseConnectionIntegrationTest {
 
             databaseConnection.beginTransaction();
 
-            // Insertar un registro
             try (PreparedStatement insertStmt = connection.prepareStatement(
                     "INSERT INTO escaperoom (name) VALUES (?)")) {
                 insertStmt.setString(1, "Rollback Test Room");
                 insertStmt.executeUpdate();
             }
 
-            // Hacer rollback
             databaseConnection.rollbackTransaction();
 
-            // Verificar que el registro no existe después del rollback
             int finalCount;
             try (PreparedStatement countStmt = connection.prepareStatement(
                     "SELECT COUNT(*) FROM escaperoom")) {
@@ -158,14 +143,11 @@ class DatabaseConnectionIntegrationTest {
     @Order(4)
     @DisplayName("Integration Test - Foreign Key Constraints")
     void testForeignKeyConstraints() {
-        // Arrange
         Connection connection = databaseConnection.getConnection();
 
-        // Act & Assert
         assertDoesNotThrow(() -> {
             databaseConnection.beginTransaction();
 
-            // Insertar un escaperoom padre
             int escapeRoomId;
             try (PreparedStatement insertEscapeRoom = connection.prepareStatement(
                     "INSERT INTO escaperoom (name) VALUES (?)",
@@ -179,19 +161,19 @@ class DatabaseConnectionIntegrationTest {
                 }
             }
 
-            // Insertar una room que referencia al escaperoom
             try (PreparedStatement insertRoom = connection.prepareStatement(
-                    "INSERT INTO room (idEscaperoom_ref, name, dificulty, price) VALUES (?, ?, ?, ?)")) {
+                    "INSERT INTO room (idEscaperoom_ref, name, difficulty, price, theme) VALUES (?, ?, ?, ?, ?)")) {
                 insertRoom.setInt(1, escapeRoomId);
                 insertRoom.setString(2, "FK Test Room");
                 insertRoom.setString(3, "EASY");
                 insertRoom.setBigDecimal(4, new java.math.BigDecimal("25"));
+                insertRoom.setString(5, "MEDIUM");
 
                 int rowsAffected = insertRoom.executeUpdate();
                 assertEquals(1, rowsAffected, "Debe insertar la room correctamente");
             }
 
-            databaseConnection.rollbackTransaction(); // Limpiar datos de prueba
+            databaseConnection.rollbackTransaction();
 
         }, "No debe lanzar excepción al probar las restricciones de clave foránea");
     }
@@ -200,15 +182,12 @@ class DatabaseConnectionIntegrationTest {
     @Order(5)
     @DisplayName("Integration Test - Connection Pool Behavior")
     void testConnectionPoolBehavior() {
-        // Act & Assert
         assertDoesNotThrow(() -> {
-            // Simular múltiples operaciones consecutivas
             for (int i = 0; i < 5; i++) {
                 Connection connection = databaseConnection.getConnection();
                 assertNotNull(connection, "La conexión " + i + " no debe ser null");
                 assertTrue(connection.isValid(2), "La conexión " + i + " debe ser válida");
 
-                // Realizar una operación simple
                 try (PreparedStatement stmt = connection.prepareStatement("SELECT 1")) {
                     try (ResultSet rs = stmt.executeQuery()) {
                         assertTrue(rs.next(), "Debe haber resultado en la iteración " + i);
@@ -221,7 +200,6 @@ class DatabaseConnectionIntegrationTest {
 
     @AfterEach
     void tearDown() {
-        // Asegurar que no hay transacciones pendientes
         try {
             Connection connection = databaseConnection.getConnection();
             if (connection != null && !connection.isClosed()) {
