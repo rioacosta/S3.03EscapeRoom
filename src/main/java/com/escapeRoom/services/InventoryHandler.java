@@ -34,10 +34,11 @@ public class InventoryHandler {
         }
         for (Room room : rooms) {
             System.out.println("La sala " + room.getName() + " contiene:" +
-                    "\n Objetos de decoracion: ");
+                    "\nObjetos de decoracion: ");
                      room.showDecorationItems();
             System.out.println("Las pistas: ");
                     room.showHintItems();
+                    System.out.println("\n");
         }
     }
 }

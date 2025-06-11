@@ -22,13 +22,15 @@ public class PlayerHandler {
 
     public void createPlayer(Player player) {
         playerDao.create(player);
+        System.out.println("Jugador confirmado con nombre "+ player.getName() + " email "+
+                player.getEmail() + " y ID " + player.getIdPlayer() );
     }
 
     public void subscribePlayer(Player player) {
         if (player == null || player.getName() == null || player.getEmail() == null) {
             throw new NullOrEmptyException("Datos del jugador inválidos, no se puede suscribir");
         }
-        playerDao.create(player);
+        //playerDao.create(player);
         newsletter.addObserver(player);
         System.out.println("Jugador " + player.getName() + " suscrito");
     }
