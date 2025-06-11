@@ -60,6 +60,8 @@ Está pensado para familiarizarse con:
 
 2 - Crea una base de datos llamada escaperoomdb e importa el archivo con el mismo nombre localizado en src/main/resources
 
-3 - Modifica el usuario y contraseña del archivo DatabaseConnection por tus credenciales de MySQL
+3 - Abre el programa en tu IDE
 
-4 - Ejecuta el programa en tu IDE
+3 - Modifica el usuario y contraseña del archivo DatabaseConnection, encontrado en src/main/java/com/escapeRoom/dao, por tus credenciales de MySQL
+
+4 - Ejecuta el programa :D
