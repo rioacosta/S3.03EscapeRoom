@@ -37,7 +37,7 @@ public class PlayerHandler {
         if (player != null) {
             boolean result = NewNewsletter.subscribers.contains(player);
 
-            if (result) {
+            if (!result) {
                 newsletter.removeObserver(player);
                 System.out.println("Jugador " + player.getName() + " des-suscrito.");
             } else {
