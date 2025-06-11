@@ -40,7 +40,7 @@ CREATE TABLE `certificate` (
 --
 
 INSERT INTO `certificate` (`idCertificate`, `idPlayer`, `name`, `description`, `dateOfDelivery`) VALUES
-(1, 1, 'Certificado por la superación de la sala Disn', 'Creías que no lo ibas a conseguir... pero lo lograste! :D Pluto se sentiría orgulloso', '2025-06-07 14:13:31');
+(1, 1, 'Certificado por la superación de la sala Disney', 'Creías que no lo ibas a conseguir... pero lo lograste! :D Pluto se sentiría orgulloso', '2025-06-07 14:13:31');
 
 -- --------------------------------------------------------
 
@@ -63,11 +63,7 @@ CREATE TABLE `decoration` (
 INSERT INTO `decoration` (`idDecoration`, `idRoom_ref`, `description`, `material`, `price`) VALUES
 (1, 1, 'Orejas mickey', 'Plástico', 60.00),
 (2, 1, 'Pastel a medio comer', 'Plástico', 47.50),
-(3, 2, 'Cuchillo ensangrentado', 'Metal', 35.00),
-(5, 20, 'papo', 'madeera', 12.00),
-(6, 21, 'martito', 'madera', 12.00),
-(7, 22, 'madera y pañal', 'madera', 12.00),
-(8, 23, 'aerawe', 'ma', 12.00);
+(3, 2, 'Cuchillo ensangrentado', 'Metal', 35.00);
 
 -- --------------------------------------------------------
 
@@ -108,10 +104,7 @@ CREATE TABLE `hint` (
 INSERT INTO `hint` (`idHint`, `idRoom_ref`, `description`, `theme`, `price`) VALUES
 (1, 1, 'Ponte las orejitas y lo verás todo más claro', 'DISNEY', 20.00),
 (2, 2, 'Qué hay debajo del sofá? Podría ser...', 'TERROR', 25.00),
-(3, 2, 'El cuervo graznó esa media noche', 'TERROR', 17.00),
-(9, 20, 'marta y marto', 'HORROR', 12.00),
-(10, 21, 'martita', 'HORROR', 12.00),
-(11, 22, 'martita y tito', 'HORROR', 12.00);
+(3, 2, 'El cuervo graznó esa media noche', 'TERROR', 17.00);
 
 -- --------------------------------------------------------
 
@@ -133,8 +126,7 @@ INSERT INTO `player` (`idPlayer`, `name`, `email`) VALUES
 (1, 'Romina', 'romi@mail.com'),
 (2, 'Nim', 'nim@mail.com'),
 (3, 'Perrito Barrios', 'perritoDog@mimail.com'),
-(4, 'Perrito Barrios', 'perritoDog@mimail.com'),
-(5, 'Totopo con gucamole', 'gucamole@tuNacho.com');
+(4, 'Totopo con gucamole', 'gucamole@tuNacho.com');
 
 -- --------------------------------------------------------
 
@@ -157,12 +149,7 @@ CREATE TABLE `room` (
 
 INSERT INTO `room` (`idRoom`, `idEscaperoom_ref`, `name`, `difficulty`, `price`, `theme`) VALUES
 (1, 1, 'Sala Disney', 'EASY', 100.00, 'DISNEY'),
-(2, 1, 'Sala Terrorífica', 'HARD', 150.00, 'TERROR'),
-(19, 1, 'TEST ROOM', 'EASY', 50.00, 'HORROR'),
-(20, 1, 'paopo y pepop', 'HARD', 12.00, 'HORROR'),
-(21, 1, 'salaTop', 'EASY', 12.00, 'HORROR'),
-(22, 1, '0', 'MEDIUM', 12.00, 'HORROR'),
-(23, 1, 'marta', 'EASY', 12.00, 'HORROR');
+(2, 1, 'Sala Terrorífica', 'HARD', 150.00, 'TERROR');
 
 -- --------------------------------------------------------
 
