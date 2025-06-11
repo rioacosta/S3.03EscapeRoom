@@ -40,7 +40,7 @@ CREATE TABLE `certificate` (
 --
 
 INSERT INTO `certificate` (`idCertificate`, `idPlayer`, `name`, `description`, `dateOfDelivery`) VALUES
-(1, 1, 'Certificado por la superación de la sala Disney', 'Creías que no lo ibas a conseguir... pero lo lograste! :D Pluto se sentiría orgulloso', '2025-06-07 14:13:31');
+(1, 1, 'Certificado por superación de la sala Disney', 'Creías que no lo ibas a conseguir... pero lo lograste! :D Pluto se sentiría orgulloso', '2025-06-07 14:13:31');
 
 -- --------------------------------------------------------
 
